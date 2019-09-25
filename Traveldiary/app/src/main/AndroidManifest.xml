@@ -5,11 +5,16 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="且行切记"
+        android:label="且行且记"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainPageActivity"></activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/customTextstyle"
+            android:label="账号注册"
+            ></activity>
+        <activity android:name=".MainPageActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
