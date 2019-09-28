@@ -4,19 +4,185 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/titleText"
-            android:text="1111111"/>
+            android:text="账号注册"
+            android:textSize="20dp"
+            android:textColor="@color/titleText"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/editstyle"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
 
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edtEmailaddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:background="@null"
+                android:hint="请输入邮箱"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/editTextCorlor"
+                android:textCursorDrawable="@color/cursorCorlor"
+                android:textSize="18dp"
+                android:cursorVisible="true"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/editstyle"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="45dp"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:textColorHint="@color/editTextCorlor"
+            android:textCursorDrawable="@color/cursorCorlor"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/editstyle"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/edtAgainPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="45dp"
+            android:background="@null"
+            android:cursorVisible="true"
+            android:hint="请再次输入密码"
+            android:inputType="textPassword"
+            android:textColorHint="@color/editTextCorlor"
+            android:textCursorDrawable="@color/cursorCorlor"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/editstyle"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtVerifyCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="45dp"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:textColorHint="@color/editTextCorlor"
+                android:textCursorDrawable="@color/cursorCorlor"
+                android:textSize="18dp"
+                android:cursorVisible="true"
+                android:inputType="number"/>
+
+            <TextView
+                android:id="@+id/edtGetVerifyCode"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="65dp"
+                android:background="@color/editBac"
+                android:paddingTop="6dp"
+                android:baselineAligned="false"
+                android:text="获取验证码"
+                android:textColor="#1E90FF"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:layout_marginTop="40dp">
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="下一步"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/registerstyle"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册即代表阅读并同意"
+            android:textColor="@color/titleText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务协议"
+            android:textColor="#0000FF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和"
+            android:textColor="@color/titleText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="隐私政策"
+            android:textColor="#0000FF" />
     </LinearLayout>
 </LinearLayout>
