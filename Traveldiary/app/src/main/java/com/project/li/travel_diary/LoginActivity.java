@@ -22,6 +22,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private String emaiaddress;
     private String pass;
+    private CustomeOnClickListener listener;
+    private CustomeOnFocusListener onFocusListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,17 +32,20 @@ public class LoginActivity extends AppCompatActivity {
         setStatusBar();
         getView();
         textChange();
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
+        registLitener();
 
     }
 
+    /**
+     * 注册监听器
+     */
+    protected void registLitener(){
+        listener = new CustomeOnClickListener();
+        onFocusListener = new CustomeOnFocusListener();
+        btnRegister.setOnClickListener(listener);
+        Emaiaddress.setOnFocusChangeListener(onFocusListener);
+        password.setOnFocusChangeListener(onFocusListener);
+    }
     protected void textChange(){
         /**
          * 输入账号文本框监听器
@@ -134,6 +139,46 @@ public class LoginActivity extends AppCompatActivity {
             //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
 
+        }
+    }
+
+    /**
+     * 监听器
+     */
+    class CustomeOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnRegister:
+                    Intent intent = new Intent();
+                    intent.setClass(LoginActivity.this,RegisterActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+    }
+
+    class CustomeOnFocusListener implements View.OnFocusChangeListener{
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            switch (v.getId()){
+                case R.id.edtUsername:
+                    if(hasFocus){
+                        Emaiaddress.setHint(null);
+                    }else{
+                        Emaiaddress.setHint("请输入账号");
+                    }
+                    break;
+                case R.id.edtPassword:
+                    if(hasFocus){
+                        password.setHint(null);
+                    }else{
+                        password.setHint("请输入密码");
+                    }
+                    break;
+            }
         }
     }
 }

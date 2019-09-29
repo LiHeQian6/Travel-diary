@@ -21,6 +21,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String password;
     private String againPassword;
     private String VerifyCode;
+    private CustomeOnFocusListener onFocusListener;
+    private CustomeOnClickListener onclickListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         getView();
         textChange();
+        registeListener();
+    }
+    protected void registeListener(){
+        onFocusListener = new CustomeOnFocusListener();
+        onclickListener = new CustomeOnClickListener();
+        edtEmailAddress.setOnFocusChangeListener(onFocusListener);
+        edtPassword.setOnFocusChangeListener(onFocusListener);
+        edtAgainPassword.setOnFocusChangeListener(onFocusListener);
+        edtVerifyCode.setOnFocusChangeListener(onFocusListener);
+        edtgetVerifyCode.setOnClickListener(onclickListener);
     }
     protected void textChange(){
         /**
@@ -190,6 +202,55 @@ public class RegisterActivity extends AppCompatActivity {
             //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
 
+        }
+    }
+
+    class CustomeOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.edtGetVerifyCode:
+
+                    break;
+            }
+        }
+    }
+
+    class CustomeOnFocusListener implements View.OnFocusChangeListener{
+
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            switch (v.getId()){
+                case R.id.edtEmailaddress:
+                    if(hasFocus){
+                        edtEmailAddress.setHint(null);
+                    }else{
+                        edtEmailAddress.setHint("请输入邮箱");
+                    }
+                    break;
+                case R.id.edtPassword:
+                    if(hasFocus){
+                        edtPassword.setHint(null);
+                    }else{
+                        edtPassword.setHint("请输入密码");
+                    }
+                    break;
+                case R.id.edtAgainPass:
+                    if(hasFocus){
+                        edtAgainPassword.setHint(null);
+                    }else{
+                        edtAgainPassword.setHint("请再次输入密码");
+                    }
+                    break;
+                case R.id.edtVerifyCode:
+                    if(hasFocus){
+                        edtVerifyCode.setHint(null);
+                    }else{
+                        edtVerifyCode.setHint("请输入验证码");
+                    }
+                    break;
+            }
         }
     }
 }
