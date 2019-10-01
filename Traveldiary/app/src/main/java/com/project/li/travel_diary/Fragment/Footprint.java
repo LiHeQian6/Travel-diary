@@ -4,17 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.SupportMapFragment;
+import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.project.li.travel_diary.R;
 
 public class Footprint extends SupportMapFragment {
-    private MapView mapView;
+    private TextureMapView mapView;
     private AMap map;
 
     @Nullable
@@ -27,10 +29,15 @@ public class Footprint extends SupportMapFragment {
             map = mapView.getMap();
         }
         MyLocationStyle locationStyle = new MyLocationStyle();
-        locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
+        locationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_FOLLOW_NO_CENTER);
         map.setMyLocationStyle(locationStyle);
         map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.getUiSettings().setCompassEnabled(true);
+        map.getUiSettings().setScaleControlsEnabled(true);
         map.setMyLocationEnabled(true);
+        map.moveCamera(CameraUpdateFactory.zoomTo(20));
+        map.moveCamera(CameraUpdateFactory.changeTilt(60));
+
         return view;
     }
 
@@ -38,6 +45,12 @@ public class Footprint extends SupportMapFragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -50,6 +63,12 @@ public class Footprint extends SupportMapFragment {
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
         mapView.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        map=null;
     }
 
     @Override
