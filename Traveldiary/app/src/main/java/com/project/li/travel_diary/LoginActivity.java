@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout login;
     private TextView btnRegister;
+    private TextView forgetPass;
     private EditText Emaiaddress;
     private EditText password;
     private String emaiaddress;
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(listener);
         Emaiaddress.setOnFocusChangeListener(onFocusListener);
         password.setOnFocusChangeListener(onFocusListener);
+        forgetPass.setOnClickListener(listener);
     }
     protected void textChange(){
         /**
@@ -126,11 +128,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 获取控件ID
+     */
     protected void getView(){
         login = findViewById(R.id.btnLogin);
         btnRegister = findViewById(R.id.btnRegister);
         Emaiaddress = findViewById(R.id.edtUsername);
         password = findViewById(R.id.edtPassword);
+        forgetPass = findViewById(R.id.btnForgetPass);
     }
 
     protected void setStatusBar() {
@@ -154,6 +160,11 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this,RegisterActivity.class);
                     startActivity(intent);
+                    break;
+                case R.id.btnForgetPass:
+                    Intent intent1 = new Intent();
+                    intent1.setClass(LoginActivity.this,ForgetPassActivity.class);
+                    startActivity(intent1);
                     break;
             }
         }
