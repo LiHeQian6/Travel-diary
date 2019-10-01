@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.project.li.travel_diary">
+    xmlns:tools="http://schemas.android.com/tools" package="com.project.li.travel_diary">
 
     <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,16 +16,17 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-
 
     <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="且行且记"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:usesCleartextTraffic="true"
-            android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="且行且记"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
         <meta-data
-                android:name="com.amap.api.v2.apikey"
-                android:value="36c937eae67db76ca55ba96cf9008ec9"/>
+            android:name="com.amap.api.v2.apikey"
+            android:value="36c937eae67db76ca55ba96cf9008ec9"/>
+        <activity android:name=".ForgetPassActivity"></activity>
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/customTextstyle"
