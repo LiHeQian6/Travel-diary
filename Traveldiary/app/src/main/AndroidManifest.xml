@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.li.travel_diary">
+
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
@@ -19,12 +20,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Settings.ChangePassword" android:label="修改密码" android:theme="@style/settings"></activity>
+        <activity
+            android:name=".Settings.ChangePassword"
+            android:label="修改密码"
+            android:theme="@style/settings" />
         <activity
             android:name=".Settings.Setting"
             android:label="设置"
-            android:theme="@style/settings"></activity>
-        <activity android:name=".Settings.SetName" android:label="修改昵称" android:theme="@style/settings"/>
+            android:theme="@style/settings" />
+        <activity
+            android:name=".Settings.SetName"
+            android:label="修改昵称"
+            android:theme="@style/settings" />
         <activity android:name=".Login.ResetPassActivity" />
 
         <meta-data
@@ -46,6 +53,11 @@
         </activity>
 
         <service android:name="com.amap.api.location.APSService" />
+
+        <activity
+            android:name=".MessageTree.MessageTree"
+            android:label="留言树"
+            android:theme="@style/settings"></activity>
     </application>
 
 </manifest>

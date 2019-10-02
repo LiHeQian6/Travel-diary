@@ -11,17 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.project.li.travel_diary.Fragment.Findings;
 import com.project.li.travel_diary.Fragment.Footprint;
-import com.project.li.travel_diary.Fragment.Message;
+import com.project.li.travel_diary.Fragment.Myself;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +50,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         TabHost.TabSpec tabSpec3 = fragmentTabHost.newTabSpec("tag3")
                 .setIndicator(getTabSpecView("tag3",R.mipmap.myselfg,"个人"));
-        fragmentTabHost.addTab(tabSpec3, Message.class,null);
+        fragmentTabHost.addTab(tabSpec3, Myself.class,null);
 
         fragmentTabHost.setCurrentTab(1);
         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.colorMyBlue));
