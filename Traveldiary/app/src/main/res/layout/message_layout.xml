@@ -93,7 +93,7 @@
 
     <!--设置按钮-->
     <Button
-        android:id="@+id/btnSetting"
+        android:id="@+id/settingBtn"
         android:layout_marginTop="30dp"
         android:background="@drawable/settingbtn"
         android:layout_width="370dp"
