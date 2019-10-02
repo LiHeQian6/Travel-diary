@@ -42,19 +42,19 @@ public class MainPageActivity extends AppCompatActivity {
         fragmentTabHost.setup(this,getSupportFragmentManager(),android.R.id.tabcontent);
 
         TabHost.TabSpec tabSpec1 = fragmentTabHost.newTabSpec("tag1")
-                .setIndicator(getTabSpecView("tag1",R.drawable.footg,"足迹"));
+                .setIndicator(getTabSpecView("tag1",R.mipmap.footg,"足迹"));
         fragmentTabHost.addTab(tabSpec1, Footprint.class,null);
 
         TabHost.TabSpec tabSpec2 = fragmentTabHost.newTabSpec("tag2")
-                .setIndicator(getTabSpecView("tag2",R.drawable.fangda,"发现"));
+                .setIndicator(getTabSpecView("tag2",R.mipmap.fangda,"发现"));
 
         fragmentTabHost.addTab(tabSpec2, Findings.class,null);
 
         TabHost.TabSpec tabSpec3 = fragmentTabHost.newTabSpec("tag3")
-                .setIndicator(getTabSpecView("tag3",R.drawable.tipg,"消息"));
+                .setIndicator(getTabSpecView("tag3",R.mipmap.myselfg,"个人"));
         fragmentTabHost.addTab(tabSpec3, Message.class,null);
 
-        fragmentTabHost.setCurrentTab(2);
+        fragmentTabHost.setCurrentTab(1);
         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.colorMyBlue));
 
         fragmentTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -63,23 +63,23 @@ public class MainPageActivity extends AppCompatActivity {
                 textViewMap.get(tabId).setTextColor(getResources().getColor(R.color.colorMyBlue));
                 switch(tabId){
                     case "tag1":
-                        imageViewMap.get("tag1").setImageResource(R.drawable.foot);
-                        imageViewMap.get("tag2").setImageResource(R.drawable.fangdag);
-                        imageViewMap.get("tag3").setImageResource(R.drawable.tipg);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.foot);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.fangdag);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.myselfg);
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.colorMyGray));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.colorMyGray));
                         break;
                     case "tag2":
-                        imageViewMap.get("tag1").setImageResource(R.drawable.footg);
-                        imageViewMap.get("tag2").setImageResource(R.drawable.fangda);
-                        imageViewMap.get("tag3").setImageResource(R.drawable.tipg);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.footg);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.fangda);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.myselfg);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.colorMyGray));
                         textViewMap.get("tag3").setTextColor(getResources().getColor(R.color.colorMyGray));
                         break;
                     case "tag3":
-                        imageViewMap.get("tag1").setImageResource(R.drawable.footg);
-                        imageViewMap.get("tag2").setImageResource(R.drawable.fangdag);
-                        imageViewMap.get("tag3").setImageResource(R.drawable.tip);
+                        imageViewMap.get("tag1").setImageResource(R.mipmap.footg);
+                        imageViewMap.get("tag2").setImageResource(R.mipmap.fangdag);
+                        imageViewMap.get("tag3").setImageResource(R.mipmap.myself);
                         textViewMap.get("tag1").setTextColor(getResources().getColor(R.color.colorMyGray));
                         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.colorMyGray));
                         break;
