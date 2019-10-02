@@ -9,110 +9,104 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.TextView;
 
-public class ForgetPassActivity extends AppCompatActivity {
+public class ResetPassActivity extends AppCompatActivity {
 
-    private EditText edtEmailaddress;
-    private EditText edtVerifyCode;
-    private TextView btnGetVerifyCode;
-    private Button btnNext;
-    private CustomeOnClickListener onClickListener;
+    private EditText edtNewPass;
+    private EditText edtAgainPass;
+    private Button goLogin;
+    private String newPass;
+    private String againPass;
     private CustomeOnFocusListener onFocusListener;
-    private String emailAddress;
-    private String verifyCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forget_pass);
+        setContentView(R.layout.activity_reset_pass);
         setStatusBar();
         getViews();
         textChange();
         registLitener();
     }
-
-    /**
-     * 注册监听器
-     */
-    protected void registLitener(){
-        onClickListener = new CustomeOnClickListener();
-        onFocusListener = new CustomeOnFocusListener();
-        edtEmailaddress.setOnFocusChangeListener(onFocusListener);
-        edtVerifyCode.setOnFocusChangeListener(onFocusListener);
-        btnGetVerifyCode.setOnClickListener(onClickListener);
-    }
-
-    /**
-     * 文本监听
-     */
-    protected void textChange() {
-        edtEmailaddress.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                emailAddress = edtEmailaddress.getText().toString().trim();
-                verifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !verifyCode.equals("")){
-                    btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(ForgetPassActivity.this,ResetPassActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }else{
-                    btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                }
-            }
-        });
-        edtVerifyCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                emailAddress = edtEmailaddress.getText().toString().trim();
-                verifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !verifyCode.equals("")){
-                    btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(ForgetPassActivity.this,ResetPassActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                }else{
-                    btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                }
-            }
-        });
-    }
-
     /**
      * 获取控件ID
      */
     protected void getViews(){
-        edtEmailaddress = findViewById(R.id.edtEmailaddress);
-        edtVerifyCode = findViewById(R.id.edtVerifyCode);
-        btnGetVerifyCode = findViewById(R.id.textGetVerifyCode);
-        btnNext = findViewById(R.id.btnNext);
+        edtNewPass = findViewById(R.id.edtNewPass);
+        edtAgainPass = findViewById(R.id.edtAgainNewPass);
+        goLogin = findViewById(R.id.btnNext);
+    }
+
+    /**
+     * 文本改变监听
+     */
+    protected void textChange(){
+        edtNewPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                newPass = edtNewPass.getText().toString().trim();
+                againPass = edtAgainPass.getText().toString().trim();
+                if(!newPass.equals("") && !againPass.equals("")){
+                    goLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
+                    goLogin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            intent.setClass(ResetPassActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }else{
+                    goLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
+                }
+            }
+        });
+        edtAgainPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                newPass = edtNewPass.getText().toString().trim();
+                againPass = edtAgainPass.getText().toString().trim();
+                if(!newPass.equals("") && !againPass.equals("")){
+                    goLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
+                    goLogin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            intent.setClass(ResetPassActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }else{
+                    goLogin.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
+                }
+            }
+        });
+    }
+
+    /**
+     * 注册事件监听器
+     */
+    protected void registLitener(){
+        onFocusListener = new CustomeOnFocusListener();
+        edtNewPass.setOnFocusChangeListener(onFocusListener);
+        edtAgainPass.setOnFocusChangeListener(onFocusListener);
     }
 
     /**
@@ -127,23 +121,6 @@ public class ForgetPassActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * 点击事件
-     */
-    class CustomeOnClickListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.edtGetVerifyCode:
-                    break;
-            }
-        }
-    }
-
-    /**
-     * 文本焦点改变监听
-     */
     class CustomeOnFocusListener implements View.OnFocusChangeListener{
 
         @Override
@@ -151,16 +128,16 @@ public class ForgetPassActivity extends AppCompatActivity {
             switch(v.getId()){
                 case R.id.edtEmailaddress:
                     if(hasFocus){
-                        edtEmailaddress.setHint(null);
+                        edtNewPass.setHint(null);
                     }else{
-                        edtEmailaddress.setHint("请输入邮箱");
+                        edtNewPass.setHint("请输入新密码");
                     }
                     break;
                 case R.id.edtVerifyCode:
                     if(hasFocus){
-                        edtVerifyCode.setHint(null);
+                        edtAgainPass.setHint(null);
                     }else{
-                        edtVerifyCode.setHint("请输入验证码");
+                        edtAgainPass.setHint("请确认新密码");
                     }
                     break;
             }
