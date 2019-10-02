@@ -1,4 +1,4 @@
-package com.project.li.travel_diary;
+package com.project.li.travel_diary.Login;
 
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.project.li.travel_diary.R;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText edtEmailAddress;

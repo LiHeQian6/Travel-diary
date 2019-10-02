@@ -11,4 +11,5 @@
     <color name="registerBtnForCorlor">#1E90FF</color>
     <color name="editTextCorlor">#D3D3D3</color>
     <color name="cursorCorlor">#1E90FF</color>
+    <color name="settingCorlor">#ededed</color>
 </resources>

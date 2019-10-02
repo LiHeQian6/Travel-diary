@@ -19,19 +19,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ResetPassActivity"></activity>
+        <activity android:name=".Settings.ChangePassword" android:label="修改密码" android:theme="@style/settings"></activity>
+        <activity
+            android:name=".Settings.Setting"
+            android:label="设置"
+            android:theme="@style/settings"></activity>
+        <activity android:name=".Settings.SetName" android:label="修改昵称" android:theme="@style/settings"/>
+        <activity android:name=".Login.ResetPassActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="36c937eae67db76ca55ba96cf9008ec9" />
 
-        <activity android:name=".ForgetPassActivity" />
+        <activity android:name=".Login.ForgetPassActivity" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Login.RegisterActivity"
             android:label="账号注册"
-            android:theme="@style/customTextstyle"></activity>
+            android:theme="@style/customTextstyle" />
         <activity android:name=".MainPageActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
