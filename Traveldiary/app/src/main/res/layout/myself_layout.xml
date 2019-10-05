@@ -52,14 +52,10 @@
     <Button
         android:id="@+id/treebtn"
         android:background="@drawable/treebtn"
-        android:paddingLeft="40dp"
-        android:layout_marginTop="10dp"
         android:layout_width="350dp"
         android:layout_height="80dp"
-        android:drawableLeft="@mipmap/tree"
-        android:text="        留言树"
-        android:textSize="25dp"
-        android:gravity="center_vertical"/>
+        android:text="留言历史"
+        android:textSize="25dp" />
     <Button
         android:id="@+id/notibtn"
         android:background="@drawable/treebtn"
