@@ -11,17 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.project.li.travel_diary.Fragment.Findings;
 import com.project.li.travel_diary.Fragment.Footprint;
-import com.project.li.travel_diary.Fragment.Message;
+import com.project.li.travel_diary.Fragment.Myself;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import java.security.Permission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +50,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         TabHost.TabSpec tabSpec3 = fragmentTabHost.newTabSpec("tag3")
                 .setIndicator(getTabSpecView("tag3",R.mipmap.myselfg,"个人"));
-        fragmentTabHost.addTab(tabSpec3, Message.class,null);
+        fragmentTabHost.addTab(tabSpec3, Myself.class,null);
 
         fragmentTabHost.setCurrentTab(1);
         textViewMap.get("tag2").setTextColor(getResources().getColor(R.color.colorMyBlue));
@@ -117,42 +115,44 @@ public class MainPageActivity extends AppCompatActivity {
     }
     private void getDynamicPermission() {
         if (!EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_SETTINGS,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
-            EasyPermissions.requestPermissions(MainPageActivity.this, "APP将申请以下权限，请问是否允许？", 100,
+            EasyPermissions.requestPermissions(MainPageActivity.this, "APP将申请以下权限，请允许以下申请的权限，否则app功能无法正常使用！", 100,
                     Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_SETTINGS,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION);
         }
-        EasyPermissions.PermissionCallbacks permissionCallbacks = new EasyPermissions.PermissionCallbacks() {
-            @Override
-            public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
-            }
-
-            @Override
-            public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
-            }
-
-            @Override
-            public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-                Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                try {
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ArrayList<String> permissions = new ArrayList<>();
-        permissions.add(Manifest.permission.READ_PHONE_STATE);
-        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        permissionCallbacks.onPermissionsDenied(100,permissions);
+//        EasyPermissions.PermissionCallbacks permissionCallbacks = new EasyPermissions.PermissionCallbacks() {
+//            @Override
+//            public void onRequestPermissionsResult(int i, @NonNull String[] strings, @NonNull int[] ints) {
+//            }
+//
+//            @Override
+//            public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+//
+//            }
+//
+//            @Override
+//            public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+//                Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+//                Uri uri = Uri.fromParts("package", getPackageName(), null);
+//                intent.setData(uri);
+//                try {
+//                    startActivity(intent);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        ArrayList<String> permissions = new ArrayList<>();
+//        permissions.add(Manifest.permission.READ_PHONE_STATE);
+//        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+//        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+//        permissionCallbacks.onPermissionsDenied(100,permissions);
     }
 }

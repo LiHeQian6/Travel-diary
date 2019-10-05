@@ -7,11 +7,11 @@
     <LinearLayout
         android:orientation="horizontal"
         android:background="#F5F5F5"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="40dp"
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="#0000FF"/>
@@ -29,18 +29,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="孤独的小完能"
-                android:textStyle="bold"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 android:fontFamily="serif-monospace"/>
             <TextView
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textStyle="bold"
                 android:text="您已累计获赞：123"
                 android:textSize="20dp"/>
         </LinearLayout>
     </LinearLayout>
+
     <!--蓝色横线-->
     <TextView
         android:layout_width="match_parent"
@@ -48,14 +48,9 @@
         android:background="#0000FF"/>
 
 
-    <!--灰色横线-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#C0C0C0"/>
-
     <!--留言树-->
     <Button
+        android:id="@+id/treebtn"
         android:background="@drawable/treebtn"
         android:paddingLeft="40dp"
         android:layout_marginTop="10dp"
@@ -64,58 +59,55 @@
         android:drawableLeft="@mipmap/tree"
         android:text="        留言树"
         android:textSize="25dp"
-        android:textStyle="bold"
         android:gravity="center_vertical"/>
     <Button
+        android:id="@+id/notibtn"
         android:background="@drawable/treebtn"
         android:layout_marginTop="20dp"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:text="通知"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
     <Button
+        android:id="@+id/favobtn"
         android:background="@drawable/treebtn"
         android:layout_marginTop="5dp"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:text="我的收藏"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
     <Button
+        android:id="@+id/quesbtn"
         android:background="@drawable/treebtn"
         android:layout_marginTop="5dp"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:text="问题与反馈"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20dp" />
 
-    <!--设置按钮-->
-    <Button
-        android:id="@+id/settingBtn"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/settingbtn"
-        android:layout_width="370dp"
-        android:layout_height="50dp"
-        android:paddingLeft="30dp"
-        android:text="               设置"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:gravity="center_vertical"
-        android:drawableLeft="@mipmap/setting"/>
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--设置按钮-->
+        <Button
+            android:id="@+id/settingbtn"
+            android:background="@drawable/settingbtn"
+            android:layout_width="370dp"
+            android:layout_height="50dp"
+            android:text="设置"
+            android:textSize="20dp" />
 
-    <!--注销按钮-->
-    <Button
-        android:layout_marginTop="12dp"
-        android:background="@drawable/downbtn"
-        android:layout_width="370dp"
-        android:layout_height="50dp"
-        android:text="              注销登录"
-        android:textColor="#fff"
-        android:textSize="23dp"
-        android:textStyle="bold"
-        android:drawableLeft="@mipmap/down"
-        android:gravity="center_vertical"
-        android:paddingLeft="30dp"/>
+        <!--注销按钮-->
+        <Button
+            android:id="@+id/downbtn"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/downbtn"
+            android:layout_width="370dp"
+            android:layout_height="50dp"
+            android:text="注销登录"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+    </LinearLayout>
 </LinearLayout>
