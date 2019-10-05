@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/RegisterServlet?name="+name+"&&"+"password="+password+"&&"+"verifyCode="+verifyCode);
+                    URL url = new URL("http://"+LoginActivity.IPaddress+":8080/travel_diary/RegisterServlet?name="+name+"&&"+"password="+password+"&&"+"verifyCode="+verifyCode);
                     Log.e("url",name+password+verifyCode);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

@@ -73,7 +73,7 @@ public class ResetPassActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/ResetPasswordServlet?name="+name+"&&"+"newPassword="+newPassword);
+                    URL url = new URL("http://"+LoginActivity.IPaddress+":8080/travel_diary/ResetPasswordServlet?name="+name+"&&"+"newPassword="+newPassword);
                     Log.e("url",name+newPassword);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

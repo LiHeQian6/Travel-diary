@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private CustomeOnFocusListener onFocusListener;
     private Handler handler;
     private SharedPreferences pref;
+    public final static String IPaddress="47.94.247.44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/Login?name="+name+"&&"+"password="+password);
+                    URL url = new URL("http://"+IPaddress+":8080/travel_diary/Login?name="+name+"&&"+"password="+password);
                     Log.e("url","http://"+"192.168.1.101"+":8080/Travel_diary/Login?name="+name+"&&"+"password="+password);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();

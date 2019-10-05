@@ -70,7 +70,7 @@ public class ForgetPassActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/ForgetPasswordServlet?name="+name+"&&"+"verifyCode="+verifyCode);
+                    URL url = new URL("http://"+LoginActivity.IPaddress+":8080/travel_diary/ForgetPasswordServlet?name="+name+"&&"+"verifyCode="+verifyCode);
                     Log.e("url",name+verifyCode);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
