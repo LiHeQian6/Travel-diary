@@ -1,16 +1,30 @@
 package com.project.li.travel_diary.Login;
 
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.project.li.travel_diary.MainPageActivity;
 import com.project.li.travel_diary.R;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText edtEmailAddress;
@@ -19,12 +33,15 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtVerifyCode;
     private TextView edtgetVerifyCode;
     private Button btnNext;
+    private TextView noSame;
+    private TextView passwordLength;
     private String emailAddress;
     private String password;
     private String againPassword;
     private String VerifyCode;
     private CustomeOnFocusListener onFocusListener;
     private CustomeOnClickListener onclickListener;
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +51,54 @@ public class RegisterActivity extends AppCompatActivity {
         getView();
         textChange();
         registeListener();
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String info = (String) msg.obj;
+                if (info.equals("T")) {
+                    Intent intent = new Intent();
+                    intent.setClass(RegisterActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else if(info.equals("S")){
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "当前邮箱已被注册！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+                else {
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "注册失败！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+            }
+        };
+
     }
+
+    public void toRegister(final String name, final String password,final String verifyCode){
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/RegisterServlet?name="+name+"&&"+"password="+password+"&&"+"verifyCode="+verifyCode);
+                    Log.e("url",name+password+verifyCode);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String info = reader.readLine();
+                    Log.e("info",info);
+                    Message msg = Message.obtain();
+                    msg.obj = info;
+                    handler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     protected void registeListener(){
         onFocusListener = new CustomeOnFocusListener();
         onclickListener = new CustomeOnClickListener();
@@ -64,20 +128,25 @@ public class RegisterActivity extends AppCompatActivity {
                 password = edtPassword.getText().toString().trim();
                 againPassword = edtAgainPassword.getText().toString().trim();
                 VerifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !password.equals("") && !againPassword.equals("") && !VerifyCode.equals("")){
+                if(!emailAddress.equals("")
+                        && !password.equals("")
+                        && !againPassword.equals("")
+                        && !VerifyCode.equals("")
+                        && password.length()>=6
+                        && password.equals(againPassword)
+                        && VerifyCode.length()==4) {
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            emailAddress = edtEmailAddress.getText().toString().trim();
+                            password = edtPassword.getText().toString().trim();
+                            VerifyCode = edtVerifyCode.getText().toString().trim();
+                            toRegister(emailAddress,password,VerifyCode);
                         }
                     });
                 }else{
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    });
                 }
             }
         });
@@ -100,20 +169,30 @@ public class RegisterActivity extends AppCompatActivity {
                 password = edtPassword.getText().toString().trim();
                 againPassword = edtAgainPassword.getText().toString().trim();
                 VerifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !password.equals("") && !againPassword.equals("") && !VerifyCode.equals("")){
+                if(!password.equals("") && password.length()<6){
+                    passwordLength.setText("密码长度最低为6位");
+                }else{
+                    passwordLength.setText("");
+                }
+                if(!emailAddress.equals("")
+                        && !password.equals("")
+                        && !againPassword.equals("")
+                        && !VerifyCode.equals("")
+                        && password.length()>=6
+                        && password.equals(againPassword)
+                        && VerifyCode.length()==4){
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            emailAddress = edtEmailAddress.getText().toString().trim();
+                            password = edtPassword.getText().toString().trim();
+                            VerifyCode = edtVerifyCode.getText().toString().trim();
+                            toRegister(emailAddress,password,VerifyCode);
                         }
                     });
                 }else{
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    });
                 }
             }
         });
@@ -136,20 +215,30 @@ public class RegisterActivity extends AppCompatActivity {
                 password = edtPassword.getText().toString().trim();
                 againPassword = edtAgainPassword.getText().toString().trim();
                 VerifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !password.equals("") && !againPassword.equals("") && !VerifyCode.equals("")){
+                if(!emailAddress.equals("") && !password.equals("") && !againPassword.equals("") && !password.equals(againPassword)){
+                    noSame.setText("两次输入密码不一致！");
+                }else{
+                    noSame.setText("");
+                }
+                if(!emailAddress.equals("")
+                        && !password.equals("")
+                        && !againPassword.equals("")
+                        && !VerifyCode.equals("")
+                        && password.length()>=6
+                        && password.equals(againPassword)
+                        && VerifyCode.length()==4){
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            emailAddress = edtEmailAddress.getText().toString().trim();
+                            password = edtPassword.getText().toString().trim();
+                            VerifyCode = edtVerifyCode.getText().toString().trim();
+                            toRegister(emailAddress,password,VerifyCode);
                         }
                     });
                 }else{
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    });
                 }
             }
         });
@@ -172,20 +261,25 @@ public class RegisterActivity extends AppCompatActivity {
                 password = edtPassword.getText().toString().trim();
                 againPassword = edtAgainPassword.getText().toString().trim();
                 VerifyCode = edtVerifyCode.getText().toString().trim();
-                if(!emailAddress.equals("") && !password.equals("") && !againPassword.equals("") && !VerifyCode.equals("")){
+                if(!emailAddress.equals("")
+                        && !password.equals("")
+                        && !againPassword.equals("")
+                        && !VerifyCode.equals("")
+                        && password.length()>=6
+                        && password.equals(againPassword)
+                        && VerifyCode.length()==4){
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerforstyle));
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            emailAddress = edtEmailAddress.getText().toString().trim();
+                            password = edtPassword.getText().toString().trim();
+                            VerifyCode = edtVerifyCode.getText().toString().trim();
+                            toRegister(emailAddress,password,VerifyCode);
                         }
                     });
                 }else{
                     btnNext.setBackgroundDrawable(getResources().getDrawable(R.drawable.registerstyle));
-                    btnNext.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    });
                 }
             }
         });
@@ -197,6 +291,8 @@ public class RegisterActivity extends AppCompatActivity {
         edtVerifyCode = findViewById(R.id.edtVerifyCode);
         edtgetVerifyCode = findViewById(R.id.edtGetVerifyCode);
         btnNext = findViewById(R.id.btnNext);
+        noSame = findViewById(R.id.noSame);
+        passwordLength = findViewById(R.id.passwordLength);
     }
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

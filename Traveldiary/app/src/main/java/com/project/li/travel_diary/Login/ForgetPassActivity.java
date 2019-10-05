@@ -2,16 +2,28 @@ package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.li.travel_diary.R;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class ForgetPassActivity extends AppCompatActivity {
 
@@ -23,6 +35,7 @@ public class ForgetPassActivity extends AppCompatActivity {
     private CustomeOnFocusListener onFocusListener;
     private String emailAddress;
     private String verifyCode;
+    private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +44,49 @@ public class ForgetPassActivity extends AppCompatActivity {
         getViews();
         textChange();
         registLitener();
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String info = (String) msg.obj;
+                if (info.equals("T")) {
+                    Intent intent = new Intent();
+                    intent.putExtra("emailAddress",emailAddress);
+                    intent.setClass(ForgetPassActivity.this, ResetPassActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "没有此用户！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+            }
+        };
+
+    }
+
+    public void toResetPassword(final String name,final String verifyCode){
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+"192.168.1.101"+":8080/travel_diary/ForgetPasswordServlet?name="+name+"&&"+"verifyCode="+verifyCode);
+                    Log.e("url",name+verifyCode);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String info = reader.readLine();
+                    Log.e("info",info);
+                    Message msg = Message.obtain();
+                    msg.obj = info;
+                    handler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     /**
@@ -66,9 +122,9 @@ public class ForgetPassActivity extends AppCompatActivity {
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(ForgetPassActivity.this,ResetPassActivity.class);
-                            startActivity(intent);
+                            emailAddress = edtEmailaddress.getText().toString().trim();
+                            verifyCode = edtVerifyCode.getText().toString().trim();
+                            toResetPassword(emailAddress,verifyCode);
                         }
                     });
                 }else{
@@ -94,9 +150,9 @@ public class ForgetPassActivity extends AppCompatActivity {
                     btnNext.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setClass(ForgetPassActivity.this,ResetPassActivity.class);
-                            startActivity(intent);
+                            emailAddress = edtEmailaddress.getText().toString().trim();
+                            verifyCode = edtVerifyCode.getText().toString().trim();
+                            toResetPassword(emailAddress,verifyCode);
                         }
                     });
                 }else{
