@@ -27,14 +27,14 @@ import java.net.URLConnection;
 
 public class ForgetPassActivity extends AppCompatActivity {
 
-    private EditText edtEmailaddress;
-    private EditText edtVerifyCode;
-    private TextView btnGetVerifyCode;
-    private Button btnNext;
+    private EditText edtEmailaddress;//邮箱输入
+    private EditText edtVerifyCode;//验证码输入
+    private TextView btnGetVerifyCode;//点击获取验证码
+    private Button btnNext;//点击下一步跳转
     private CustomeOnClickListener onClickListener;
     private CustomeOnFocusListener onFocusListener;
-    private String emailAddress;
-    private String verifyCode;
+    private String emailAddress;//邮箱
+    private String verifyCode;//验证码
     private Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,11 @@ public class ForgetPassActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 向服务器发送数据并接收返回信息
+     * @param name
+     * @param verifyCode
+     */
     public void toResetPassword(final String name,final String verifyCode){
         new Thread() {
             @Override
@@ -101,7 +106,8 @@ public class ForgetPassActivity extends AppCompatActivity {
     }
 
     /**
-     * 文本监听
+     * 输入账号文本框监听器
+     * 监听文本内容改变，点击button传递参数，执行toLogin方法向服务器发送数据
      */
     protected void textChange() {
         edtEmailaddress.addTextChangedListener(new TextWatcher() {
@@ -173,7 +179,7 @@ public class ForgetPassActivity extends AppCompatActivity {
     }
 
     /**
-     * 改变标题栏即状态栏
+     * 改变标题栏及状态栏style
      */
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -185,7 +191,7 @@ public class ForgetPassActivity extends AppCompatActivity {
     }
 
     /**
-     * 点击事件
+     * 点击事件监听器
      */
     class CustomeOnClickListener implements View.OnClickListener{
 
@@ -199,7 +205,7 @@ public class ForgetPassActivity extends AppCompatActivity {
     }
 
     /**
-     * 文本焦点改变监听
+     * 是否获得焦点监听器，用于监听输入框焦点改变并改变输入框hint内容
      */
     class CustomeOnFocusListener implements View.OnFocusChangeListener{
 
