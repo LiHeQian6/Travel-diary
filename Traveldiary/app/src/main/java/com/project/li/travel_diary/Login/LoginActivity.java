@@ -88,6 +88,11 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
+    /**
+     * 向服务器发送数据并接收返回信息
+     * @param name
+     * @param password
+     */
     public void toLogin(final String name, final String password){
         new Thread() {
             @Override
@@ -122,10 +127,13 @@ public class LoginActivity extends AppCompatActivity {
         password.setOnFocusChangeListener(onFocusListener);
         forgetPass.setOnClickListener(listener);
     }
+
+    /**
+     * 输入账号文本框监听器
+     * 监听文本内容改变，点击button传递参数，执行toLogin方法向服务器发送数据
+     */
     protected void textChange(){
-        /**
-         * 输入账号文本框监听器
-         */
+
         Emaiaddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -201,6 +209,9 @@ public class LoginActivity extends AppCompatActivity {
         forgetPass = findViewById(R.id.btnForgetPass);
     }
 
+    /**
+     * 调整标题栏与状态栏style
+     */
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
@@ -211,7 +222,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * 监听器
+     * 点击事件监听器
      */
     class CustomeOnClickListener implements View.OnClickListener{
 
@@ -232,6 +243,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 是否获得焦点监听器，用于监听输入框焦点改变并改变输入框hint内容
+     */
     class CustomeOnFocusListener implements View.OnFocusChangeListener{
 
         @Override

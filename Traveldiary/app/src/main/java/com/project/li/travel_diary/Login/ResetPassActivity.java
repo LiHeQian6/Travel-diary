@@ -27,13 +27,13 @@ import java.net.URLConnection;
 
 public class ResetPassActivity extends AppCompatActivity {
 
-    private EditText edtNewPass;
-    private EditText edtAgainPass;
-    private TextView passwordLength;
-    private TextView isSame;
-    private Button goLogin;
-    private String newPass;
-    private String againPass;
+    private EditText edtNewPass;//新密码编辑框
+    private EditText edtAgainPass;//重复新密码编辑框
+    private TextView passwordLength;//提示密码长度文本框
+    private TextView isSame;//提示两次输入密码相同文本框
+    private Button goLogin;//下一步button
+    private String newPass;//新密码
+    private String againPass;//重复新密码
     private CustomeOnFocusListener onFocusListener;
     private Handler handler;
     private String emailAddress;
@@ -68,6 +68,11 @@ public class ResetPassActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 向服务器发送新密码数据
+     * @param name
+     * @param newPassword
+     */
     public void toResetPassword(final String name,final String newPassword){
         new Thread() {
             @Override
@@ -104,7 +109,8 @@ public class ResetPassActivity extends AppCompatActivity {
     }
 
     /**
-     * 文本改变监听
+     * 输入文本框监听器
+     * 监听文本内容改变，点击button传递参数，执行toLogin方法向服务器发送数据
      */
     protected void textChange(){
         edtNewPass.addTextChangedListener(new TextWatcher() {
@@ -193,6 +199,9 @@ public class ResetPassActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 是否获得焦点监听器，用于监听输入框焦点改变并改变输入框hint内容
+     */
     class CustomeOnFocusListener implements View.OnFocusChangeListener{
 
         @Override

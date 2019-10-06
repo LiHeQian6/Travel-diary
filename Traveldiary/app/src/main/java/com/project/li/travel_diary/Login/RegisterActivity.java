@@ -27,18 +27,18 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class RegisterActivity extends AppCompatActivity {
-    private EditText edtEmailAddress;
-    private EditText edtPassword;
-    private EditText edtAgainPassword;
-    private EditText edtVerifyCode;
-    private TextView edtgetVerifyCode;
-    private Button btnNext;
-    private TextView noSame;
-    private TextView passwordLength;
-    private String emailAddress;
-    private String password;
-    private String againPassword;
-    private String VerifyCode;
+    private EditText edtEmailAddress;//邮箱编辑框
+    private EditText edtPassword;//密码编辑框
+    private EditText edtAgainPassword;//再次输入密码编辑框
+    private EditText edtVerifyCode;//验证码输入框
+    private TextView edtgetVerifyCode;//获取验证码Button
+    private Button btnNext;//下一步按钮
+    private TextView noSame;//提示密码是否相同文本框
+    private TextView passwordLength;//提示密码最小长度
+    private String emailAddress;//邮箱
+    private String password;//密码
+    private String againPassword;//再次输入的密码
+    private String VerifyCode;//验证码
     private CustomeOnFocusListener onFocusListener;
     private CustomeOnClickListener onclickListener;
     private Handler handler;
@@ -75,6 +75,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 向服务器发送注册信息
+     * @param name
+     * @param password
+     * @param verifyCode
+     */
     public void toRegister(final String name, final String password,final String verifyCode){
         new Thread() {
             @Override
@@ -99,6 +105,9 @@ public class RegisterActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * 注册监听器
+     */
     protected void registeListener(){
         onFocusListener = new CustomeOnFocusListener();
         onclickListener = new CustomeOnClickListener();
@@ -108,6 +117,11 @@ public class RegisterActivity extends AppCompatActivity {
         edtVerifyCode.setOnFocusChangeListener(onFocusListener);
         edtgetVerifyCode.setOnClickListener(onclickListener);
     }
+
+    /**
+     * 输入文本框监听器
+     * 监听文本内容改变，点击button传递参数，执行toLogin方法向服务器发送数据
+     */
     protected void textChange(){
         /**
          * 输入账号文本框监听器
@@ -284,6 +298,10 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * 获取控件ID
+     */
     protected void getView(){
         edtEmailAddress = findViewById(R.id.edtEmailaddress);
         edtPassword = findViewById(R.id.edtPassword);
@@ -294,6 +312,10 @@ public class RegisterActivity extends AppCompatActivity {
         noSame = findViewById(R.id.noSame);
         passwordLength = findViewById(R.id.passwordLength);
     }
+
+    /**
+     * 调整状态栏和标题栏style
+     */
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
@@ -303,6 +325,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 点击事件监听器
+     */
     class CustomeOnClickListener implements View.OnClickListener{
 
         @Override
@@ -315,6 +340,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 是否获得焦点监听器，用于监听输入框焦点改变并改变输入框hint内容
+     */
     class CustomeOnFocusListener implements View.OnFocusChangeListener{
 
         @Override
