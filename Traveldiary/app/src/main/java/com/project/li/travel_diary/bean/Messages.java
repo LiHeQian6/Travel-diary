@@ -15,8 +15,9 @@ public class Messages implements Serializable{
     private int id;
     private String title;
     private String content;
-    private LatLng lng;
-    private Date date;
+    private Double lng;
+    private Double lat;
+    private String date;
     private String user;
     private String address;
     private int likeNum;
@@ -24,11 +25,12 @@ public class Messages implements Serializable{
     public Messages() {
     }
 
-    public Messages(int id,String title, String content, LatLng lng, Date date, String user, String address, int likeNum) {
+    public Messages(int id, String title, String content, Double lng, Double lat, String date, String user, String address, int likeNum) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.lng = lng;
+        this.lat = lat;
         this.date = date;
         this.user = user;
         this.address = address;
@@ -67,19 +69,27 @@ public class Messages implements Serializable{
         this.content = content;
     }
 
-    public LatLng getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(LatLng lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 
-    public Date getDate() {
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -99,7 +109,6 @@ public class Messages implements Serializable{
         this.likeNum = likeNum;
     }
 
-    @NonNull
     @Override
     public String toString() {
         return "Messages{" +
@@ -107,11 +116,11 @@ public class Messages implements Serializable{
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", lng=" + lng +
-                ", date=" + date +
+                ", lat=" + lat +
+                ", date='" + date + '\'' +
                 ", user='" + user + '\'' +
                 ", address='" + address + '\'' +
                 ", likeNum=" + likeNum +
                 '}';
     }
-
 }

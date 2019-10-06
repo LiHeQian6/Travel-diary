@@ -1,71 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.project.li.travel_diary">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.project.li.travel_diary">
+
     <!-- 允许程序打开网络套接字 -->
-    <uses-permission android:name="android.permission.INTERNET"/> <!-- 允许程序设置内置sd卡的写权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 允许程序获取网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 允许程序访问WiFi网络信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 允许程序读写手机状态和身份 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- 用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/> <!-- 用于申请调用A-GPS模块 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/> <!-- 用于申请获取蓝牙信息进行室内定位 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="且行且记"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:usesCleartextTraffic="true"
-            tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ShowMessageActivity">
-        </activity>
-        <activity android:name=".AddMessageActivity">
-        </activity>
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="且行且记"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ShowMessageActivity"></activity>
+        <activity android:name=".AddMessageActivity"></activity>
         <activity
-                android:name=".Settings.ChangePassword"
-                android:label="修改密码"
-                android:theme="@style/settings"/>
+            android:name=".Settings.ChangePassword"
+            android:label="修改密码"
+            android:theme="@style/settings" />
         <activity
-                android:name=".Settings.Setting"
-                android:label="设置"
-                android:theme="@style/settings"/>
+            android:name=".Settings.Setting"
+            android:label="设置"
+            android:theme="@style/settings" />
         <activity
-                android:name=".Settings.SetName"
-                android:label="修改昵称"
-                android:theme="@style/settings"/>
-        <activity android:name=".Login.ResetPassActivity"/>
+            android:name=".Settings.SetName"
+            android:label="修改昵称"
+            android:theme="@style/settings" />
+        <activity android:name=".Login.ResetPassActivity" />
 
         <meta-data
-                android:name="com.amap.api.v2.apikey"
-                android:value="36c937eae67db76ca55ba96cf9008ec9"/>
+            android:name="com.amap.api.v2.apikey"
+            android:value="36c937eae67db76ca55ba96cf9008ec9" />
 
-        <activity android:name=".Login.ForgetPassActivity"/>
+        <activity android:name=".Login.ForgetPassActivity" />
         <activity
-                android:name=".Login.RegisterActivity"
-                android:label="账号注册"
-                android:theme="@style/customTextstyle"/>
-        <activity android:name=".MainPageActivity"/>
+            android:name=".Login.RegisterActivity"
+            android:label="账号注册"
+            android:theme="@style/customTextstyle" />
+        <activity android:name=".MainPageActivity" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name="com.amap.api.location.APSService" />
 
         <activity
-                android:name=".MessageTree.MessageTree"
-                android:label="留言记录"
-                android:theme="@style/settings"/>
+            android:name=".MessageTree.MessageTree"
+            android:label="留言记录"
+            android:theme="@style/settings" />
+        <activity
+            android:name=".MessageTree.EditPage"
+            android:label="编辑留言"
+            android:theme="@style/settings">
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,11 @@
 package com.project.li.travel_diary.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,19 +27,51 @@ import com.project.li.travel_diary.AddMessageActivity;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.ShowMessageActivity;
 import com.project.li.travel_diary.bean.Messages;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.Serializable;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Findings extends Fragment {
     private TextureMapView mapView;
     private AMap map;
     private Marker clickMarker;
     private Button add;
+    private List<Messages> list = new ArrayList();
     private AMapLocationClient mLocationClient;
     private LatLng latLng;
-    private Date date;
+    private String date;
     private String address;
+    @SuppressLint("HandlerLeak")
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 100 :
+                    list.clear();
+                    list.addAll((List) msg.obj);
+                    break;
+                case 101 :
+                    if (!((String)msg.obj).equals("null")){
+                        messages.setId((int)msg.obj);
+                        list.add(messages);
+                        String content = messages.getContent();
+                        addMarker(new LatLng(messages.getLat(),messages.getLng()),messages.getTitle(), content);
+                    }
+                    break;
+            }
+        }
+    };
+    private Messages messages;
 
     @Nullable
     @Override
@@ -74,8 +106,10 @@ public class Findings extends Fragment {
                 latLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
                 map.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
                 Log.e("坐标",aMapLocation.getLatitude()+","+aMapLocation.getLongitude());
-                date = new Date(aMapLocation.getTime());
-                Log.e("date",date.toString());
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date d = new Date(aMapLocation.getTime());
+                date=df.format(d);
+                Log.e("date",date);
                 address=aMapLocation.getAddress();
                 Log.e("address",address);
             }
@@ -83,6 +117,8 @@ public class Findings extends Fragment {
         //视角初始化
         mLocationClient.startLocation();
         //初始化数据
+        //getFootPrint();
+        //setMarker();
         addMarker(new LatLng(34.341568, 108.940174),"西安","一起来啊！");
         //添加数据
         add.setOnClickListener(new View.OnClickListener() {
@@ -123,20 +159,71 @@ public class Findings extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==100&&resultCode==101){
-            Messages messages= (Messages) data.getSerializableExtra("msg");
-            messages.setDate(date);
-            messages.setLng(latLng);
-            messages.setAddress(address);
-            //发送数据到后台
-            String content = messages.getContent();
-            addMarker(messages.getLng(),messages.getTitle(), content.length()>10?content.substring(0,10)+"...":content);
+    private void setMarker() {
+        for(int i=0;i<list.size();i++){
+            Messages messages = list.get(i);
+            addMarker(new LatLng(messages.getLat(),messages.getLng()),messages.getTitle(),messages.getContent());
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==100&&resultCode==101){
+            messages= (Messages) data.getSerializableExtra("msg");
+            messages.setDate(date);
+            messages.setLat(latLng.latitude);
+            messages.setLng(latLng.longitude);
+            messages.setAddress(address);
+            //发送数据到后台
+            addMessage(messages);
+        }
+    }
+
+    private void addMessage(Messages msg) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id",-1);
+            jsonObject.put("title",msg.getTitle());
+            jsonObject.put("content",msg.getContent());
+            jsonObject.put("address",msg.getAddress());
+            jsonObject.put("lng",msg.getLng());
+            jsonObject.put("date",msg.getDate());
+            jsonObject.put("user",msg.getUser());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String msgJSON = jsonObject.toString();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/AddMessageServlet");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoOutput(true);
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestProperty("charset", "utf-8");
+                    OutputStream stream = conn.getOutputStream();
+                    stream.write(msgJSON.getBytes());
+                    stream.close();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String jsonString = reader.readLine();
+                    Message message = new Message();
+                    message.what = 101;
+                    message.obj =jsonString;
+                    handler.sendMessage(message);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     private void addMarker(LatLng lng, String title, String content){
+        content = content.length()>10?content.substring(0,10)+"...":content;
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(lng);
         markerOption.title(title).snippet(content);
@@ -188,4 +275,45 @@ public class Findings extends Fragment {
         }
         mLocationClient = null;
     }
+
+    public void getFootPrint() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/FootPrintServlet");
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String info = reader.readLine();
+                    List list = new ArrayList();
+                    try {
+                        JSONArray array = new JSONArray(info);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            Messages messages = new Messages();
+                            messages.setId(jsonObject.getInt("id"));
+                            messages.setLikeNum(jsonObject.getInt("likeNum"));
+                            messages.setTitle(jsonObject.getString("title"));
+                            messages.setContent(jsonObject.getString("content"));
+                            messages.setAddress(jsonObject.getString("address"));
+                            messages.setLng(jsonObject.getDouble("lng"));
+                            messages.setLat(jsonObject.getDouble("lat"));
+                            messages.setDate(jsonObject.getString("date"));
+                            messages.setUser(jsonObject.getString("user"));
+                        }
+                        Message message = new Message();
+                        message.what = 100;
+                        message.obj = list;
+                        handler.sendMessage(message);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 }
