@@ -3,36 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
     <LinearLayout
         android:id="@+id/message_layout"
         android:layout_marginTop="5dp"
         android:background="@drawable/messagestyle"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/message_title"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/locate"/>
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/location"
-                android:layout_marginTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:text="拉斯维加斯"/>
-        </LinearLayout>
+            android:textColor="#000000"
+            android:textSize="20dp" />
         <TextView
             android:layout_width="150dp"
             android:layout_height="1dp"
@@ -42,19 +28,40 @@
             android:id="@+id/message"
             android:layout_gravity="center_horizontal"
             android:layout_width="350dp"
-            android:layout_height="70dp"
+            android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="18dp"
-            android:text="景色优美！"/>
+            android:textSize="18dp" />
         <TextView
-            android:id="@+id/leavedate"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:text="2019.10.5"/>
+            android:layout_width="350dp"
+            android:layout_height="1dp"
+            android:background="#DCDCDC"
+            android:layout_gravity="center_horizontal"/>
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/locate"/>
+            <TextView
+                android:id="@+id/location"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="120dp"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/leavedate"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -76,7 +83,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="666"
                 android:textSize="18dp"/>
             <ImageView
                 android:id="@+id/rewrite"
@@ -94,95 +100,5 @@
                 android:layout_height="30dp" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/message_layout_ed"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/messagestyle"
-        android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/locate"/>
-            <TextView
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/location_ed"
-                android:layout_marginTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000000"
-                android:textSize="20dp"
-                android:text="拉斯维加斯"/>
-        </LinearLayout>
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="1dp"
-            android:background="#DCDCDC"
-            android:layout_gravity="center_horizontal"/>
-        <EditText
-            android:id="@+id/message_ed"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="350dp"
-            android:layout_height="70dp"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:text="景色优美！"/>
-        <TextView
-            android:id="@+id/leavedate_ed"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:textColor="#000000"
-            android:textSize="18dp"
-            android:text="2019.10.5"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#C0C0C0"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/prf"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <TextView
-                android:id="@+id/finger_ed"
-                android:textColor="#000"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="666"
-                android:textSize="18dp"/>
-            <ImageView
-                android:id="@+id/save"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/save"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-            <ImageView
-                android:id="@+id/trash_ed"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/trash"
-                android:layout_width="30dp"
-                android:layout_height="30dp" />
-        </LinearLayout>
-    </LinearLayout>
+
 </LinearLayout>

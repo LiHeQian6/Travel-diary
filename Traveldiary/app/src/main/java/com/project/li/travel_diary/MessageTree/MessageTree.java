@@ -1,10 +1,13 @@
 package com.project.li.travel_diary.MessageTree;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -17,12 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.login.LoginException;
+
 public class MessageTree extends AppCompatActivity {
     private List<Map<String,String>> dataSource;
     private ListView listView;
     private TreeAdapter treeAdapter;
-    private int displayWidth;
-    private int displayHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,16 +35,31 @@ public class MessageTree extends AppCompatActivity {
 
 
         dataSource = new ArrayList<>();
-        Map<String,String> item = new HashMap<>();
-        item.put("leavedate","2019.10.2");
-        item.put("location","拉斯维加斯");
-        item.put("message","哈哈哈哈哈哈哈哈哈哈");
-        item.put("finger","456");
-        dataSource.add(item);
+        for(int i=0;i<=4;i++){
+            Map<String,String> item = new HashMap<>();
+            item.put("title","我是标题"+i);
+            item.put("leavedate","2019.10.2");
+            item.put("location","拉斯维加斯");
+            item.put("message","哈哈哈哈哈哈哈哈哈哈");
+            item.put("finger","456");
+            dataSource.add(item);
+        }
         listView = findViewById(R.id.list_item);
         treeAdapter = new TreeAdapter(this,dataSource,R.layout.tree_item);
         listView.setAdapter(treeAdapter);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == 100 && resultCode == 200){
+            dataSource = (List<Map<String,String>>)data.getSerializableExtra("dataSource");
+            Log.e("title",dataSource.get(0).get("title"));
+            dataSource.remove(dataSource.size()-1);
+            listView = findViewById(R.id.list_item);
+            treeAdapter = new TreeAdapter(this,dataSource,R.layout.tree_item);
+            listView.setAdapter(treeAdapter);
+        }
     }
 
     protected void setStatusBar() {
