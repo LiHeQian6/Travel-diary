@@ -45,7 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     private CustomeOnFocusListener onFocusListener;
     private Handler handler;
     private SharedPreferences pref;
-    public final static String IPaddress="47.94.247.44";
+    private SharedPreferences prefChange;
+    public final static String IPaddress="192.168.1.101";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,9 @@ public class LoginActivity extends AppCompatActivity {
         textChange();
         registLitener();
         pref = getSharedPreferences("data", MODE_PRIVATE);
-        if(!pref.getString("name","").equals("") && !pref.getString("password","").equals("")){
-//            emaiaddress = pref.getString("name","");
-//            pass = pref.getString("password","");
-//            toLogin(emaiaddress,pass);
+        prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
+        if(pref.getString("name","").equals(prefChange.getString("name",""))
+                && pref.getString("password","").equals(prefChange.getString("password",""))){
             Intent intent = new Intent();
             intent.setClass(LoginActivity.this, MainPageActivity.class);
             startActivity(intent);
@@ -73,9 +73,13 @@ public class LoginActivity extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor1 = getSharedPreferences("dataChange", MODE_PRIVATE).edit();
                     editor.putString("name", emaiaddress);
                     editor.putString("password", pass);
+                    editor1.putString("name",emaiaddress);
+                    editor1.putString("password",pass);
                     editor.commit();
+                    editor1.commit();
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, MainPageActivity.class);
                     startActivity(intent);
