@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.li.travel_diary.Login.LoginActivity;
@@ -33,11 +34,16 @@ public class Myself extends Fragment {
     private Button quesBtn;
     private Button settingBtn;
     private Button downBtn;
+    private TextView nickname;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.myself_layout,container,false);
         getButtons(view);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", MODE_PRIVATE);
+        nickname.setText(sharedPreferences.getString("nickname",""));
+
         registLitener();
         settingScreen();
 
@@ -82,7 +88,7 @@ public class Myself extends Fragment {
         }
     }
 
-    //获取button控件
+    //获取视图控件
     private void getButtons(View view) {
         treeBtn = view.findViewById(R.id.treebtn);
         notiBtn = view.findViewById(R.id.notibtn);
@@ -90,6 +96,7 @@ public class Myself extends Fragment {
         quesBtn = view.findViewById(R.id.quesbtn);
         settingBtn = view.findViewById(R.id.settingbtn);
         downBtn = view.findViewById(R.id.downbtn);
+        nickname = view.findViewById(R.id.nickname);
     }
 
     //绑定监听器
