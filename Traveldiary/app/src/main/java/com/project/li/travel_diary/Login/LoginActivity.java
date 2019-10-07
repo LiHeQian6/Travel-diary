@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
-    public final static String IPaddress="192.168.1.101";
+    public final static String IPaddress="47.94.247.44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         registLitener();
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
-        if(pref.getString("name","").equals(prefChange.getString("name",""))
+        if(!pref.getString("name","").equals("") && pref.getString("name","").equals(prefChange.getString("name",""))
                 && pref.getString("password","").equals(prefChange.getString("password",""))){
             Intent intent = new Intent();
             intent.setClass(LoginActivity.this, MainPageActivity.class);
