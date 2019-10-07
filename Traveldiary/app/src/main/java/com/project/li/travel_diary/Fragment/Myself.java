@@ -67,9 +67,7 @@ public class Myself extends Fragment {
                     Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.downbtn:
-                    Intent intent3 = new Intent();
-                    intent3.setClass(getContext(), LoginActivity.class);
-                    startActivity(intent3);
+
                     break;
             }
 
