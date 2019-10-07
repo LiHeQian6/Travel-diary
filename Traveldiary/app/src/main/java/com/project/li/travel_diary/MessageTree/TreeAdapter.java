@@ -121,13 +121,13 @@ public class TreeAdapter extends BaseAdapter {
         return convertView;
     }
 
-    //向服务器发送数据,返回用户的所有留言
+    //删除用户所选择的留言，并返回值
     public void deleteMyLeaveMessageHistory(final int id) {
         new Thread() {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.1.101" /*+ getResources().getString(R.string.IP)*/ + ":8080/travel_diary/DeleteMessageServlet?id="+id);
+                    URL url = new URL("http://" + MessageTree.IPaddress + ":8080/travel_diary/DeleteMessageServlet?id="+id);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
