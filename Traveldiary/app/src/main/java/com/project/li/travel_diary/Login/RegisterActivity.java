@@ -67,6 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }else if(info.equals("S")){
                     Toast toastTip = Toast.makeText(RegisterActivity.this, "当前邮箱已被注册！", Toast.LENGTH_LONG);
                     toastTip.show();
+                }else if(info.equals("N")){
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请输入！", Toast.LENGTH_LONG);
+                    toastTip.show();
                 }
                 else {
                     Toast toastTip = Toast.makeText(RegisterActivity.this, "注册失败！", Toast.LENGTH_LONG);
@@ -369,7 +372,7 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.edtGetVerifyCode:
-
+                    toRegister(emailAddress,password,VerifyCode);
                     break;
             }
         }
