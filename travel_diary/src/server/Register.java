@@ -12,6 +12,8 @@ package server;
 
 import java.sql.SQLException;
 
+import util.EmailUtil;
+
 /**
      * @ClassName: Register
      * @Description: ×¢²áÕËºÅ
@@ -22,7 +24,8 @@ import java.sql.SQLException;
 
 public class Register {
 	public boolean registerUser(String userName,String Password,String verifyCode) {
-		String sendVerifyCode="1234";
+//		String sendVerifyCode="1234";
+		String sendVerifyCode=EmailUtil.getCode();
 		dao.UpDataMessage addmessage = new dao.UpDataMessage();
 		try {
 			addmessage.getConnection();

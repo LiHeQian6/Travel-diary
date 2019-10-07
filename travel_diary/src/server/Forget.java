@@ -12,6 +12,8 @@ package server;
 
 import java.sql.SQLException;
 
+import util.EmailUtil;
+
 /**
      * @ClassName: Forget
      * @Description: TODO(这里用一句话描述这个类的作用)
@@ -22,7 +24,7 @@ import java.sql.SQLException;
 
 public class Forget {
 	private String[] Message;
-	private String sendVerifyCode = "1234";
+	private String sendVerifyCode = EmailUtil.getCode();
 	public boolean ifSame(String userName,String verifyCode) {
 		dao.getUserMessage isName = new dao.getUserMessage();
 		try {

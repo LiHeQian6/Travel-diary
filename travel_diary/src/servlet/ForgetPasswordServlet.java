@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import util.EmailUtil;
+
 /**
  * Servlet implementation class ForgetPasswordServlet
  */
@@ -34,12 +36,18 @@ public class ForgetPasswordServlet extends HttpServlet {
 		String nameString = request.getParameter("name");
 		String verifyCode = request.getParameter("verifyCode"); 
 		System.out.println(nameString+"  "+verifyCode);
-		if(forget.ifSame(nameString,verifyCode)) {
-			writer.write("T");
-			System.out.println("验证成功！");
+		if("".equals(verifyCode)) {
+			EmailUtil.sendMail(nameString);
+			writer.write("N");
+			System.out.println("请输入验证码");	
 		}else {
-			writer.write("Nobody");
-			System.out.println("查无此人");
+			if(forget.ifSame(nameString,verifyCode)) {
+				writer.write("T");
+				System.out.println("验证成功！");
+			}else {
+				writer.write("Nobody");
+				System.out.println("查无此人");
+			}
 		}
 	}
 

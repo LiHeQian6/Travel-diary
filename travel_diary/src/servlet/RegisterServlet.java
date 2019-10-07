@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import server.Login;
+import util.EmailUtil;
 
 /**
  * Servlet implementation class RegisterServlet
@@ -42,12 +43,26 @@ public class RegisterServlet extends HttpServlet {
 			System.out.println("ÖØ¸´");
 			return;
 		}
-		if(register.registerUser(nameString, passString,verifyCode)) {
-			writer.write("T");
-			System.out.println("×¢²á³É¹¦");
+//		if(register.registerUser(nameString, passString,verifyCode)) {
+//			writer.write("T");
+//			System.out.println("×¢²á³É¹¦");
+//		}else {
+//			writer.write("F");
+//			System.out.println("×¢²áÊ§°Ü£¡");
+//		}
+		if("".equals(verifyCode)) {
+			EmailUtil.sendMail(nameString);
+			writer.write("N");
+			System.out.println("ÇëÊäÈëÑéÖ¤Âë");
+			
 		}else {
-			writer.write("F");
-			System.out.println("×¢²áÊ§°Ü£¡");
+			if(register.registerUser(nameString, passString,verifyCode)) {
+				writer.write("T");
+				System.out.println("×¢²á³É¹¦");
+			}else {
+				writer.write("F");
+				System.out.println("×¢²áÊ§°Ü£¡");
+			}
 		}
 	}
 
