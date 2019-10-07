@@ -53,10 +53,11 @@ public class SetName extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                    editor.putString("nickname", newname);
+                    editor.putString("nickName", newname);
                     editor.commit();
                     Toast toastTip = Toast.makeText(SetName.this, "修改成功！", Toast.LENGTH_LONG);
                     toastTip.show();
+                    finish();
                 } else {
                     Toast toastTip = Toast.makeText(SetName.this, "修改失败！", Toast.LENGTH_LONG);
                     toastTip.show();

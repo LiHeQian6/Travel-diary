@@ -35,6 +35,8 @@ public class Myself extends Fragment {
     private Button settingBtn;
     private Button downBtn;
     private TextView nickname;
+    private Boolean up = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,12 +44,28 @@ public class Myself extends Fragment {
         getButtons(view);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", MODE_PRIVATE);
-        nickname.setText(sharedPreferences.getString("nickname",""));
+        nickname.setText(sharedPreferences.getString("nickName",""));
 
         registLitener();
         settingScreen();
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        up = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(up){
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", MODE_PRIVATE);
+            nickname.setText(sharedPreferences.getString("nickName",""));
+        }
+        up = false;
     }
 
     //注册监听器
