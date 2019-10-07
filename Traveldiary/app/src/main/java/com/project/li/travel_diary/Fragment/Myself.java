@@ -73,9 +73,7 @@ public class Myself extends Fragment {
                     SharedPreferences.Editor editor1 = getContext().getSharedPreferences("dataChange", MODE_PRIVATE).edit();
                     editor1.putString("password", "");
                     editor1.commit();
-                    Intent intent3 = new Intent();
-                    intent3.setClass(getContext(), LoginActivity.class);
-                    startActivity(intent3);
+                    getActivity().finish();
                     break;
             }
 

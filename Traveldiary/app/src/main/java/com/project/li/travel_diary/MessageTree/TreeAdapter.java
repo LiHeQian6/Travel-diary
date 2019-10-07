@@ -2,6 +2,8 @@ package com.project.li.travel_diary.MessageTree;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,10 +14,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.li.travel_diary.R;
+import com.project.li.travel_diary.bean.Messages;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +41,21 @@ public class TreeAdapter extends BaseAdapter {
     private TextView location; //留言记录文字框地点
     private TextView leaveDate; //留言记录文字框时间
     private TextView finger; //留言记录点赞数
+    private int positionQ;
+
+    private Handler handlerDelete = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if((msg.obj+"").equals("true")){
+                Toast.makeText((MessageTree)context,"删除成功！",Toast.LENGTH_SHORT).show();
+                dataSource.remove(positionQ);
+                notifyDataSetChanged();
+            }else{
+                Toast.makeText((MessageTree)context,"删除失败！",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
     // 声明列表项中的控件
     public TreeAdapter(Context context, List<Map<String, String>> dataSource,
                          int item_layout_id) {
@@ -70,21 +98,48 @@ public class TreeAdapter extends BaseAdapter {
         rewrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(context,EditPage.class);
-                intent.putExtra("dataSource",(Serializable) dataSource);
-                intent.putExtra("position",position);
-                ((MessageTree)context).startActivityForResult(intent,100);
+                new Thread(){
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent();
+                        intent.setClass(context,EditPage.class);
+                        intent.putExtra("dataSource",(Serializable) dataSource);
+                        intent.putExtra("position",position);
+                        ((MessageTree)context).startActivityForResult(intent,100);
+                    }
+                }.start();
             }
         });
         trash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataSource.remove(position);
-                notifyDataSetChanged();
+                positionQ = position;
+                deleteMyLeaveMessageHistory(Integer.parseInt(dataSource.get(position).get("id")));
             }
         });
 
         return convertView;
+    }
+
+    //向服务器发送数据,返回用户的所有留言
+    public void deleteMyLeaveMessageHistory(final int id) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://192.168.1.101" /*+ getResources().getString(R.string.IP)*/ + ":8080/travel_diary/DeleteMessageServlet?id="+id);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String returnResult = reader.readLine();
+                    Message message = new Message();
+                    message.what = 300;
+                    message.obj = returnResult;
+                    handlerDelete.sendMessage(message);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }
