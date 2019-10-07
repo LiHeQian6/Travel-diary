@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         registLitener();
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
-        if(pref.getString("name","").equals(prefChange.getString("name",""))
+        if(!pref.getString("name","").equals("") && pref.getString("name","").equals(prefChange.getString("name",""))
                 && pref.getString("password","").equals(prefChange.getString("password",""))){
             Intent intent = new Intent();
             intent.setClass(LoginActivity.this, MainPageActivity.class);
