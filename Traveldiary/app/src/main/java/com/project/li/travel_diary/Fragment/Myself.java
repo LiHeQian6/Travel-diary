@@ -2,6 +2,7 @@ package com.project.li.travel_diary.Fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.project.li.travel_diary.Login.LoginActivity;
 import com.project.li.travel_diary.MessageTree.MessageTree;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.Settings.Setting;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Myself extends Fragment {
     private CustomeOnClickListener onClickListener;
@@ -67,7 +70,12 @@ public class Myself extends Fragment {
                     Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.downbtn:
-
+                    SharedPreferences.Editor editor1 = getContext().getSharedPreferences("dataChange", MODE_PRIVATE).edit();
+                    editor1.putString("password", "");
+                    editor1.commit();
+                    Intent intent3 = new Intent();
+                    intent3.setClass(getContext(), LoginActivity.class);
+                    startActivity(intent3);
                     break;
             }
 

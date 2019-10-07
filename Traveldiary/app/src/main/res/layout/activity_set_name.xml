@@ -20,18 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/titleText"
+            android:id="@+id/newName"
+            android:hint="输入新昵称"
+            android:textColorHint="@color/editTextCorlor"
             android:backgroundTint="@color/registerBtnFrontCorlor"/>
 
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/save"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:layout_marginTop="25dp"
-            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:text="保存"
-            android:textSize="16dp"
-            android:background="@drawable/registerforstyle"/>
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/registerstyle"/>
     </LinearLayout>
 
 </LinearLayout>
