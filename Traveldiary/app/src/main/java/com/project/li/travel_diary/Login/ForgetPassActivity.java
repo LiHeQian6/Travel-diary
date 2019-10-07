@@ -58,7 +58,10 @@ public class ForgetPassActivity extends AppCompatActivity {
                     intent.setClass(ForgetPassActivity.this, ResetPassActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
+                } else if(info.equals("N")){
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "验证码已发送，请输入！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }else {
                     Toast toastTip = Toast.makeText(ForgetPassActivity.this, "没有此用户！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }
@@ -222,7 +225,10 @@ public class ForgetPassActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.edtGetVerifyCode:
+                case R.id.textGetVerifyCode:
+                    emailAddress = edtEmailaddress.getText().toString().trim();
+                    verifyCode = edtVerifyCode.getText().toString().trim();
+                    toResetPassword(emailAddress,verifyCode);
                     break;
             }
         }
