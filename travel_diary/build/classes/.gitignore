@@ -1,3 +1,5 @@
-/util/
-/servlet/
+/bean/
+/dao/
 /server/
+/servlet/
+/util/
