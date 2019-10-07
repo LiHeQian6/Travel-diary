@@ -9,7 +9,16 @@ android {
             storePassword 'li040011'
         }
     }
-    compileSdkVersion 28
+    buildTypes {
+        release {
+            shrinkResources false
+        }
+    }
+
+    aaptOptions {
+        cruncherEnabled = false
+    }
+        compileSdkVersion 28
     defaultConfig {
         applicationId "com.project.li.travel_diary"
         minSdkVersion 15

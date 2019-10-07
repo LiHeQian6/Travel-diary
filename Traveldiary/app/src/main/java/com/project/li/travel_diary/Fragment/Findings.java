@@ -2,6 +2,7 @@ package com.project.li.travel_diary.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,15 +16,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.*;
 import com.project.li.travel_diary.AddMessageActivity;
+import com.project.li.travel_diary.Login.LoginActivity;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.ShowMessageActivity;
 import com.project.li.travel_diary.bean.Messages;
@@ -50,7 +54,7 @@ public class Findings extends Fragment {
     private AMapLocationClient mLocationClient;
     private LatLng latLng;
     private String date;
-    private String address;
+    private String address="火星QAQ";
     @SuppressLint("HandlerLeak")
     private Handler handler=new Handler(){
         @Override
@@ -99,6 +103,7 @@ public class Findings extends Fragment {
         mLocationClient = new AMapLocationClient(getContext());
         final AMapLocationClientOption mLocationClientOption = new AMapLocationClientOption();
         mLocationClientOption.setOnceLocation(true);
+        mLocationClientOption.setNeedAddress(true);
         mLocationClient.setLocationOption(mLocationClientOption);
         mLocationClient.setLocationListener(new AMapLocationListener() {
             @Override
@@ -110,7 +115,7 @@ public class Findings extends Fragment {
                 Date d = new Date(aMapLocation.getTime());
                 date=df.format(d);
                 Log.e("date",date);
-                address=aMapLocation.getAddress();
+                address=aMapLocation.getAddress().equals("")?address:aMapLocation.getAddress();
                 Log.e("address",address);
             }
         });
@@ -124,6 +129,13 @@ public class Findings extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final SharedPreferences sharedPreferences=getContext().getSharedPreferences("data",0);
+                String name = sharedPreferences.getString("name", "");
+                if(name.equals("")){
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
                 mLocationClient.startLocation();
                 Messages messages = new Messages();
                 Intent intent=new Intent(getContext(), AddMessageActivity.class);
@@ -151,6 +163,11 @@ public class Findings extends Fragment {
         map.setOnInfoWindowClickListener(new AMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+//                mLocationClient.startLocation();
+//                if ( AMapUtils.calculateLineDistance(latLng,marker.getPosition())>100){
+//                    Toast.makeText(getContext(),"距离太远了，我的千里眼都看不到了！快到那里亲眼看看吧！",Toast.LENGTH_LONG).show();
+//                    return;
+//                }
                 Intent intent = new Intent(getContext(), ShowMessageActivity.class);
                 intent.putExtra("location",marker.getPosition());
                 startActivity(intent);
@@ -169,11 +186,16 @@ public class Findings extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==100&&resultCode==101){
+            final SharedPreferences sharedPreferences=getContext().getSharedPreferences("data",0);
+            String name = sharedPreferences.getString("name", "");
             messages= (Messages) data.getSerializableExtra("msg");
             messages.setDate(date);
             messages.setLat(latLng.latitude);
             messages.setLng(latLng.longitude);
+            Log.e("message",address);
             messages.setAddress(address);
+            messages.setUser(name);
+            Log.e("message",messages.toString());
             //发送数据到后台
             addMessage(messages);
         }

@@ -14,7 +14,6 @@ import com.amap.api.maps.model.LatLng;
 import com.project.li.travel_diary.Login.LoginActivity;
 import com.project.li.travel_diary.bean.Messages;
 
-import java.io.Serializable;
 
 public class AddMessageActivity extends AppCompatActivity {
     private Button add;
@@ -27,6 +26,7 @@ public class AddMessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatusBar();
         setContentView(R.layout.activity_add_message);
         title=findViewById(R.id.title);
         content=findViewById(R.id.add_content);
@@ -34,10 +34,11 @@ public class AddMessageActivity extends AppCompatActivity {
         textChange();
         Intent intent = getIntent();
         messages = (Messages) intent.getSerializableExtra("messages");
+
     }
     protected void textChange(){
         /**
-         * 输入账号文本框监听器
+         * 输入标题文本框监听器
          */
         title.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,7 +78,7 @@ public class AddMessageActivity extends AppCompatActivity {
             }
         });
         /**
-         * 输入密码文本框监听器
+         * 输入内容文本框监听器
          */
         content.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,5 +118,16 @@ public class AddMessageActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    /**
+     * 调整状态栏和标题栏style
+     */
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
+            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
+
+        }
     }
 }

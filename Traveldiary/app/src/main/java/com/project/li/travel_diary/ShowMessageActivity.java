@@ -1,10 +1,14 @@
 package com.project.li.travel_diary;
 
+import android.content.Intent;
 import android.net.wifi.aware.DiscoverySession;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import com.amap.api.maps.model.LatLng;
 import com.project.li.travel_diary.bean.Messages;
@@ -20,6 +24,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ShowMessageActivity extends AppCompatActivity {
     private List<Messages> list = new ArrayList();
@@ -36,15 +41,34 @@ public class ShowMessageActivity extends AppCompatActivity {
             }
         }
     };
+    private MessageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_message);
+        setStatusBar();
         location =(LatLng) getIntent().getParcelableExtra("location");
-        getPositionMessages();
+        //getPositionMessages();
         listView=findViewById(R.id.list_view);
-        listView.setAdapter(new MessageAdapter());
+        list.add(new Messages(3, "String title", "String content", 0.1, 0.1, "String date", "904569030@qq.com"," String address", 50));
+        adapter = new MessageAdapter(this, list, R.layout.messages_page);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 110 && resultCode == 200) {
+            List<Map<String, String>> dataSource = (List<Map<String, String>>) data.getSerializableExtra("dataSource");
+            for(int i=0;i<list.size();i++){
+                if(list.get(i).getId()==Integer.parseInt(dataSource.get(0).get("id"))){
+                    list.get(i).setTitle(dataSource.get(0).get("title"));
+                    list.get(i).setContent(dataSource.get(0).get("message"));
+                    break;
+                }
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void getPositionMessages() {
@@ -85,5 +109,13 @@ public class ShowMessageActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+    protected void setStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
+            //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
+
+        }
     }
 }
