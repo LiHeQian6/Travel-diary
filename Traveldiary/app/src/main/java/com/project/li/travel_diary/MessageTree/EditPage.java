@@ -103,7 +103,7 @@ public class EditPage extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.1.101" /*+ getResources().getString(R.string.IP)*/ + ":8080/travel_diary/ChangeMessageServlet");
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/ChangeMessageServlet");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");
