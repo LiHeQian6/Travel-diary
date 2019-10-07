@@ -24,6 +24,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ForgetPassActivity extends AppCompatActivity {
 
@@ -130,7 +132,12 @@ public class ForgetPassActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             emailAddress = edtEmailaddress.getText().toString().trim();
                             verifyCode = edtVerifyCode.getText().toString().trim();
-                            toResetPassword(emailAddress,verifyCode);
+                            if(isEmail(emailAddress)) {
+                                toResetPassword(emailAddress,verifyCode);
+                            }else{
+                                Toast toastTip = Toast.makeText(ForgetPassActivity.this, "请输入正确的邮箱格式！", Toast.LENGTH_LONG);
+                                toastTip.show();
+                            }
                         }
                     });
                 }else{
@@ -158,7 +165,12 @@ public class ForgetPassActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             emailAddress = edtEmailaddress.getText().toString().trim();
                             verifyCode = edtVerifyCode.getText().toString().trim();
-                            toResetPassword(emailAddress,verifyCode);
+                            if(isEmail(emailAddress)) {
+                                toResetPassword(emailAddress,verifyCode);
+                            }else{
+                                Toast toastTip = Toast.makeText(ForgetPassActivity.this, "请输入正确的邮箱格式！", Toast.LENGTH_LONG);
+                                toastTip.show();
+                            }
                         }
                     });
                 }else{
@@ -166,6 +178,18 @@ public class ForgetPassActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 正则判断邮箱是否合法
+     * @param email
+     * @return
+     */
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     /**

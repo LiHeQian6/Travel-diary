@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
-    android:background="#ffffff"
+    android:background="@drawable/loginbacground"
     android:orientation="vertical"
     tools:context=".Login.LoginActivity">
 
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:background="@color/colorPrimary"
+        android:background="@null"
         android:orientation="horizontal">
 
         <TextView
@@ -93,19 +93,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:background="@null"
+            android:textColor="#ffffff"
             android:text="注册账号" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary">
+            android:background="@null">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="      |      " />
+                android:text="      |      "
+                android:textColor="#ffffff"/>
 
         </LinearLayout>
 
@@ -114,7 +116,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:background="@null"
+            android:textColor="#ffffff"
             android:text="忘记密码" />
     </LinearLayout>
 </LinearLayout>
