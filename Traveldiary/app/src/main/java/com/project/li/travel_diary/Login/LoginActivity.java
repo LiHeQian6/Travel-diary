@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
-    public final static String IPaddress="192.168.1.101";
+    public final static String IPaddress="47.94.247.44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
