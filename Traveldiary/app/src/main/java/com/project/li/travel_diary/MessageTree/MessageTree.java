@@ -79,7 +79,7 @@ public class MessageTree extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://192.168.1.101" /*+ getResources().getString(R.string.IP)*/ + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
