@@ -18,6 +18,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.*;
 import com.amap.api.maps.model.*;
+import com.project.li.travel_diary.Login.LoginActivity;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.bean.Messages;
 import org.json.JSONArray;
@@ -141,7 +142,7 @@ public class Footprint extends SupportMapFragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
+                    URL url = new URL("http://" + LoginActivity.IPaddress + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
