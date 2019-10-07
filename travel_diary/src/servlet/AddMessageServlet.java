@@ -35,6 +35,9 @@ public class AddMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=UTF-8");
 		InsertMessage insertMessage=new InsertMessage();
 		PrintWriter writer = response.getWriter();
         Messages messages = new Messages();
@@ -56,7 +59,7 @@ public class AddMessageServlet extends HttpServlet {
         messages.setLng(jsonObject.getDouble("lng"));
         System.out.println(messages.toString());
         int id=insertMessage.InsertMessage(messages);
-        if(id!=-1) {
+        if(id!=0) {
         	writer.write(id);
         	System.out.println("Ìí¼Ó³É¹¦£¡");
         }else {
