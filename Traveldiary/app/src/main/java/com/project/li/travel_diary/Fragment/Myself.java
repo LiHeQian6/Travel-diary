@@ -81,6 +81,7 @@ public class Myself extends Fragment {
                     editor1.commit();
                     Intent intent = new Intent();
                     intent.setClass(getContext(),LoginActivity.class);
+                    startActivity(intent);
                     getActivity().finish();
                     break;
             }

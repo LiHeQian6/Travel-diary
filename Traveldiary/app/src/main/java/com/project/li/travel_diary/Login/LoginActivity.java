@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,10 +32,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout login;
+    private LinearLayout activity_Login;
     private TextView btnRegister;
     private TextView forgetPass;
     private EditText Emaiaddress;
@@ -46,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
-    public final static String IPaddress="47.94.247.44";
+    public final static String IPaddress="10.7.81.159";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,18 +70,22 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
-                if (info.equals("T")) {
+                if (!info.equals("F")) {
                     SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                     SharedPreferences.Editor editor1 = getSharedPreferences("dataChange", MODE_PRIVATE).edit();
+                    Log.e("nickName",info);
                     editor.putString("name", emaiaddress);
                     editor.putString("password", pass);
+                    editor.putString("nickName",info);
                     editor1.putString("name",emaiaddress);
                     editor1.putString("password",pass);
+                    editor1.putString("nickName",info);
                     editor.commit();
                     editor1.commit();
                     Intent intent = new Intent();
@@ -159,7 +167,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             String name = Emaiaddress.getText().toString();
                             String passage = password.getText().toString();
-                            toLogin(name,passage);
+                            if(isEmail(name)) {
+                                toLogin(name, passage);
+                            }else{
+                                Toast toastTip = Toast.makeText(LoginActivity.this, "请输入正确的邮箱格式！", Toast.LENGTH_LONG);
+                                toastTip.show();
+                            }
                         }
                     });
                 }else{
@@ -192,7 +205,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             String name = Emaiaddress.getText().toString();
                             String passage = password.getText().toString();
-                            toLogin(name,passage);
+                            if(isEmail(name)) {
+                                toLogin(name, passage);
+                            }else{
+                                Toast toastTip = Toast.makeText(LoginActivity.this, "请输入正确的邮箱格式！", Toast.LENGTH_LONG);
+                                toastTip.show();
+                            }
                         }
                     });
                 }else{
@@ -200,6 +218,18 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 正则判断邮箱是否合法
+     * @param email
+     * @return
+     */
+    public boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
     }
 
     /**
@@ -211,6 +241,7 @@ public class LoginActivity extends AppCompatActivity {
         Emaiaddress = findViewById(R.id.edtUsername);
         password = findViewById(R.id.edtPassword);
         forgetPass = findViewById(R.id.btnForgetPass);
+        activity_Login = findViewById(R.id.activity_login);
     }
 
     /**
@@ -218,7 +249,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     protected void setStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
             //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
 
