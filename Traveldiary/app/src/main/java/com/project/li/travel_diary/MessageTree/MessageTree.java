@@ -79,7 +79,8 @@ public class MessageTree extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) +
+                            ":8080/travel_diary/MyFootPrintServlet?user="+getSharedPreferences("data",MODE_PRIVATE).getString("name",""));
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
@@ -96,6 +97,8 @@ public class MessageTree extends AppCompatActivity {
                             messages.setContent(jsonObject.getString("content"));   //留言内容
                             messages.setAddress(jsonObject.getString("address"));   //地址
                             messages.setDate(jsonObject.getString("date"));         //留言日期
+                            messages.setLat(jsonObject.getDouble("lat"));
+                            messages.setLng(jsonObject.getDouble("lng"));
                             list.add(messages);
                         }
                         Message message = new Message();
