@@ -47,9 +47,9 @@ public class TreeAdapter extends BaseAdapter {
         @Override
         public void handleMessage(Message msg) {
             if((msg.obj+"").equals("true")){
-                Toast.makeText((MessageTree)context,"删除成功！",Toast.LENGTH_SHORT).show();
                 dataSource.remove(positionQ);
                 notifyDataSetChanged();
+                Toast.makeText((MessageTree)context,"删除成功！",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText((MessageTree)context,"删除失败！",Toast.LENGTH_SHORT).show();
             }
@@ -115,6 +115,7 @@ public class TreeAdapter extends BaseAdapter {
             public void onClick(View v) {
                 positionQ = position;
                 deleteMyLeaveMessageHistory(Integer.parseInt(dataSource.get(position).get("id")));
+                notifyDataSetChanged();
             }
         });
 
@@ -127,7 +128,7 @@ public class TreeAdapter extends BaseAdapter {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://" + MessageTree.IPaddress + ":8080/travel_diary/DeleteMessageServlet?id="+id);
+                    URL url = new URL("http://" + context.getResources().getString(R.string.IP) + ":8080/travel_diary/DeleteMessageServlet?id="+id);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));

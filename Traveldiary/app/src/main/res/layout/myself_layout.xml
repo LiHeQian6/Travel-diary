@@ -15,20 +15,25 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"
             android:background="#0000FF"/>
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:src="@drawable/huanxiong" />
-        <TextView
-            android:layout_marginLeft="50dp"
-            android:id="@+id/nickname"
-            android:gravity="center"
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="孤独的小完能"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:fontFamily="serif-monospace"/>
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:src="@drawable/huanxiong" />
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="30dp"
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="孤独的小完能"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:fontFamily="serif-monospace"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!--蓝色横线-->

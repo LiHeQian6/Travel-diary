@@ -50,7 +50,7 @@ public class EditPage extends AppCompatActivity {
                 setResult(200,intent);
                 finish();
             }else{
-                Toast.makeText(getApplicationContext(),"保存失败，请重新输入！",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"保存失败！",Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -80,14 +80,15 @@ public class EditPage extends AppCompatActivity {
                     Map<String,String> item = dataSource.get(position);
                     JSONObject messagesObject = new JSONObject();
                     messagesObject.put("id",item.get("id"));
-                    messagesObject.put("address",item.get("position"));
-                    messagesObject.put("title",item.get("title"));
-                    messagesObject.put("content",item.get("message"));
-                    messagesObject.put("date",item.get("date"));
+                    messagesObject.put("address",item.get("location"));
+                    messagesObject.put("title",titleEdit.getText().toString());
+                    messagesObject.put("content",contentEdit.getText().toString());
+                    messagesObject.put("date",item.get("leavedate"));
                     messagesObject.put("likenum",item.get("finger"));
                     messagesObject.put("lat",Double.parseDouble(item.get("lat")));
                     messagesObject.put("lng",Double.parseDouble(item.get("lng")));
                     String messages = messagesObject.toString();
+                    Log.e("11",messages);
                     updateMyLeaveMessageHistory(messages);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -103,7 +104,7 @@ public class EditPage extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://10.7.81.159" /*+ getResources().getString(R.string.IP)*/ + ":8080/travel_diary/ChangeMessageServlet");
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/ChangeMessageServlet");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setDoOutput(true);
                     conn.setRequestMethod("POST");

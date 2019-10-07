@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -36,7 +37,6 @@ public class MessageTree extends AppCompatActivity {
     private Context context = this;
     private ListView listView;
     private TreeAdapter treeAdapter;
-    public final static String IPaddress="47.94.247.44";
     private Handler handlerInquery= new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -101,6 +101,7 @@ public class MessageTree extends AppCompatActivity {
                             messages.setLng(jsonObject.getDouble("lng"));
                             list.add(messages);
                         }
+                        Log.e("ssss",list.toString());
                         Message message = new Message();
                         message.what = 100;
                         message.obj = list;
