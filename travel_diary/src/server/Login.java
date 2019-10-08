@@ -20,10 +20,11 @@ package server;
      */
 
 public class Login {
-	
+	private String messageString="";
+	private String[] Message;
+	private String nickName=""; 
 	public boolean getloginMessage(String inputName,String inputPassword) {
-		String messageString="";
-		String[] Message;
+		
 		dao.getUserMessage getusermessage = new dao.getUserMessage();
 		try {
 			messageString = getusermessage.queryDate("select distinct * from table_users where account='"+inputName+"'");
@@ -37,8 +38,13 @@ public class Login {
 		}
 		Message = messageString.split(";");
 		if(inputName.equals(Message[0]) && inputPassword.equals(Message[1])) {
+			nickName=Message[2];
 			return true;
 		}else
 			return false;
+	}
+	
+	public String returnnickName() {
+		return nickName;
 	}
 }

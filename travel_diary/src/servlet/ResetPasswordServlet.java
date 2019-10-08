@@ -29,6 +29,9 @@ public class ResetPasswordServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
 		server.ResetPassword forget = new server.ResetPassword();
 		PrintWriter writer = response.getWriter();
 		String nameString = request.getParameter("name");

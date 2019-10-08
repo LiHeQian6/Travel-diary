@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,13 +45,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText Emaiaddress;
     private EditText password;
     private String emaiaddress;
+    private CheckBox ifRembemer;
     private String pass;
     private CustomeOnClickListener listener;
     private CustomeOnFocusListener onFocusListener;
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
-    public final static String IPaddress="10.7.81.159";
+    public final static String IPaddress="47.94.247.44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         registLitener();
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
+        ifRembemer.setChecked(true);
+        Emaiaddress.setText(pref.getString("name",""));
+        password.setText(pref.getString("password",""));
         if(!pref.getString("name","").equals("") && pref.getString("name","").equals(prefChange.getString("name",""))
                 && pref.getString("password","").equals(prefChange.getString("password",""))){
             Intent intent = new Intent();
@@ -242,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.edtPassword);
         forgetPass = findViewById(R.id.btnForgetPass);
         activity_Login = findViewById(R.id.activity_login);
+        ifRembemer = findViewById(R.id.ifRemember);
     }
 
     /**

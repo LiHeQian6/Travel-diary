@@ -26,10 +26,11 @@ import java.sql.Statement;
      */
 
 public class InsertMessage {
+	bean.Messages messages = new bean.Messages();
 	private final String DRIVER = "com.mysql.jdbc.Driver";
 	private final String CONN_STR = "jdbc:mysql://127.0.0.1:3306/traveldiary";
 	private final String USER = "root";
-	private final String PWD = "";
+	private final String PWD = messages.getPWD();
 	private Connection conn;
 	Statement statement;
 	ResultSet resultSet;
@@ -45,6 +46,26 @@ public class InsertMessage {
 		return conn;
 	}
 
+	public int queryDate(String sql) throws ClassNotFoundException{
+		String str = "null";
+		int n=0;
+		try {
+			getConnection();
+			statement = conn.createStatement();
+			resultSet = statement.executeQuery(sql);
+			
+			while(resultSet.next()) {
+				n = resultSet.getInt(1);
+				//System.out.println(resultSet.getString(1) + " " +resultSet.getString(2)+ " " +resultSet.getString(3)+ " " +resultSet.getString(4)+ " " +resultSet.getString(5));
+			}
+			return n;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n;
+	}
+	
 	// 更新数据
 	public int insert(String sql) {
 		try {
@@ -52,7 +73,7 @@ public class InsertMessage {
 			int n = preStmt.executeUpdate();
 			if(n > 0 ) {
 				preStmt.close();
-				return 1;
+				return n;
 			} else {
 				preStmt.close();
 				return 0;

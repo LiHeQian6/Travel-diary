@@ -26,10 +26,11 @@ import java.sql.Statement;
      */
 
 public class UpDataMessage {
+	bean.Messages messages = new bean.Messages();
 	private final String DRIVER = "com.mysql.jdbc.Driver";
 	private final String CONN_STR = "jdbc:mysql://127.0.0.1:3306/traveldiary";
 	private final String USER = "root";
-	private final String PWD = "";
+	private final String PWD = messages.getPWD();
 	private Connection conn;
 	Statement statement;
 	ResultSet resultSet;
