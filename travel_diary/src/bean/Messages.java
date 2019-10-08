@@ -20,7 +20,7 @@ public class Messages implements Serializable{
     private String user;
     private String address;
     private int likeNum;
-    private String PWD = "sjw5211314.";
+    private String PWD = "";
 
     public Messages() {
     }

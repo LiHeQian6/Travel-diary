@@ -53,19 +53,12 @@ public class RegisterServlet extends HttpServlet {
 //			writer.write("F");
 //			System.out.println("×¢²áÊ§°Ü£¡");
 //		}
-		if("".equals(verifyCode)) {
-			EmailUtil.sendMail(nameString);
-			writer.write("N");
-			System.out.println("ÇëÊäÈëÑéÖ¤Âë");
-			
+		if(register.registerUser(nameString, passString,verifyCode)) {
+			writer.write("T");
+			System.out.println("×¢²á³É¹¦");
 		}else {
-			if(register.registerUser(nameString, passString,verifyCode)) {
-				writer.write("T");
-				System.out.println("×¢²á³É¹¦");
-			}else {
-				writer.write("F");
-				System.out.println("×¢²áÊ§°Ü£¡");
-			}
+			writer.write("F");
+			System.out.println("×¢²áÊ§°Ü£¡");
 		}
 	}
 

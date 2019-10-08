@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import server.Register;
+
 /**
  * Servlet implementation class Login
  */
@@ -33,16 +35,22 @@ public class LoginServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=UTF-8");
 		server.Login login = new server.Login();
+		server.Register ifSame = new server.Register();
 		PrintWriter writer = response.getWriter();
 		String nameString = request.getParameter("name");
 		String passString = request.getParameter("password");
 		System.out.println(nameString+"  "+passString);
-		if(login.getloginMessage(nameString,passString)) {
-			writer.print(login.returnnickName());
-			System.out.println("登录成功！");
+		if(ifSame.ifSame(nameString)) {
+			if(login.getloginMessage(nameString,passString)) {
+				writer.print(login.returnnickName());
+				System.out.println("登录成功！");
+			}else {
+				writer.write("F");
+				System.out.println("账号或密码错误！");
+			}
 		}else {
-			writer.write("F");
-			System.out.println("账号或密码错误！");
+			writer.write("S");
+			System.out.println("查无此人！");
 		}
 	}
 

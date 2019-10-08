@@ -64,9 +64,11 @@ public class LoginActivity extends AppCompatActivity {
         registLitener();
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
-        ifRembemer.setChecked(true);
-        Emaiaddress.setText(pref.getString("name",""));
-        password.setText(pref.getString("password",""));
+        if(pref.getString("isChecked","").equals("true")) {
+            ifRembemer.setChecked(true);
+            Emaiaddress.setText(pref.getString("name", ""));
+            password.setText(pref.getString("password", ""));
+        }
         if(!pref.getString("name","").equals("") && pref.getString("name","").equals(prefChange.getString("name",""))
                 && pref.getString("password","").equals(prefChange.getString("password",""))){
             Intent intent = new Intent();
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
-                if (!info.equals("F")) {
+                if (!info.equals("T") && !info.equals("S")) {
                     SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                     SharedPreferences.Editor editor1 = getSharedPreferences("dataChange", MODE_PRIVATE).edit();
                     Log.e("nickName",info);
@@ -91,13 +93,21 @@ public class LoginActivity extends AppCompatActivity {
                     editor1.putString("name",emaiaddress);
                     editor1.putString("password",pass);
                     editor1.putString("nickName",info);
+                    if(ifRembemer.isChecked())
+                        editor.putString("isChecked","true");
+                    else
+                        editor.putString("isChecked","false");
                     editor.commit();
                     editor1.commit();
                     Intent intent = new Intent();
                     intent.setClass(LoginActivity.this, MainPageActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
+                }else if(info.equals("S")){
+                    Toast toastTip = Toast.makeText(LoginActivity.this, "没有此账号注册信息！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+                else {
                     Toast toastTip = Toast.makeText(LoginActivity.this, "账号或密码错误！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }
@@ -115,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+IPaddress+":8080/travel_diary/Login?name="+name+"&&"+"password="+password);
+                    URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/Login?name="+name+"&&"+"password="+password);
                     Log.e("url","http://"+"192.168.1.101"+":8080/Travel_diary/Login?name="+name+"&&"+"password="+password);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
