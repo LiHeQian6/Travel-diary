@@ -57,13 +57,14 @@ public class AddMessageServlet extends HttpServlet {
         messages.setDate(jsonObject.getString("date"));
         messages.setLat(jsonObject.getDouble("lat"));
         messages.setLng(jsonObject.getDouble("lng"));
+        messages.setUser(jsonObject.getString("user"));
         System.out.println(messages.toString());
         int id=insertMessage.InsertMessage(messages);
         if(id!=0) {
-        	writer.write(id);
+        	writer.print(id);
         	System.out.println("添加成功！");
         }else {
-        	writer.write(id);
+        	writer.print(id);
         	System.out.println("添加失败！");
         }
 		

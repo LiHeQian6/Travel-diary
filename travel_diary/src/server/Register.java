@@ -24,7 +24,6 @@ import util.EmailUtil;
 
 public class Register {
 	public boolean registerUser(String userName,String Password,String verifyCode) {
-//		String sendVerifyCode="1234";
 		String sendVerifyCode=EmailUtil.getCode();
 		dao.UpDataMessage addmessage = new dao.UpDataMessage();
 		try {
@@ -48,7 +47,7 @@ public class Register {
 		try {
 			isName.getConnection();
 			Message = isName.queryDate("select distinct * from table_users where account='"+userName+"'").split(";");
-			if(userName.equals(Message[0])) {
+			if(Message[0].equals(userName)) {
 				return true;
 			}else {
 				return false;

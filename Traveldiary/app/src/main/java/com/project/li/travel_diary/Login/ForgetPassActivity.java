@@ -1,6 +1,7 @@
 package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -37,7 +38,11 @@ public class ForgetPassActivity extends AppCompatActivity {
     private CustomeOnFocusListener onFocusListener;
     private String emailAddress;//邮箱
     private String verifyCode;//验证码
+    private String textBtngetVerifyCode;
     private Handler handler;
+    private Handler mainHandler;
+    private Handler sendEmailHandler;
+    private int time = 30;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,22 @@ public class ForgetPassActivity extends AppCompatActivity {
         getViews();
         textChange();
         registLitener();
+
+        mainHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 100:
+                        btnGetVerifyCode.setText(time-- + "秒后获取");
+                        break;
+                    case 200:
+                        btnGetVerifyCode.setText("获取验证码");
+                        btnGetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
+                        time = 30;
+                        break;
+                }
+            }
+        };
 
         handler = new Handler() {
             @Override
@@ -58,9 +79,6 @@ public class ForgetPassActivity extends AppCompatActivity {
                     intent.setClass(ForgetPassActivity.this, ResetPassActivity.class);
                     startActivity(intent);
                     finish();
-                } else if(info.equals("N")){
-                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "验证码已发送，请输入！", Toast.LENGTH_LONG);
-                    toastTip.show();
                 }else {
                     Toast toastTip = Toast.makeText(ForgetPassActivity.this, "没有此用户！", Toast.LENGTH_LONG);
                     toastTip.show();
@@ -68,6 +86,25 @@ public class ForgetPassActivity extends AppCompatActivity {
             }
         };
 
+        sendEmailHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String info = (String) msg.obj;
+                if (info.equals("T")) {
+                    CountThread countThread = new CountThread();
+                    countThread.start();
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }else if(info.equals("S")){
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "没有该邮箱的注册信息！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }else {
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "发送失败！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+            }
+        };
     }
 
     /**
@@ -80,7 +117,7 @@ public class ForgetPassActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+LoginActivity.IPaddress+":8080/travel_diary/ForgetPasswordServlet?name="+name+"&&"+"verifyCode="+verifyCode);
+                    URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/ForgetPasswordServlet?name="+name+"&&"+"verifyCode="+verifyCode);
                     Log.e("url",name+verifyCode);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
@@ -98,6 +135,35 @@ public class ForgetPassActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+    /**
+     * 请求服务器发送邮件
+     * @param name
+     * @param Tag
+     */
+    public void toSendEmail(final String name, final String Tag){
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/SendEmailServlet?emailAddress="+name+"&&"+"Tag="+Tag);
+                    Log.e("url",name+Tag);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String info = reader.readLine();
+                    Message msg = Message.obtain();
+                    msg.obj = info;
+                    sendEmailHandler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 
     /**
      * 注册监听器
@@ -218,6 +284,34 @@ public class ForgetPassActivity extends AppCompatActivity {
     }
 
     /**
+     * 倒计时
+     */
+    private class CountThread extends Thread{
+        @Override
+        public void run() {
+            while (true){
+                //每1秒向主线程发送一个Message
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Message message = new Message();
+                message.what = 100;
+                btnGetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
+                mainHandler.sendMessage(message);
+                //当数字减为0时，停止循环
+                if (time <= 0){
+                    message.what = 200;
+                    break;
+                }
+            }
+        }
+    }
+
+
+    /**
      * 点击事件监听器
      */
     class CustomeOnClickListener implements View.OnClickListener{
@@ -226,9 +320,23 @@ public class ForgetPassActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.textGetVerifyCode:
+                    textBtngetVerifyCode = btnGetVerifyCode.getText().toString().trim();
                     emailAddress = edtEmailaddress.getText().toString().trim();
                     verifyCode = edtVerifyCode.getText().toString().trim();
-                    toResetPassword(emailAddress,verifyCode);
+                    if(edtEmailaddress.equals("")){
+                        Toast toastTip = Toast.makeText(ForgetPassActivity.this, "请填写邮箱信息！", Toast.LENGTH_LONG);
+                        toastTip.show();
+                    }else if(!isEmail(emailAddress)){
+                        Toast toastTip = Toast.makeText(ForgetPassActivity.this, "请正确填写邮箱信息！", Toast.LENGTH_LONG);
+                        toastTip.show();
+                    }else{
+                        if (textBtngetVerifyCode.equals("获取验证码") && isEmail(emailAddress)) {
+                            toSendEmail(emailAddress, "forgetPassword");
+                        }else {
+                            Toast toastTip = Toast.makeText(ForgetPassActivity.this, "请稍后再获取！", Toast.LENGTH_LONG);
+                            toastTip.show();
+                        }
+                    }
                     break;
             }
         }

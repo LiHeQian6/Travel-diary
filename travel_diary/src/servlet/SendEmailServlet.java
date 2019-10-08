@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import util.EmailUtil;
+import server.Register;
 
 /**
- * Servlet implementation class ForgetPasswordServlet
+ * Servlet implementation class SendEmailServlet
  */
-@WebServlet("/ForgetPasswordServlet")
-public class ForgetPasswordServlet extends HttpServlet {
+@WebServlet("/SendEmailServlet")
+public class SendEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ForgetPasswordServlet() {
+    public SendEmailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,20 +31,32 @@ public class ForgetPasswordServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("text/html; charset=UTF-8");
-		server.Forget forget = new server.Forget();
+		util.EmailUtil sendEmail = new util.EmailUtil();
+		server.Register ifSame = new server.Register();
 		PrintWriter writer = response.getWriter();
-		String nameString = request.getParameter("name");
-		String verifyCode = request.getParameter("verifyCode"); 
-		System.out.println(nameString+"  "+verifyCode);
-		if(forget.ifSame(nameString,verifyCode)) {
-			writer.write("T");
-			System.out.println("验证成功！");
-		}else {
-			writer.write("Nobody");
-			System.out.println("查无此人");
+		String emailAddress = request.getParameter("emailAddress");
+		String tag = request.getParameter("Tag");
+		switch(tag) {
+			case "register":
+				if(ifSame.ifSame(emailAddress)) {
+					writer.write("S");
+				}else {
+					if(sendEmail.sendMail(emailAddress))
+						writer.write("T");
+					else
+						writer.write("F");
+				}
+				break;
+			case "forgetPassword":
+				if(ifSame.ifSame(emailAddress)) {
+					if(sendEmail.findPasswordByMail(emailAddress))
+						writer.write("T");
+					else
+						writer.write("F");
+				}else {
+					writer.write("S");
+				}
+				break;
 		}
 	}
 

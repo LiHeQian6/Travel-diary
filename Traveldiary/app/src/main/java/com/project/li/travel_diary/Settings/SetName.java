@@ -71,7 +71,7 @@ public class SetName extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://" + LoginActivity.IPaddress + ":8080/travel_diary/ResetMessageServlet?name=" + address + "&&" + "newName=" + newname);
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/ResetMessageServlet?name=" + address + "&&" + "newName=" + newname);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
