@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
-    public final static String IPaddress="47.94.247.44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 try {
                     URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/Login?name="+name+"&&"+"password="+password);
-                    Log.e("url","http://"+"192.168.1.101"+":8080/Travel_diary/Login?name="+name+"&&"+"password="+password);
+                    //Log.e("url","http://"+"192.168.1.101"+":8080/Travel_diary/Login?name="+name+"&&"+"password="+password);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
