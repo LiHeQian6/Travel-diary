@@ -3,6 +3,14 @@ package com.project.li.travel_diary.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,47 +22,68 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.li.travel_diary.Login.LoginActivity;
 import com.project.li.travel_diary.MessageTree.MessageTree;
+import com.project.li.travel_diary.MessageTree.TreeAdapter;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.Settings.Setting;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class Myself extends Fragment {
-    private CustomeOnClickListener onClickListener;
+    /*private CustomeOnClickListener onClickListener;*/
+    private List<Map<String, String>> functionDataSource;
     private int displayWidth;
     private int displayHeight;
-    private Button treeBtn;
-    private Button notiBtn;
-    private Button favoBtn;
-    private Button quesBtn;
-    private Button settingBtn;
+    private TextView myEmail;
     private Button downBtn;
     private TextView nickname;
+    private ImageView myPen;
     private Boolean up = false;
-    private ImageView avatar;
+    private FuntionAdapter funtionAdapter;
+    private TextView line;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.myself_layout,container,false);
-        getButtons(view);
+
+        getViews(view);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("data", MODE_PRIVATE);
         nickname.setText(sharedPreferences.getString("nickName",""));
+        myEmail.setText("邮箱："+sharedPreferences.getString("name",""));
 
-        registLitener();
-        settingScreen();
+        settingScreen(view);
+        funtionItem(view);
+
+        //注销按钮的点击事件
+        downBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getContext(),LoginActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
+
 
     @Override
     public void onPause() {
@@ -72,118 +101,92 @@ public class Myself extends Fragment {
         up = false;
     }
 
-    //注册监听器
-    class CustomeOnClickListener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-                case R.id.settingbtn:
-                    Intent intent1 = new Intent();
-                    intent1.setClass(getContext(), Setting.class);
-                    startActivity(intent1);
-                    break;
-                case R.id.treebtn:
-                    Intent intent2 = new Intent();
-                    intent2.setClass(getContext(), MessageTree.class);
-                    startActivity(intent2);
-                    break;
-                case R.id.notibtn:
-                    Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.favobtn:
-                    Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.quesbtn:
-                    Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.downbtn:
-                    SharedPreferences.Editor editor1 = getContext().getSharedPreferences("dataChange", MODE_PRIVATE).edit();
-                    editor1.putString("password", "");
-                    editor1.commit();
-                    Intent intent = new Intent();
-                    intent.setClass(getContext(),LoginActivity.class);
-                    startActivity(intent);
-                    getActivity().finish();
-                    break;
-            }
-
-        }
-    }
-
     //获取视图控件
-    private void getButtons(View view) {
-        treeBtn = view.findViewById(R.id.treebtn);
-        notiBtn = view.findViewById(R.id.notibtn);
-        favoBtn = view.findViewById(R.id.favobtn);
-        quesBtn = view.findViewById(R.id.quesbtn);
-        settingBtn = view.findViewById(R.id.settingbtn);
-        downBtn = view.findViewById(R.id.downbtn);
+    private void getViews(View view) {
         nickname = view.findViewById(R.id.nickname);
-        avatar = view.findViewById(R.id.avatar);
+        myEmail = view.findViewById(R.id.my_email);
+        downBtn = view.findViewById(R.id.down_btn);
+        myPen = view.findViewById(R.id.my_pen);
+        line = view.findViewById(R.id.list_view_topline);
     }
 
-    //绑定监听器
-    private void registLitener() {
-        onClickListener = new CustomeOnClickListener();
-        settingBtn.setOnClickListener(onClickListener);
-        treeBtn.setOnClickListener(onClickListener);
-        notiBtn.setOnClickListener(onClickListener);
-        favoBtn.setOnClickListener(onClickListener);
-        quesBtn.setOnClickListener(onClickListener);
-        downBtn.setOnClickListener(onClickListener);
+    //设置功能adapter
+    public void funtionItem(View view){
+        functionDataSource = new ArrayList<>();
+        String text[] = {"历史留言","收藏","通知","问题与反馈","设置"};
+        for(int i=0;i<5;i++){
+            Map<String,String> item = new HashMap<>();
+            item.put("text",text[i]);
+            functionDataSource.add(item);
+        }
+        ListView listView = view.findViewById(R.id.myself_item);
+        funtionAdapter = new FuntionAdapter(getContext(),functionDataSource,R.layout.funtion_item);
+        listView.setAdapter(funtionAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0){
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(), MessageTree.class);
+                    startActivity(intent);
+                }else if(position == 4){
+                    Intent intent = new Intent();
+                    intent.setClass(getContext(),Setting.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getContext(),"功能尚在开发，敬请期待...",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    //适配屏幕
-    private void settingScreen() {
+    //动态设置控件大小
+    public void settingScreen(View view){
+        LinearLayout myself = view.findViewById(R.id.myself);
         WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(displayMetrics);
         displayWidth = displayMetrics.widthPixels;
         displayHeight = displayMetrics.heightPixels;
-
-        LinearLayout.LayoutParams params0 = new LinearLayout.LayoutParams(
-                (int)(displayHeight * 0.13f + 0.5f),
-                (int)(displayHeight * 0.13f + 0.5f));
-        avatar.setLayoutParams(params0);
-
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.85f + 0.5f),
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 (int)(displayHeight * 0.15f + 0.5f));
-        params1.setMargins(0,(int)(displayHeight * 0.06f + 0.5f),0,0);
-        treeBtn.setLayoutParams(params1);
+        params.setMargins(0,(int)(displayHeight * 0.05f + 0.5f),0,0);
+        myself.setLayoutParams(params);
 
+        RoundImageView roundImageView = view.findViewById(R.id.touxaing);
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+                (int)(displayHeight * 0.12f + 0.5f),
+                (int)(displayHeight * 0.12f + 0.5f));
+        params1.setMargins((int)(displayHeight * 0.05f + 0.5f),(int)(displayHeight * 0.015f + 0.5f), (int)(displayWidth * 0.025f + 0.5f),(int)(displayHeight * 0.015f + 0.5f));
+        roundImageView.setLayoutParams(params1);
+
+        LinearLayout nickLayout = view.findViewById(R.id.nick_layout);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.2f + 0.5f),
-                (int)(displayWidth * 0.2f + 0.5f));
-        params2.setMargins((int)(displayWidth * 0.01f + 0.5f),(int)(displayHeight * 0.1f + 0.5f),(int)(displayWidth * 0.1f + 0.5f),0);
-        notiBtn.setLayoutParams(params2);
+                (int)(displayWidth * 0.5f + 0.5f),
+                (int)(displayHeight * 0.12f + 0.5f));
+        params2.setMargins((int)(displayWidth * 0.03f + 0.5f),(int)(displayHeight * 0.035f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
+        nickLayout.setLayoutParams(params2);
 
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.2f + 0.5f),
-                (int)(displayWidth * 0.2f + 0.5f));
-        params3.setMargins(0,(int)(displayHeight * 0.1f + 0.5f),0,0);
-        favoBtn.setLayoutParams(params3);
+                (int)(displayHeight * 0.08f + 0.5f),
+                (int)(displayHeight * 0.08f + 0.5f));
+        params3.setMargins(-(int)(displayWidth * 0.03f + 0.5f),(int)(displayHeight * 0.03f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
+        myPen.setLayoutParams(params3);
+
+        nickname.setTextSize((int)(displayWidth * 0.013f + 0.5f));
+        myEmail.setTextSize((int)(displayWidth * 0.01f + 0.5f));
 
         LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.2f + 0.5f),
-                (int)(displayWidth * 0.2f + 0.5f));
-        params4.setMargins((int)(displayWidth * 0.1f + 0.5f),(int)(displayHeight * 0.1f + 0.5f),0,0);
-        quesBtn.setLayoutParams(params4);
-
+                LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        params4.setMargins(0,(int)(displayHeight * 0.08f + 0.5f), 0,0);
+        line.setLayoutParams(params4);
 
         LinearLayout.LayoutParams params5 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.9f + 0.5f),
-                (int)(displayHeight * 0.06f + 0.5f));
-        params5.setMargins(0,(int)(displayHeight * 0.1f + 0.5f),0,0);
-        settingBtn.setLayoutParams(params5);
-
-        LinearLayout.LayoutParams params6 = new LinearLayout.LayoutParams(
-                (int)(displayWidth * 0.9f + 0.5f),
-                (int)(displayHeight * 0.06f + 0.5f));
-        params6.setMargins(0,(int)(displayHeight * 0.02f + 0.5f),0,0);
-        downBtn.setLayoutParams(params6);
+                (int)(displayWidth * 0.8f + 0.5f), (int)(displayHeight * 0.06f + 0.5f));
+        params5.setMargins(0,(int)(displayHeight * 0.08f + 0.5f), 0,0);
+        downBtn.setLayoutParams(params5);
     }
-
 
 }

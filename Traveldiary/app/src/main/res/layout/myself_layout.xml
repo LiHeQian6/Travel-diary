@@ -1,132 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:imagecontrol="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
-    <!--个人信息框-->
     <LinearLayout
+        android:id="@+id/myself"
+        android:background="#66C0C0C0"
         android:orientation="horizontal"
-        android:background="#F5F5F5"
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <com.project.li.travel_diary.Fragment.RoundImageView
+            android:id="@+id/touxaing"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            imagecontrol:border_inside_color="#F5F5F5"
+            imagecontrol:border_outside_color="#ffffff"
+            imagecontrol:border_thickness="4dp"
+            android:src="@drawable/huanxiong"/>
         <LinearLayout
-            android:layout_weight="2"
+            android:id="@+id/nick_layout"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <TextView
-                android:layout_marginRight="40dp"
-                android:layout_width="15dp"
-                android:layout_height="match_parent"
-                android:background="#0000FF"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="4"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/huanxiong" />
-            <TextView
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="35dp"
                 android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:fontFamily="serif-monospace"/>
+                android:textSize="18dp"
+                android:textColor="#696969"
+                android:text="孤独的小完能"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/my_email"
+                android:textColor="#696969"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text="邮箱：156267102@qqcom"/>
         </LinearLayout>
+        <ImageView
+            android:id="@+id/my_pen"
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/pen"/>
     </LinearLayout>
-
-    <!--蓝色横线-->
     <TextView
+        android:id="@+id/list_view_topline"
+        android:background="#ebebeb"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#0000FF"/>
-
-    <Button
-        android:id="@+id/treebtn"
-        android:background="@drawable/historybtn"
-        android:drawableLeft="@mipmap/leavemessage"
-        android:layout_width="350dp"
-        android:layout_height="80dp"
-        android:text="          留言历史"
-        android:paddingLeft="60dp"
-        android:gravity="center_vertical"
-        android:textSize="25dp" />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:layout_height="1dp" />
+    <ListView
+        android:id="@+id/myself_item"
+        android:background="#66C0C0C0"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/notibtn"
-            android:background="@drawable/iamgebtn"
-            android:drawableTop="@mipmap/notification"
-            android:scaleType="center"
-            android:paddingTop="10dp"
-            android:src="@mipmap/feedback"
-            android:layout_marginTop="20dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:textSize="12dp"
-            android:text="通知"
-            android:textStyle="bold"/>
-        <Button
-            android:id="@+id/favobtn"
-            android:background="@drawable/iamgebtn"
-            android:drawableTop="@mipmap/favorite"
-            android:scaleType="center"
-            android:paddingTop="10dp"
-            android:src="@mipmap/feedback"
-            android:layout_marginTop="20dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:textSize="12dp"
-            android:text="收藏"
-            android:textStyle="bold"/>
-        <Button
-            android:id="@+id/quesbtn"
-            android:background="@drawable/iamgebtn"
-            android:drawableTop="@mipmap/feedback"
-            android:scaleType="center"
-            android:paddingTop="10dp"
-            android:src="@mipmap/feedback"
-            android:layout_marginTop="20dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:textSize="12dp"
-            android:text="问题反馈"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:gravity="bottom"
-        android:layout_width="wrap_content"
+    </ListView>
+    <TextView
+        android:background="#ebebeb"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <Button
+        android:layout_marginTop="50dp"
+        android:id="@+id/down_btn"
+        android:background="@drawable/downbtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!--设置按钮-->
-        <Button
-            android:id="@+id/settingbtn"
-            android:background="@drawable/settingbtn"
-            android:layout_width="370dp"
-            android:layout_height="50dp"
-            android:text="设置"
-            android:textSize="20dp" />
-
-        <!--注销按钮-->
-        <Button
-            android:id="@+id/downbtn"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/downbtn"
-            android:layout_width="370dp"
-            android:layout_height="50dp"
-            android:text="注销登录"
-            android:textColor="#fff"
-            android:textSize="20dp" />
-    </LinearLayout>
+        android:textColor="#ffffff"
+        android:text="注销登录"/>
 </LinearLayout>
