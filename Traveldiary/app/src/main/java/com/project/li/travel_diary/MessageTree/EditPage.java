@@ -32,6 +32,7 @@ public class EditPage extends AppCompatActivity {
     private EditText contentEdit;
     private Button saveButton;
     private int position;
+    private String messages;
     private List<Map<String, String>> dataSource;
     public Handler handlerUpdate = new Handler(){
         @Override
@@ -41,7 +42,13 @@ public class EditPage extends AppCompatActivity {
 
                 Map<String,String> textFull = dataSource.get(position);
                 textFull.put("title",titleEdit.getText().toString());
-                textFull.put("message",contentEdit.getText().toString());
+                //判断内容是否为空
+                if(contentEdit.getText().toString().equals("")){
+                    textFull.put("message",
+                            getSharedPreferences("data",0).getString("nickName","")+"到此一游！");
+                }else{
+                    textFull.put("message",contentEdit.getText().toString());
+                }
                 dataSource.add(textFull);
 
                 Intent intent = new Intent();
@@ -72,59 +79,75 @@ public class EditPage extends AppCompatActivity {
         titleEdit.setText(dataSource.get(position).get("title"));
         contentEdit.setText(dataSource.get(position).get("message"));
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //封装messages对象成jason并向后台发送数据
-                try {
-                    Map<String,String> item = dataSource.get(position);
-                    JSONObject messagesObject = new JSONObject();
-                    messagesObject.put("id",item.get("id"));
-                    messagesObject.put("address",item.get("location"));
-                    messagesObject.put("title",titleEdit.getText().toString());
-                    messagesObject.put("content",contentEdit.getText().toString());
-                    messagesObject.put("date",item.get("leavedate"));
-                    messagesObject.put("likenum",item.get("finger"));
-                    messagesObject.put("lat",Double.parseDouble(item.get("lat")));
-                    messagesObject.put("lng",Double.parseDouble(item.get("lng")));
-                    String messages = messagesObject.toString();
-                    Log.e("11",messages);
-                    updateMyLeaveMessageHistory(messages);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        updateMyLeaveMessageHistory();
 
-            }
-        });
     }
 
     //向服务器发送数据，返回更新的结果
-    public void updateMyLeaveMessageHistory(final String messages) {
-        new Thread() {
+    public void updateMyLeaveMessageHistory() {
+
+        //保存按钮监听事件
+        saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/ChangeMessageServlet");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoOutput(true);
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json");
-                    conn.setRequestProperty("charset", "utf-8");
-                    OutputStream stream = conn.getOutputStream();
-                    stream.write(messages.getBytes());
-                    stream.close();
-                    InputStream in = conn.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String returnResult = reader.readLine();
-                    Message message = new Message();
-                    message.what = 180;
-                    message.obj = returnResult;
-                    handlerUpdate.sendMessage(message);
-                }catch (Exception e){
-                    e.printStackTrace();
+            public void onClick(View v) {
+                //判断标题是否为空
+                if(titleEdit.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"标题不能为空哦，请重新输入！",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    //封装messages对象成jason并向后台发送数据
+                    try {
+                        Map<String,String> item = dataSource.get(position);
+                        JSONObject messagesObject = new JSONObject();
+                        //判断内容是否为空
+                        if(contentEdit.getText().toString().equals("")){
+                            messagesObject.put("content",
+                                    getSharedPreferences("data",0).getString("nickName","")+"到此一游！");
+                        }else{
+                            messagesObject.put("content",contentEdit.getText().toString());
+                        }
+                        messagesObject.put("id",item.get("id"));
+                        messagesObject.put("address",item.get("location"));
+                        messagesObject.put("title",titleEdit.getText().toString());
+                        messagesObject.put("date",item.get("leavedate"));
+                        messagesObject.put("likenum",item.get("finger"));
+                        messagesObject.put("lat",Double.parseDouble(item.get("lat")));
+                        messagesObject.put("lng",Double.parseDouble(item.get("lng")));
+                        messages = messagesObject.toString();
+                        Log.e("11",messages);
+
+                        //设置线程执行
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/ChangeMessageServlet");
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                    conn.setDoOutput(true);
+                                    conn.setRequestMethod("POST");
+                                    conn.setRequestProperty("Content-Type", "application/json");
+                                    conn.setRequestProperty("charset", "utf-8");
+                                    OutputStream stream = conn.getOutputStream();
+                                    stream.write(messages.getBytes());
+                                    stream.close();
+                                    InputStream in = conn.getInputStream();
+                                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                                    String returnResult = reader.readLine();
+                                    Message message = new Message();
+                                    message.what = 180;
+                                    message.obj = returnResult;
+                                    handlerUpdate.sendMessage(message);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.start();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }.start();
+        });
     }
 
 
