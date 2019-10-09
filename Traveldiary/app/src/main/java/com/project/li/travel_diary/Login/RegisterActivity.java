@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.li.travel_diary.MainPageActivity;
 import com.project.li.travel_diary.R;
 
 import java.io.BufferedReader;

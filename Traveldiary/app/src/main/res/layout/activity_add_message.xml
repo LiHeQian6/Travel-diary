@@ -46,7 +46,8 @@
                     android:textAlignment="center"
                     android:textColorHint="@color/editTextCorlor"
                     android:textCursorDrawable="@color/cursorCorlor"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:maxLength="20"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -72,7 +73,8 @@
                 android:minLines="8"
                 android:maxLines="15"
                 android:scrollbars="vertical"
-                android:background="@null">
+                android:background="@null"
+        android:maxLength="2000">
         </EditText>
     </LinearLayout>
 

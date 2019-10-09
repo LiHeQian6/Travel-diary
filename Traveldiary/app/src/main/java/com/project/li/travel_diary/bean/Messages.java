@@ -1,10 +1,6 @@
 package com.project.li.travel_diary.bean;
 
-import android.support.annotation.NonNull;
-import com.amap.api.maps.model.LatLng;
-
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author li
@@ -19,13 +15,14 @@ public class Messages implements Serializable{
     private Double lat;
     private String date;
     private String user;
-    private String address;
+    private String address="火星QAQ";
+    private String liked="";
     private int likeNum;
 
     public Messages() {
     }
 
-    public Messages(int id, String title, String content, Double lng, Double lat, String date, String user, String address, int likeNum) {
+    public Messages(int id, String title, String content, Double lng, Double lat, String date, String user, String address, String liked, int likeNum) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -34,6 +31,7 @@ public class Messages implements Serializable{
         this.date = date;
         this.user = user;
         this.address = address;
+        this.liked = liked;
         this.likeNum = likeNum;
     }
 
@@ -67,6 +65,14 @@ public class Messages implements Serializable{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 
     public Double getLng() {
@@ -120,6 +126,7 @@ public class Messages implements Serializable{
                 ", date='" + date + '\'' +
                 ", user='" + user + '\'' +
                 ", address='" + address + '\'' +
+                ", liked='" + liked + '\'' +
                 ", likeNum=" + likeNum +
                 '}';
     }
