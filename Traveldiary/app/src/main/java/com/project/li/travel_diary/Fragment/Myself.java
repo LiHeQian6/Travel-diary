@@ -159,20 +159,20 @@ public class Myself extends Fragment {
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
                 (int)(displayHeight * 0.12f + 0.5f),
                 (int)(displayHeight * 0.12f + 0.5f));
-        params1.setMargins((int)(displayHeight * 0.05f + 0.5f),(int)(displayHeight * 0.015f + 0.5f), (int)(displayWidth * 0.025f + 0.5f),(int)(displayHeight * 0.015f + 0.5f));
+        params1.setMargins((int)(displayHeight * 0.03f + 0.5f),(int)(displayHeight * 0.015f + 0.5f), (int)(displayWidth * 0.025f + 0.5f),(int)(displayHeight * 0.015f + 0.5f));
         roundImageView.setLayoutParams(params1);
 
         LinearLayout nickLayout = view.findViewById(R.id.nick_layout);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
                 (int)(displayWidth * 0.5f + 0.5f),
                 (int)(displayHeight * 0.12f + 0.5f));
-        params2.setMargins((int)(displayWidth * 0.03f + 0.5f),(int)(displayHeight * 0.035f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
+        params2.setMargins((int)(displayWidth * 0.03f + 0.5f),(int)(displayHeight * 0.05f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
         nickLayout.setLayoutParams(params2);
 
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
                 (int)(displayHeight * 0.08f + 0.5f),
                 (int)(displayHeight * 0.08f + 0.5f));
-        params3.setMargins(-(int)(displayWidth * 0.03f + 0.5f),(int)(displayHeight * 0.03f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
+        params3.setMargins(-(int)(displayWidth * 0.06f + 0.5f),(int)(displayHeight * 0.04f + 0.5f), 0,(int)(displayHeight * 0.015f + 0.5f));
         myPen.setLayoutParams(params3);
 
         nickname.setTextSize((int)(displayWidth * 0.013f + 0.5f));
