@@ -4,10 +4,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import com.amap.api.maps.model.LatLng;
@@ -29,6 +28,7 @@ public class ShowMessageActivity extends AppCompatActivity {
     private List<Messages> list = new ArrayList();
     private ListView listView;
     private LatLng location;
+    public static AppCompatActivity a;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -36,9 +36,7 @@ public class ShowMessageActivity extends AppCompatActivity {
                 case 100:
                     list.clear();
                     list.addAll((List) msg.obj);
-                    Messages e = new Messages();
-                    list.add(e);
-                    adapter = new MessageAdapter(getApplicationContext(), list, R.layout.messages_page);
+                    adapter = new MessageAdapter(a, list, R.layout.messages_page);
                     listView.setAdapter(adapter);
                     break;
             }
@@ -50,6 +48,7 @@ public class ShowMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_message);
+        a=this;
         setStatusBar();
         location =(LatLng) getIntent().getParcelableExtra("location");
         getPositionMessages();

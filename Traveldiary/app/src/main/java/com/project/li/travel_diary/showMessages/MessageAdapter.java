@@ -49,11 +49,6 @@ public class MessageAdapter extends BaseAdapter {
                     }
                     break;
                 case 301:
-                    if(((String)msg.obj).equals("true")){
-                        like.setImageResource(R.drawable.liked);
-                        likeNum.setText(Integer.parseInt(likeNum.getText().toString())+1+"");
-                        like.setOnClickListener(null);
-                    }
                     break;
             }
 
@@ -92,7 +87,7 @@ public class MessageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         if (null == convertView) {
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(item_layout_id,null);
@@ -119,10 +114,12 @@ public class MessageAdapter extends BaseAdapter {
             delete.setVisibility(View.INVISIBLE);
         }
         List<String> liked=new ArrayList<>(Arrays.asList(data.get(position).getLiked().split(",")));
+        Log.e("liked",liked.toString());
         if(liked.contains(name)){
             like.setImageResource(R.drawable.liked);
             like.setOnClickListener(null);
         }else{
+            final View finalConvertView = convertView;
             like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,11 +132,25 @@ public class MessageAdapter extends BaseAdapter {
                                 URLConnection conn = url.openConnection();
                                 InputStream in = conn.getInputStream();
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                                String returnResult = reader.readLine();
-                                Message message = new Message();
-                                message.what = 301;
-                                message.obj = returnResult;
-                                handlerDelete.sendMessage(message);
+                                String returnResult = reader.readLine();Log.e("like info",returnResult);
+//                                Message message = new Message();
+//                                message.what = 301;
+//                                message.obj = returnResult;
+//                                handlerDelete.sendMessage(message);
+                                if(returnResult.equals("true")){
+//                                    like.setImageResource(R.drawable.liked);
+//                                    likeNum.setText(Integer.parseInt(likeNum.getText().toString())+1+"");
+//                                    like.setOnClickListener(null);
+                                    data.get(position).setLiked(data.get(position).getLiked()+","+name);
+                                    data.get(position).setLikeNum(data.get(position).getLikeNum()+1);
+                                    notifyDataSetChanged();
+                                    /*View view = getView(position, finalConvertView, parent);
+                                    ImageView l = view.findViewById(R.id.like);
+                                    TextView n= view.findViewById(R.id.finger);
+                                    l.setImageResource(R.drawable.liked);
+                                    n.setText(Integer.parseInt(n.getText().toString())+1+"");
+                                    l.setOnClickListener(null);*/
+                                }
                             }catch (Exception e){
                                 e.printStackTrace();
                             }

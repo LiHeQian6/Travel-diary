@@ -2,8 +2,8 @@ package com.project.li.travel_diary.showMessages;
 
 import android.Manifest;
 import android.os.Build;
-import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTabHost;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
