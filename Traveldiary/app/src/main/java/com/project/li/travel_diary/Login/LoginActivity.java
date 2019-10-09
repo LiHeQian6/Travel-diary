@@ -2,6 +2,8 @@ package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -67,12 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         getView();
         textChange();
         registLitener();
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        width = metrics.widthPixels;
-//        height = metrics.heightPixels;
-//        density = metrics.density;
-//        densityDpi = metrics.densityDpi;
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
         if(pref.getString("isChecked","").equals("true")) {
