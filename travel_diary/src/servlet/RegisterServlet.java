@@ -32,6 +32,9 @@ public class RegisterServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
 		server.Register register = new server.Register();
 		PrintWriter writer = response.getWriter();
 		String nameString = request.getParameter("name");
@@ -50,19 +53,12 @@ public class RegisterServlet extends HttpServlet {
 //			writer.write("F");
 //			System.out.println("×¢²áÊ§°Ü£¡");
 //		}
-		if("".equals(verifyCode)) {
-			EmailUtil.sendMail(nameString);
-			writer.write("N");
-			System.out.println("ÇëÊäÈëÑéÖ¤Âë");
-			
+		if(register.registerUser(nameString, passString,verifyCode)) {
+			writer.write("T");
+			System.out.println("×¢²á³É¹¦");
 		}else {
-			if(register.registerUser(nameString, passString,verifyCode)) {
-				writer.write("T");
-				System.out.println("×¢²á³É¹¦");
-			}else {
-				writer.write("F");
-				System.out.println("×¢²áÊ§°Ü£¡");
-			}
+			writer.write("F");
+			System.out.println("×¢²áÊ§°Ü£¡");
 		}
 	}
 

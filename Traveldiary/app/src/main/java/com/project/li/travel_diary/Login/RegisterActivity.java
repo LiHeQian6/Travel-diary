@@ -1,6 +1,7 @@
 package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -41,9 +42,13 @@ public class RegisterActivity extends AppCompatActivity {
     private String password;//密码
     private String againPassword;//再次输入的密码
     private String VerifyCode;//验证码
+    private String textBtnedtgetVerifyCode;
     private CustomeOnFocusListener onFocusListener;
     private CustomeOnClickListener onclickListener;
     private Handler handler;
+    private Handler sendEmailHandler;
+    private int time = 30;
+    private Handler mainHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,22 @@ public class RegisterActivity extends AppCompatActivity {
         getView();
         textChange();
         registeListener();
+        edtgetVerifyCode.setText("获取验证码");
+        mainHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 100:
+                        edtgetVerifyCode.setText(time-- + "秒后获取");
+                        break;
+                    case 200:
+                        edtgetVerifyCode.setText("获取验证码");
+                        edtgetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
+                        time = 30;
+                        break;
+                }
+            }
+        };
 
         handler = new Handler() {
             @Override
@@ -64,15 +85,28 @@ public class RegisterActivity extends AppCompatActivity {
                     intent.setClass(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
-                }else if(info.equals("S")){
-                    Toast toastTip = Toast.makeText(RegisterActivity.this, "当前邮箱已被注册！", Toast.LENGTH_LONG);
-                    toastTip.show();
-                }else if(info.equals("N")){
-                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请输入！", Toast.LENGTH_LONG);
+                }else {
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "注册失败！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }
-                else {
-                    Toast toastTip = Toast.makeText(RegisterActivity.this, "注册失败！", Toast.LENGTH_LONG);
+            }
+        };
+
+        sendEmailHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String info = (String) msg.obj;
+                if (info.equals("T")) {
+                    CountThread countThread = new CountThread();
+                    countThread.start();
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }else if(info.equals("S")){
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "该邮箱已被注册！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }else {
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "发送失败！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }
             }
@@ -91,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://"+LoginActivity.IPaddress+":8080/travel_diary/RegisterServlet?name="+name+"&&"+"password="+password+"&&"+"verifyCode="+verifyCode);
+                    URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/RegisterServlet?name="+name+"&&"+"password="+password+"&&"+"verifyCode="+verifyCode);
                     Log.e("url",name+password+verifyCode);
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
@@ -109,6 +143,35 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }.start();
     }
+
+    /**
+     * 请求服务器发送邮件
+     * @param name
+     * @param Tag
+     */
+    public void toSendEmail(final String name, final String Tag){
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://"+getResources().getString(R.string.IP)+":8080/travel_diary/SendEmailServlet?emailAddress="+name+"&&"+"Tag="+Tag);
+                    Log.e("url",name+password+Tag);
+                    URLConnection conn = url.openConnection();
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                    String info = reader.readLine();
+                    Message msg = Message.obtain();
+                    msg.obj = info;
+                    sendEmailHandler.sendMessage(msg);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 
     /**
      * 注册监听器
@@ -363,6 +426,29 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    private class CountThread extends Thread{
+        @Override
+        public void run() {
+            while (true){
+                //每1秒向主线程发送一个Message
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                Message message = new Message();
+                message.what = 100;
+                edtgetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
+                mainHandler.sendMessage(message);
+                //当数字减为0时，停止循环
+                if (time == 0){
+                    message.what = 200;
+                    break;
+                }
+            }
+        }
+    }
     /**
      * 点击事件监听器
      */
@@ -372,7 +458,22 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.edtGetVerifyCode:
-                    toRegister(emailAddress,password,VerifyCode);
+                    textBtnedtgetVerifyCode = edtgetVerifyCode.getText().toString().trim();
+                    emailAddress = edtEmailAddress.getText().toString().trim();
+                    password = edtPassword.getText().toString().trim();
+                    VerifyCode = edtVerifyCode.getText().toString().trim();
+                    if(emailAddress.equals("") || password.equals("")) {
+                        Toast toastTip = Toast.makeText(RegisterActivity.this, "请填写信息！", Toast.LENGTH_LONG);
+                        toastTip.show();
+                    }else{
+                        if (textBtnedtgetVerifyCode.equals("获取验证码")
+                                && isEmail(emailAddress)) {
+                            toSendEmail(emailAddress, "register");
+                        } else {
+                            Toast toastTip = Toast.makeText(RegisterActivity.this, "请稍后再获取！", Toast.LENGTH_LONG);
+                            toastTip.show();
+                        }
+                    }
                     break;
             }
         }

@@ -31,23 +31,20 @@ public class ForgetPasswordServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html; charset=UTF-8");
 		server.Forget forget = new server.Forget();
 		PrintWriter writer = response.getWriter();
 		String nameString = request.getParameter("name");
 		String verifyCode = request.getParameter("verifyCode"); 
 		System.out.println(nameString+"  "+verifyCode);
-		if("".equals(verifyCode)) {
-			EmailUtil.sendMail(nameString);
-			writer.write("N");
-			System.out.println("请输入验证码");	
+		if(forget.ifSame(nameString,verifyCode)) {
+			writer.write("T");
+			System.out.println("验证成功！");
 		}else {
-			if(forget.ifSame(nameString,verifyCode)) {
-				writer.write("T");
-				System.out.println("验证成功！");
-			}else {
-				writer.write("Nobody");
-				System.out.println("查无此人");
-			}
+			writer.write("Nobody");
+			System.out.println("查无此人");
 		}
 	}
 

@@ -26,10 +26,11 @@ import java.sql.Statement;
      */
 
 public class getUserMessage {
+	bean.Messages messages = new bean.Messages();
 	private final String DRIVER = "com.mysql.jdbc.Driver";
 	private final String CONN_STR = "jdbc:mysql://127.0.0.1:3306/traveldiary";
 	private final String USER = "root";
-	private final String PWD = "";
+	private final String PWD = messages.getPWD();
 	private Connection conn;
 	Statement statement;
 	ResultSet resultSet;
@@ -60,7 +61,7 @@ public class getUserMessage {
 //				else {
 //					str += item.toString1();
 //				}
-				str = resultSet.getString(2)+";"+resultSet.getString(3);
+				str = resultSet.getString(2)+";"+resultSet.getString(3)+";"+resultSet.getString(5);
 				//System.out.println(resultSet.getString(1) + " " +resultSet.getString(2)+ " " +resultSet.getString(3)+ " " +resultSet.getString(4)+ " " +resultSet.getString(5));
 			}
 			return str;

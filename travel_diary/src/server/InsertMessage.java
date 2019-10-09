@@ -34,9 +34,17 @@ public class InsertMessage {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int i=insert.insert("SELECT id_user from table_users where account='"+m.getUser()+"';");
-		int n=insert.insert("SELECT id_position from talle_position where latitude="+m.getLat()+"and longitude="+m.getLng()+";");
+		int i=0;
+		int n=0;
+		try {
+			i=insert.queryDate("SELECT id_user from table_users where account='"+m.getUser()+"';");
+			n = insert.queryDate("SELECT id_position from talle_position where latitude="+m.getLat()+"and longitude="+m.getLng()+";");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int id=-1;
+		System.out.println(n+" "+i);
 		if(n==0) {
 			n=insert.insert("insert into talle_position values(null,"+m.getLng()+","+m.getLat()+",'"+m.getAddress()+"');");
 		}

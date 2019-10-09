@@ -20,6 +20,7 @@ public class Messages implements Serializable{
     private String user;
     private String address;
     private int likeNum;
+    private String PWD = "";
 
     public Messages() {
     }
@@ -107,8 +108,20 @@ public class Messages implements Serializable{
     public void setLikeNum(int likeNum) {
         this.likeNum = likeNum;
     }
+    
+	/**
+	 * @return iP
+	 */
+	
+	public String getPWD() {
+		return PWD;
+	}
 
-    @Override
+	/**
+	 * @param paramtheparamthe{bare_field_name} to set
+	 */
+
+	@Override
     public String toString() {
         return "Messages{" +
                 "id=" + id +

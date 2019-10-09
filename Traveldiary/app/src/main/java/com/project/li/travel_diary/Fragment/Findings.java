@@ -63,13 +63,17 @@ public class Findings extends Fragment {
                 case 100 :
                     list.clear();
                     list.addAll((List) msg.obj);
+                    Log.e("list",list.toString());
+                    setMarker();
                     break;
                 case 101 :
-                    if (!((String)msg.obj).equals("null")){
-                        messages.setId((int)msg.obj);
+                    if (!((String)msg.obj).equals("0")){
+                        messages.setId(Integer.parseInt((String) msg.obj));
                         list.add(messages);
                         String content = messages.getContent();
                         addMarker(new LatLng(messages.getLat(),messages.getLng()),messages.getTitle(), content);
+                    }else{
+                        Toast.makeText(getContext(),"发布失败",Toast.LENGTH_SHORT).show();
                     }
                     break;
             }
@@ -122,8 +126,7 @@ public class Findings extends Fragment {
         //视角初始化
         mLocationClient.startLocation();
         //初始化数据
-        //getFootPrint();
-        //setMarker();
+        getFootPrint();
         addMarker(new LatLng(34.341568, 108.940174),"西安","一起来啊！");
         //添加数据
         add.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +166,7 @@ public class Findings extends Fragment {
         map.setOnInfoWindowClickListener(new AMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                //位置限定
 //                mLocationClient.startLocation();
 //                if ( AMapUtils.calculateLineDistance(latLng,marker.getPosition())>100){
 //                    Toast.makeText(getContext(),"距离太远了，我的千里眼都看不到了！快到那里亲眼看看吧！",Toast.LENGTH_LONG).show();
@@ -209,8 +213,10 @@ public class Findings extends Fragment {
             jsonObject.put("content",msg.getContent());
             jsonObject.put("address",msg.getAddress());
             jsonObject.put("lng",msg.getLng());
+            jsonObject.put("lat",msg.getLat());
             jsonObject.put("date",msg.getDate());
             jsonObject.put("user",msg.getUser());
+            jsonObject.put("likenum",msg.getLikeNum());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -234,6 +240,7 @@ public class Findings extends Fragment {
                     Message message = new Message();
                     message.what = 101;
                     message.obj =jsonString;
+                    Log.e("info",jsonString);
                     handler.sendMessage(message);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -307,7 +314,7 @@ public class Findings extends Fragment {
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                    String info = reader.readLine();
+                    String info = reader.readLine();Log.e("as",info);
                     List list = new ArrayList();
                     try {
                         JSONArray array = new JSONArray(info);
@@ -323,6 +330,7 @@ public class Findings extends Fragment {
                             messages.setLat(jsonObject.getDouble("lat"));
                             messages.setDate(jsonObject.getString("date"));
                             messages.setUser(jsonObject.getString("user"));
+                            list.add(messages);
                         }
                         Message message = new Message();
                         message.what = 100;

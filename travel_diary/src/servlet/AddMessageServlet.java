@@ -35,6 +35,9 @@ public class AddMessageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=UTF-8");
 		InsertMessage insertMessage=new InsertMessage();
 		PrintWriter writer = response.getWriter();
         Messages messages = new Messages();
@@ -54,13 +57,14 @@ public class AddMessageServlet extends HttpServlet {
         messages.setDate(jsonObject.getString("date"));
         messages.setLat(jsonObject.getDouble("lat"));
         messages.setLng(jsonObject.getDouble("lng"));
+        messages.setUser(jsonObject.getString("user"));
         System.out.println(messages.toString());
         int id=insertMessage.InsertMessage(messages);
-        if(id!=-1) {
-        	writer.write(id);
+        if(id!=0) {
+        	writer.print(id);
         	System.out.println("添加成功！");
         }else {
-        	writer.write(id);
+        	writer.print(id);
         	System.out.println("添加失败！");
         }
 		

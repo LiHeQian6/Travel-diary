@@ -37,6 +37,8 @@ public class ShowMessageActivity extends AppCompatActivity {
                 case 100:
                     list.clear();
                     list.addAll((List) msg.obj);
+                    adapter = new MessageAdapter(getApplicationContext(), list, R.layout.messages_page);
+                    listView.setAdapter(adapter);
                     break;
             }
         }
@@ -49,11 +51,8 @@ public class ShowMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_message);
         setStatusBar();
         location =(LatLng) getIntent().getParcelableExtra("location");
-        //getPositionMessages();
+        getPositionMessages();
         listView=findViewById(R.id.list_view);
-        list.add(new Messages(3, "String title", "String content", 0.1, 0.1, "String date", "904569030@qq.com"," String address", 50));
-        adapter = new MessageAdapter(this, list, R.layout.messages_page);
-        listView.setAdapter(adapter);
     }
 
     @Override
@@ -96,6 +95,7 @@ public class ShowMessageActivity extends AppCompatActivity {
                             messages.setLat(jsonObject.getDouble("lat"));
                             messages.setDate(jsonObject.getString("date"));
                             messages.setUser(jsonObject.getString("user"));
+                            list.add(messages);
                         }
                         Message message = new Message();
                         message.what = 100;
