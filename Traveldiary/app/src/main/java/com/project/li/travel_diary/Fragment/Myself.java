@@ -55,6 +55,7 @@ public class Myself extends Fragment {
     private Boolean up = false;
     private FuntionAdapter funtionAdapter;
     private TextView line;
+    private SharedPreferences prefChange;
 
     @Nullable
     @Override
@@ -74,6 +75,9 @@ public class Myself extends Fragment {
         downBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor1 = getContext().getSharedPreferences("dataChange", MODE_PRIVATE).edit();
+                editor1.putString("password","");
+                editor1.commit();
                 Intent intent = new Intent();
                 intent.setClass(getContext(),LoginActivity.class);
                 startActivity(intent);

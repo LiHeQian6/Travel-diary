@@ -57,8 +57,8 @@ public class AllMessgaes {
 			getConnection();
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(sql);
+			System.out.println(sql);
 			while(resultSet.next()) {
-				System.out.println(resultSet.getDouble(7)+resultSet.getDouble(8));
 				bean.Messages messages = new bean.Messages(
 						resultSet.getInt(1),
 						resultSet.getString(2),
@@ -68,6 +68,7 @@ public class AllMessgaes {
 						resultSet.getString(5),
 						resultSet.getString(6),
 						resultSet.getString(9),
+						resultSet.getString(10),
 						resultSet.getInt(4));
 				list.add(messages);
 				//System.out.println(resultSet.getString(1) + " " +resultSet.getString(2)+ " " +resultSet.getString(3)+ " " +resultSet.getString(4)+ " " +resultSet.getString(5));

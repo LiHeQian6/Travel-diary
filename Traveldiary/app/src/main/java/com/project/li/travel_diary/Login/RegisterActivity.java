@@ -1,5 +1,6 @@
 package com.project.li.travel_diary.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -64,7 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 switch (msg.what){
                     case 100:
-                        edtgetVerifyCode.setText(time-- + "秒后获取");
+                        edtgetVerifyCode.setText(time-- + "秒后重新获取");
                         break;
                     case 200:
                         edtgetVerifyCode.setText("获取验证码");

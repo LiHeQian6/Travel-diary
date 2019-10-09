@@ -18,26 +18,73 @@ public class Messages implements Serializable{
     private Double lat;
     private String date;
     private String user;
-    private String address;
+    private String address="火星QAQ";
+    private String liked="";
     private int likeNum;
     private String PWD = "";
 
     public Messages() {
     }
 
-    public Messages(int id, String title, String content, Double lng, Double lat, String date, String user, String address, int likeNum) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.lng = lng;
-        this.lat = lat;
-        this.date = date;
-        this.user = user;
-        this.address = address;
-        this.likeNum = likeNum;
-    }
+    
 
-    public int getId() {
+    
+	
+	    /**
+	     * 创建一个新的实例 Messages
+	     *
+	     * @param id
+	     * @param title
+	     * @param content
+	     * @param lng
+	     * @param lat
+	     * @param date
+	     * @param user
+	     * @param address
+	     * @param liked
+	     * @param likeNum
+	     */
+	    
+	public Messages(int id, String title, String content, Double lng, Double lat, String date, String user,
+			String address, String liked, int likeNum) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.lng = lng;
+		this.lat = lat;
+		this.date = date;
+		this.user = user;
+		this.address = address;
+		this.liked = liked;
+		this.likeNum = likeNum;
+	}
+
+
+
+
+	/**
+	 * @return liked
+	 */
+	
+	public String getLiked() {
+		return liked;
+	}
+
+
+
+	
+	/**
+	 * @param paramtheparamthe{bare_field_name} to set
+	 */
+	
+	public void setLiked(String liked) {
+		this.liked = liked;
+	}
+
+
+
+	public int getId() {
         return id;
     }
 
@@ -117,22 +164,23 @@ public class Messages implements Serializable{
 		return PWD;
 	}
 
-	/**
-	 * @param paramtheparamthe{bare_field_name} to set
-	 */
 
+
+
+
+	
+	    /* (非 Javadoc)
+	     * 
+	     * 
+	     * @return
+	     * @see java.lang.Object#toString()
+	     */
+	    
 	@Override
-    public String toString() {
-        return "Messages{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", lng=" + lng +
-                ", lat=" + lat +
-                ", date='" + date + '\'' +
-                ", user='" + user + '\'' +
-                ", address='" + address + '\'' +
-                ", likeNum=" + likeNum +
-                '}';
-    }
+	public String toString() {
+		return "Messages [id=" + id + ", title=" + title + ", content=" + content + ", lng=" + lng + ", lat=" + lat
+				+ ", date=" + date + ", user=" + user + ", address=" + address + ", liked=" + liked + ", likeNum="
+				+ likeNum + "]";
+	}
+
 }
