@@ -10,8 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.amap.api.maps.model.LatLng;
-import com.project.li.travel_diary.Login.LoginActivity;
+
 import com.project.li.travel_diary.bean.Messages;
 
 

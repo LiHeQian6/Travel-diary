@@ -22,12 +22,11 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.*;
 import com.project.li.travel_diary.AddMessageActivity;
-import com.project.li.travel_diary.Login.LoginActivity;
+import com.project.li.travel_diary.Login.WelcomActivity;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.ShowMessageActivity;
 import com.project.li.travel_diary.bean.Messages;
@@ -135,7 +134,7 @@ public class Findings extends Fragment {
                 final SharedPreferences sharedPreferences=getContext().getSharedPreferences("data",0);
                 String name = sharedPreferences.getString("name", "");
                 if(name.equals("")){
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    Intent intent = new Intent(getContext(), WelcomActivity.class);
                     startActivity(intent);
                     return;
                 }

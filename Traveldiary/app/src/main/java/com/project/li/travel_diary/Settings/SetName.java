@@ -1,6 +1,5 @@
 package com.project.li.travel_diary.Settings;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
@@ -16,8 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.project.li.travel_diary.Login.LoginActivity;
-import com.project.li.travel_diary.MainPageActivity;
 import com.project.li.travel_diary.R;
 
 import java.io.BufferedReader;

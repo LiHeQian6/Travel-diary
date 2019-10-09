@@ -1,6 +1,5 @@
 package com.project.li.travel_diary.Login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.li.travel_diary.MainPageActivity;
 import com.project.li.travel_diary.R;
 
 import java.io.BufferedReader;
@@ -83,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     Intent intent = new Intent();
-                    intent.setClass(RegisterActivity.this, LoginActivity.class);
+                    intent.setClass(RegisterActivity.this, WelcomActivity.class);
                     startActivity(intent);
                     finish();
                 }else {

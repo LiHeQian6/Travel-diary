@@ -57,7 +57,7 @@ public class MessageTree extends AppCompatActivity {
                 dataSource.add(item);
             }
             if(dataSource.size() == 0){
-                Toast.makeText(getApplicationContext(),"你的留言历史为空，赶紧去留言吧！",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"你的留言历史为空，赶紧去留言吧！",Toast.LENGTH_SHORT).show();
             }else{
                 listView = findViewById(R.id.list_item);
                 treeAdapter = new TreeAdapter(context,dataSource,R.layout.tree_item);

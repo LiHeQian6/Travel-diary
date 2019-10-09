@@ -25,8 +25,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ShowMessageActivity"></activity>
-        <activity android:name=".AddMessageActivity"></activity>
+        <activity android:name=".ShowMessageActivity" />
+        <activity android:name=".AddMessageActivity" />
         <activity
             android:name=".Settings.ChangePassword"
             android:label="修改密码"
@@ -51,7 +51,7 @@
             android:label="账号注册"
             android:theme="@style/customTextstyle" />
         <activity android:name=".MainPageActivity" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".Login.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,8 +68,8 @@
         <activity
             android:name=".MessageTree.EditPage"
             android:label="编辑留言"
-            android:theme="@style/settings">
-        </activity>
+            android:theme="@style/settings"></activity>
+        <activity android:name=".Login.LoginActivity"></activity>
     </application>
 
 </manifest>
