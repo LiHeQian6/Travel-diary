@@ -76,9 +76,9 @@ public class FuntionAdapter extends BaseAdapter {
         functionLayout.setLayoutParams(params0);
 
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                (int)(displayHeight * 0.05f + 0.5f),
-                (int)(displayHeight * 0.05f + 0.5f));
-        params1.setMargins((int)(displayWidth * 0.08f + 0.5f),(int)(displayHeight * 0.015f + 0.5f),(int)(displayWidth * 0.08f + 0.5f),(int)(displayHeight * 0.015f + 0.5f));
+                (int)(displayHeight * 0.04f + 0.5f),
+                (int)(displayHeight * 0.04f + 0.5f));
+        params1.setMargins((int)(displayWidth * 0.08f + 0.5f),(int)(displayHeight * 0.02f + 0.5f),(int)(displayWidth * 0.08f + 0.5f),(int)(displayHeight * 0.02f + 0.5f));
         funcitonImage.setLayoutParams(params1);
 
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
@@ -89,9 +89,9 @@ public class FuntionAdapter extends BaseAdapter {
         functionText.setLayoutParams(params2);
 
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
-                (int)(displayHeight * 0.03f + 0.5f),
-                (int)(displayHeight * 0.03f + 0.5f));
-        params3.setMargins(0,(int)(displayHeight * 0.025f + 0.5f),0,(int)(displayHeight * 0.025f + 0.5f));
+                (int)(displayHeight * 0.02f + 0.5f),
+                (int)(displayHeight * 0.02f + 0.5f));
+        params3.setMargins(0,(int)(displayHeight * 0.03f + 0.5f),0,(int)(displayHeight * 0.03f + 0.5f));
         arrow.setLayoutParams(params3);
     }
 
