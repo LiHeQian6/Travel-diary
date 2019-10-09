@@ -33,12 +33,9 @@ public class MyFootPrint {
 		JSONArray jsonarray = new JSONArray();
 		try {
 			list = getALLmessage.queryDate(
-					"select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position"
+					"select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked"
 					+ " from table_message,table_users,talle_position "
 					+ "where account='"+Name+"' and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position;");
-			System.out.println("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position"
-					+ " from table_message,table_users,talle_position "
-					+ "where account= '"+Name+"' and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position;");
 			for(int i=0;i<list.size();i++) {
 				JSONObject jsonobject = new JSONObject();
 				jsonobject.put("id", list.get(i).getId());
@@ -64,9 +61,9 @@ public class MyFootPrint {
 		dao.AllMessgaes getALLmessage = new dao.AllMessgaes();
 		JSONArray jsonarray = new JSONArray();
 		try {
-			list = getALLmessage.queryDate("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position\r\n" + 
-					" from table_message,table_users,talle_position \r\n" + 
-					" where table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position\r\n" + 
+			list = getALLmessage.queryDate("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked" + 
+					" from table_message,table_users,talle_position " + 
+					" where table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position" + 
 					" order by praiseNum,time;");
 			for(int i=0;i<list.size();i++) {
 				JSONObject jsonobject = new JSONObject();
@@ -79,6 +76,7 @@ public class MyFootPrint {
 				jsonobject.put("date", list.get(i).getDate());
 				jsonobject.put("user", list.get(i).getUser());
 				jsonobject.put("likeNum", list.get(i).getLikeNum());
+				//jsonobject.put("liked", list.get(i).getLiked());
 				jsonarray.put(jsonobject);
 			}
 			return jsonarray.toString();
@@ -94,7 +92,7 @@ public class MyFootPrint {
 		dao.AllMessgaes getALLmessage = new dao.AllMessgaes();
 		JSONArray jsonarray = new JSONArray();
 		try {
-			list = getALLmessage.queryDate("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position" + 
+			list = getALLmessage.queryDate("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked" + 
 					" from table_message,table_users,talle_position " + 
 					" where latitude="+lat+" and longitude="+lng+" and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position" + 
 					" order by praiseNum,time;");
@@ -109,6 +107,7 @@ public class MyFootPrint {
 				jsonobject.put("date", list.get(i).getDate());
 				jsonobject.put("user", list.get(i).getUser());
 				jsonobject.put("likeNum", list.get(i).getLikeNum());
+				jsonobject.put("liked", list.get(i).getLiked());
 				jsonarray.put(jsonobject);
 			}
 			return jsonarray.toString();

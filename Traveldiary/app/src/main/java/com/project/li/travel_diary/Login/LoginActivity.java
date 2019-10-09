@@ -11,12 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
+    private int width;
+    private int height;
+    private float density;
+    private int densityDpi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
         getView();
         textChange();
         registLitener();
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        width = metrics.widthPixels;
+//        height = metrics.heightPixels;
+//        density = metrics.density;
+//        densityDpi = metrics.densityDpi;
         pref = getSharedPreferences("data", MODE_PRIVATE);
         prefChange = getSharedPreferences("dataChange", MODE_PRIVATE);
         if(pref.getString("isChecked","").equals("true")) {
@@ -82,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
-                if (!info.equals("T") && !info.equals("S")) {
+                if (!info.equals("F") && !info.equals("S")) {
                     SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
                     SharedPreferences.Editor editor1 = getSharedPreferences("dataChange", MODE_PRIVATE).edit();
                     Log.e("nickName",info);
@@ -113,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
     }
+
 
     /**
      * 向服务器发送数据并接收返回信息

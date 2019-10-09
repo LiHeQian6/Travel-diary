@@ -69,8 +69,13 @@ public class InsertMessage {
 	// 更新数据
 	public int insert(String sql) {
 		try {
-			preStmt = conn.prepareStatement(sql);
-			int n = preStmt.executeUpdate();
+			preStmt = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+			int n=0;
+			preStmt.executeUpdate();
+			ResultSet rs=preStmt.getGeneratedKeys();
+			 if (rs.next()) {
+		            n = rs.getInt(1);
+		        }
 			if(n > 0 ) {
 				preStmt.close();
 				return n;

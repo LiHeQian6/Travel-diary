@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import server.LikeMessage;
+
 /**
- * Servlet implementation class PositionMessageServlet
+ * Servlet implementation class LikeMessageServlet
  */
-@WebServlet("/PositionMessageServlet")
-public class PositionMessageServlet extends HttpServlet {
+@WebServlet("/LikeMessageServlet")
+public class LikeMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PositionMessageServlet() {
+    public LikeMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,14 +31,15 @@ public class PositionMessageServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=UTF-8");
-        Double lat=Double.parseDouble(request.getParameter("lat"));
-        Double lng=Double.parseDouble(request.getParameter("lng"));
-		server.MyFootPrint myfootprint = new server.MyFootPrint();
-		String name = request.getParameter("user");
-		String messages="";
-		messages = myfootprint.getMessageByPosition(lat, lng);
-		System.out.println(messages.toString());
-		response.getWriter().print(messages);
+        String id=request.getParameter("id");
+        String user=request.getParameter("user");
+        System.out.println(id+" "+user);
+        LikeMessage like=new LikeMessage();
+        if(like.addLikeNum(Integer.parseInt(id), user)) {
+        	response.getWriter().print("true");
+        }else {
+        	response.getWriter().print("false");
+        }
 	}
 
 	/**

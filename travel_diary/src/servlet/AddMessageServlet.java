@@ -60,7 +60,7 @@ public class AddMessageServlet extends HttpServlet {
         messages.setUser(jsonObject.getString("user"));
         System.out.println(messages.toString());
         int id=insertMessage.InsertMessage(messages);
-        if(id!=0) {
+        if(id!=-1) {
         	writer.print(id);
         	System.out.println("Ìí¼Ó³É¹¦£¡");
         }else {

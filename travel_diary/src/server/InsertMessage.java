@@ -44,13 +44,14 @@ public class InsertMessage {
 			e.printStackTrace();
 		}
 		int id=-1;
-		System.out.println(n+" "+i);
 		if(n==0) {
 			n=insert.insert("insert into talle_position values(null,"+m.getLng()+","+m.getLat()+",'"+m.getAddress()+"');");
 		}
-		id=insert.insert("insert into table_message values(null,"+m.getTitle()+","+m.getContent()+","+m.getLikeNum()+","+
-				n+","+i+","+m.getUser()+","+m.getDate()+")");
-		if(id!=-1) {
+		id=insert.insert("insert into table_message (title,content,praiseNum,id_position,id_user,time) values('"+m.getTitle()+"','"+m.getContent()+"',"+m.getLikeNum()+","+
+				n+","+i+",'"+m.getDate()+"');");
+		
+		System.out.println(id);
+		if(id!=0) {
 			return id;
 		}else {
 			return -1;

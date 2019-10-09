@@ -61,7 +61,7 @@ public class getUserMessage {
 //				else {
 //					str += item.toString1();
 //				}
-				str = resultSet.getString(2)+";"+resultSet.getString(3)+";"+resultSet.getString(5);
+				str = resultSet.getString(2)+";"+resultSet.getString(3)+";"+resultSet.getString(4);
 				//System.out.println(resultSet.getString(1) + " " +resultSet.getString(2)+ " " +resultSet.getString(3)+ " " +resultSet.getString(4)+ " " +resultSet.getString(5));
 			}
 			return str;
