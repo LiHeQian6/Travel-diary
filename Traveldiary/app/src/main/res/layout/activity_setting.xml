@@ -15,6 +15,7 @@
         android:background="#ffffff">
 
         <LinearLayout
+            android:id="@+id/setting_image_layout"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#66C0C0C0"

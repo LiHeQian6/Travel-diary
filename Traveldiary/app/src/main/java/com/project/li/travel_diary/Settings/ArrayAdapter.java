@@ -48,24 +48,7 @@ public class ArrayAdapter extends BaseAdapter {
         }
         TextView textView =convertView.findViewById(R.id.itemName);
         textView.setText(itemName[position]);
-        ImageView next = convertView.findViewById(R.id.btnNext);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (position){
-                    case 0:
-                        Intent intent = new Intent();
-                        intent.setClass(context,SetName.class);
-                        context.startActivity(intent);
-                        break;
-                    case 1:
-                        Intent intentCP = new Intent();
-                        intentCP.setClass(context,ChangePassword.class);
-                        context.startActivity(intentCP);
-                        break;
-                }
-            }
-        });
+
         return convertView;
     }
 

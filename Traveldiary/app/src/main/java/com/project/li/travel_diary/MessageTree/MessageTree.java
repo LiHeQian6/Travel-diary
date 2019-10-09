@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.bean.Messages;
@@ -55,9 +56,13 @@ public class MessageTree extends AppCompatActivity {
                 item.put("lat",messages.getLat()+"");
                 dataSource.add(item);
             }
-            listView = findViewById(R.id.list_item);
-            treeAdapter = new TreeAdapter(context,dataSource,R.layout.tree_item);
-            listView.setAdapter(treeAdapter);
+            if(dataSource.size() == 0){
+                Toast.makeText(getApplicationContext(),"你的留言历史为空，赶紧去留言吧！",Toast.LENGTH_LONG).show();
+            }else{
+                listView = findViewById(R.id.list_item);
+                treeAdapter = new TreeAdapter(context,dataSource,R.layout.tree_item);
+                listView.setAdapter(treeAdapter);
+            }
         }
     };
 
@@ -69,7 +74,6 @@ public class MessageTree extends AppCompatActivity {
         getMyLeaveMessageHistory();
 
         setStatusBar();
-
 
     }
 
@@ -97,8 +101,8 @@ public class MessageTree extends AppCompatActivity {
                             messages.setContent(jsonObject.getString("content"));   //留言内容
                             messages.setAddress(jsonObject.getString("address"));   //地址
                             messages.setDate(jsonObject.getString("date"));         //留言日期
-                            messages.setLat(jsonObject.getDouble("lat"));
-                            messages.setLng(jsonObject.getDouble("lng"));
+                            messages.setLat(jsonObject.getDouble("lat"));           //经度
+                            messages.setLng(jsonObject.getDouble("lng"));           //纬度
                             list.add(messages);
                         }
                         Log.e("ssss",list.toString());
