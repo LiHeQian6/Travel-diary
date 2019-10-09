@@ -1,11 +1,7 @@
-package com.project.li.travel_diary;
+package com.project.li.travel_diary.showMessages;
 
 import android.Manifest;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +14,11 @@ import android.widget.TextView;
 import com.project.li.travel_diary.Fragment.Findings;
 import com.project.li.travel_diary.Fragment.Footprint;
 import com.project.li.travel_diary.Fragment.Myself;
+import com.project.li.travel_diary.R;
 import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainPageActivity extends AppCompatActivity {
