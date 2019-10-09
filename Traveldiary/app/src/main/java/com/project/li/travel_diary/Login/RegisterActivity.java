@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Handler sendEmailHandler;
     private int time = 30;
     private Handler mainHandler;
+    private int version;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,19 @@ public class RegisterActivity extends AppCompatActivity {
         textChange();
         registeListener();
         edtgetVerifyCode.setText("获取验证码");
+        final Timer timer = new Timer();
+        final TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                edtgetVerifyCode.setText(time-- + "秒后重新获取");
+                if(time<=0){
+                    edtgetVerifyCode.setText("获取验证码");
+                    edtgetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
+                    time = 30;
+                    timer.cancel();
+                }
+            }
+        };
         mainHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -99,10 +115,14 @@ public class RegisterActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
-                    CountThread countThread = new CountThread();
-                    countThread.start();
-                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
-                    toastTip.show();
+//                    if(version>25) {
+//                        CountThread countThread = new CountThread();
+//                        countThread.start();
+//                    }
+                    edtgetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
+                    timer.schedule(task,0,1000);
+//                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
+//                    toastTip.show();
                 }else if(info.equals("S")){
                     Toast toastTip = Toast.makeText(RegisterActivity.this, "该邮箱已被注册！", Toast.LENGTH_LONG);
                     toastTip.show();
@@ -443,7 +463,7 @@ public class RegisterActivity extends AppCompatActivity {
                 edtgetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
                 mainHandler.sendMessage(message);
                 //当数字减为0时，停止循环
-                if (time == 0){
+                if (time <= 0){
                     message.what = 200;
                     break;
                 }
@@ -459,14 +479,15 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.edtGetVerifyCode:
+                    version = Build.VERSION.SDK_INT;
                     textBtnedtgetVerifyCode = edtgetVerifyCode.getText().toString().trim();
                     emailAddress = edtEmailAddress.getText().toString().trim();
                     password = edtPassword.getText().toString().trim();
                     VerifyCode = edtVerifyCode.getText().toString().trim();
-                    if(emailAddress.equals("") || password.equals("")) {
+                    if (emailAddress.equals("") || password.equals("")) {
                         Toast toastTip = Toast.makeText(RegisterActivity.this, "请填写信息！", Toast.LENGTH_LONG);
                         toastTip.show();
-                    }else{
+                    } else {
                         if (textBtnedtgetVerifyCode.equals("获取验证码")
                                 && isEmail(emailAddress)) {
                             toSendEmail(emailAddress, "register");

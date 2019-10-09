@@ -32,12 +32,15 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class Footprint extends SupportMapFragment {
     private TextureMapView mapView;
     private AMap map;
     private Marker clickMarker;
     private List<Messages> list = new ArrayList();
     private AMapLocationClient mLocationClient;
+    private SharedPreferences pref;
     private Handler handler=new Handler(){
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
@@ -143,7 +146,8 @@ public class Footprint extends SupportMapFragment {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/MyFootPrintServlet?user=904569030@qq.com");
+                    pref = getContext().getSharedPreferences("data", MODE_PRIVATE);
+                    URL url = new URL("http://" + getResources().getString(R.string.IP) + ":8080/travel_diary/MyFootPrintServlet?user="+pref.getString("name",""));
                     URLConnection conn = url.openConnection();
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
