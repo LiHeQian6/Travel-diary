@@ -28,8 +28,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                 android:text="头像"
-                android:textColor="@color/titleText"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:textColor="#686868"/>
 
             <ImageView
                 android:layout_width="70dp"

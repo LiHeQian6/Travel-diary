@@ -94,7 +94,7 @@ public class MyFootPrint {
 		try {
 			list = getALLmessage.queryDate("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked" + 
 					" from table_message,table_users,talle_position " + 
-					" where latitude="+lat+" and longitude="+lng+" and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position" + 
+					" where latitude<="+(lat+0.0001)+"and latitude>="+(lat-0.0001)+" and longitude<="+(lng+0.0001)+"and longitude>="+(lng-0.0001)+" and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position" + 
 					" order by praiseNum,time;");
 			for(int i=0;i<list.size();i++) {
 				JSONObject jsonobject = new JSONObject();

@@ -17,7 +17,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="5"
             android:textSize="16dp"
-            android:textColor="@color/titleText"/>
+            android:textColor="#686868"/>
 
         <ImageView
             android:id="@+id/btnNext"
