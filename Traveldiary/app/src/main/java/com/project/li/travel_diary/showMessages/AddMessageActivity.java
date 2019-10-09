@@ -1,4 +1,4 @@
-package com.project.li.travel_diary;
+package com.project.li.travel_diary.showMessages;
 
 import android.content.Intent;
 import android.os.Build;
@@ -10,7 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.bean.Messages;
 
 

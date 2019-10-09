@@ -1,96 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    tools:context=".MessageTree.EditPage">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="#ffffff"
+              tools:context=".MessageTree.EditPage">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp">
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="留言编辑"
-            android:textSize="25dp"
-            android:textColor="@color/titleText"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="留言编辑"
+                android:textSize="25dp"
+                android:textColor="@color/titleText"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/editstyle">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/editstyle" android:baselineAligned="false">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
             <EditText
-                android:id="@+id/title_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:cursorVisible="true"
-                android:textAlignment="center"
-                android:textColorHint="@color/editTextCorlor"
-                android:textCursorDrawable="@color/cursorCorlor"
-                android:textSize="18dp" />
+                    android:id="@+id/title_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:cursorVisible="true"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/editTextCorlor"
+                    android:textCursorDrawable="@color/cursorCorlor"
+                    android:textSize="18dp"
+                    android:maxLength="20" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="6"
-        android:background="@drawable/morelineeditstyle"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:padding="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="@drawable/morelineeditstyle"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:padding="20dp">
 
         <EditText
-            android:id="@+id/content_edit"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:enabled="true"
-            android:gravity="top"
-            android:inputType="textMultiLine"
-            android:minLines="10"
-            android:maxLines="15"
-            android:scrollbars="vertical"
-            android:background="@null">
+                android:id="@+id/content_edit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minLines="10"
+                android:maxLines="15"
+                android:scrollbars="vertical"
+                android:background="@null"
+                android:maxLength="2000">
         </EditText>
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="5"
-        android:layout_marginTop="20dp">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:layout_marginTop="20dp">
 
         <Button
-            android:id="@+id/save_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="保存"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/registerforstyle"/>
+                android:id="@+id/save_button"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="保存"
+                android:textColor="@color/colorPrimary"
+                android:background="@drawable/registerforstyle"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -18,15 +18,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="且行且记"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ShowMessageActivity" />
-        <activity android:name=".AddMessageActivity" />
+        <activity android:name=".showMessages.ShowMessageActivity"></activity>
+        <activity android:name=".showMessages.AddMessageActivity"></activity>
         <activity
             android:name=".Settings.ChangePassword"
             android:label="修改密码"
@@ -50,7 +50,7 @@
             android:name=".Login.RegisterActivity"
             android:label="账号注册"
             android:theme="@style/customTextstyle" />
-        <activity android:name=".MainPageActivity" />
+        <activity android:name=".showMessages.MainPageActivity" />
         <activity android:name=".Login.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,7 +58,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Login.LoginActivity"></activity>
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
@@ -69,7 +69,6 @@
             android:name=".MessageTree.EditPage"
             android:label="编辑留言"
             android:theme="@style/settings"></activity>
-        <activity android:name=".Login.LoginActivity"></activity>
     </application>
 
 </manifest>
