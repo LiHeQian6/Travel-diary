@@ -50,7 +50,7 @@
             android:name=".Login.RegisterActivity"
             android:label="账号注册"
             android:theme="@style/customTextstyle" />
-        <activity android:name=".showMessages.MainPageActivity" />
+        <activity android:name=".showMessages.MainPageActivity" ></activity>
         <activity android:name=".Login.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

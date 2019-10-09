@@ -9,12 +9,11 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.project.li.travel_diary.MainPageActivity;
 import com.project.li.travel_diary.R;
+import com.project.li.travel_diary.showMessages.MainPageActivity;
 
 public class WelcomActivity extends AppCompatActivity {
     private int displayHeight;

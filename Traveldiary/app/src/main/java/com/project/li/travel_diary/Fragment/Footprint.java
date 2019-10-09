@@ -1,5 +1,6 @@
 package com.project.li.travel_diary.Fragment;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
