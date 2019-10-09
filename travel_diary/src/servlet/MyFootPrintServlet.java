@@ -36,7 +36,6 @@ public class MyFootPrintServlet extends HttpServlet {
 		String name = request.getParameter("user");
 		String messages="";
 		messages = myfootprint.getAllMessage(name);
-		System.out.println(messages.toString());
 		response.getWriter().print(messages);
 	}
 

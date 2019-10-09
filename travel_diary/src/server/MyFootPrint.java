@@ -36,9 +36,6 @@ public class MyFootPrint {
 					"select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked"
 					+ " from table_message,table_users,talle_position "
 					+ "where account='"+Name+"' and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position;");
-			System.out.println("select id_message,title,content,table_message.praiseNum,time,account,latitude,longitude,position,liked"
-					+ " from table_message,table_users,talle_position "
-					+ "where account='"+Name+"' and table_users.id_user = table_message.id_user and talle_position.id_position = table_message.id_position;");
 			for(int i=0;i<list.size();i++) {
 				JSONObject jsonobject = new JSONObject();
 				jsonobject.put("id", list.get(i).getId());

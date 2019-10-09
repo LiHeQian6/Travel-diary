@@ -57,7 +57,6 @@ public class AllMessgaes {
 			getConnection();
 			statement = conn.createStatement();
 			resultSet = statement.executeQuery(sql);
-			System.out.println(sql);
 			while(resultSet.next()) {
 				bean.Messages messages = new bean.Messages(
 						resultSet.getInt(1),
