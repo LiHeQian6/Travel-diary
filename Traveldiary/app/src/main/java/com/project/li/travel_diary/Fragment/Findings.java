@@ -166,11 +166,11 @@ public class Findings extends Fragment {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 //位置限定
-//                mLocationClient.startLocation();
-//                if ( AMapUtils.calculateLineDistance(latLng,marker.getPosition())>100){
-//                    Toast.makeText(getContext(),"距离太远了，我的千里眼都看不到了！快到那里亲眼看看吧！",Toast.LENGTH_LONG).show();
-//                    return;
-//                }
+                mLocationClient.startLocation();
+                if ( AMapUtils.calculateLineDistance(latLng,marker.getPosition())>500){
+                    Toast.makeText(getContext(),"距离太远了，我的千里眼都看不到了！快到那里亲眼看看吧！",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(getContext(), ShowMessageActivity.class);
                 intent.putExtra("location",marker.getPosition());
                 startActivity(intent);

@@ -2,12 +2,8 @@ package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
+import android.os.*;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
