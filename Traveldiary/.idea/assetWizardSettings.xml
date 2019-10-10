@@ -62,7 +62,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
-                                      <entry key="foregroundImage" value="C:\Users\Administrator\Desktop\logo.png" />
+                                      <entry key="foregroundImage" value="$USER_HOME$/C:\Users\Administrator\Desktop\logo.png" />
                                       <entry key="foregroundLayerName" value="logo" />
                                       <entry key="outputName" value="icon" />
                                     </map>
@@ -81,6 +81,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
