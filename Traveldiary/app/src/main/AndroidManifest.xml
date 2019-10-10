@@ -50,15 +50,15 @@
             android:name=".Login.RegisterActivity"
             android:label="账号注册"
             android:theme="@style/customTextstyle" />
-        <activity android:name=".showMessages.MainPageActivity" />
-        <activity android:name=".Login.LoginActivity">
+        <activity android:name=".showMessages.MainPageActivity" ></activity>
+        <activity android:name=".Login.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Login.LoginActivity"></activity>
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
@@ -68,8 +68,7 @@
         <activity
             android:name=".MessageTree.EditPage"
             android:label="编辑留言"
-            android:theme="@style/settings">
-        </activity>
+            android:theme="@style/settings"></activity>
     </application>
 
 </manifest>

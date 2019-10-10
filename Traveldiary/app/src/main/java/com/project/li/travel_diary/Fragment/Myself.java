@@ -3,16 +3,6 @@ package com.project.li.travel_diary.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,8 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.li.travel_diary.Login.LoginActivity;
+import com.project.li.travel_diary.Login.WelcomActivity;
 import com.project.li.travel_diary.MessageTree.MessageTree;
-import com.project.li.travel_diary.MessageTree.TreeAdapter;
 import com.project.li.travel_diary.R;
 import com.project.li.travel_diary.Settings.Setting;
 
