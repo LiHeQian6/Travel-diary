@@ -18,8 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.li.travel_diary.Login.ForgetPassActivity;
-import com.project.li.travel_diary.Login.LoginActivity;
-import com.project.li.travel_diary.Login.ResetPassActivity;
+import com.project.li.travel_diary.Login.WelcomActivity;
 import com.project.li.travel_diary.R;
 
 import java.io.BufferedReader;
@@ -69,7 +68,7 @@ public class ChangePassword extends AppCompatActivity {
                     editor1.putString("password", newpassword);
                     editor1.commit();
                     Intent intent = new Intent();
-                    intent.setClass(ChangePassword.this,LoginActivity.class);
+                    intent.setClass(ChangePassword.this,WelcomActivity.class);
                     startActivity(intent);
                     finish();
                 } else {

@@ -56,7 +56,7 @@ public class ResetPassActivity extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     Intent intent = new Intent();
-                    intent.setClass(ResetPassActivity.this, LoginActivity.class);
+                    intent.setClass(ResetPassActivity.this, WelcomActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
