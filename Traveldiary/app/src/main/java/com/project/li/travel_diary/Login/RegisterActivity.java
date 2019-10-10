@@ -1,5 +1,6 @@
 package com.project.li.travel_diary.Login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -97,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     Intent intent = new Intent();
-                    intent.setClass(RegisterActivity.this, WelcomActivity.class);
+                    intent.setClass(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }else {

@@ -18,7 +18,7 @@ android {
     aaptOptions {
         cruncherEnabled = false
     }
-    compileSdkVersion 28
+        compileSdkVersion 28
     defaultConfig {
         applicationId "com.project.li.travel_diary"
         minSdkVersion 15

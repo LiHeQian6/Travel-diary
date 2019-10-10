@@ -12,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
+
     private LinearLayout login;
     private LinearLayout activity_Login;
     private TextView btnRegister;
@@ -44,8 +47,8 @@ public class LoginActivity extends AppCompatActivity {
     private String emaiaddress;
     private CheckBox ifRembemer;
     private String pass;
-    private LoginActivity.CustomeOnClickListener listener;
-    private LoginActivity.CustomeOnFocusListener onFocusListener;
+    private CustomeOnClickListener listener;
+    private CustomeOnFocusListener onFocusListener;
     private Handler handler;
     private SharedPreferences pref;
     private SharedPreferences prefChange;
