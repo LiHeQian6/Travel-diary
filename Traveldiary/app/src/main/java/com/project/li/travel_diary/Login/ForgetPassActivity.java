@@ -2,9 +2,11 @@ package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -92,8 +94,7 @@ public class ForgetPassActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
-                    CountThread countThread = new CountThread();
-                    countThread.start();
+                    start();
                     Toast toastTip = Toast.makeText(ForgetPassActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }else if(info.equals("S")){
@@ -164,6 +165,46 @@ public class ForgetPassActivity extends AppCompatActivity {
         }.start();
     }
 
+    /**
+     * 执行倒计时操作
+     */
+    public void start() {
+        new AsyncTask<Integer, Integer, Integer>() {
+            @Override
+            protected void onPreExecute() {
+                // 准备执行前调用，用于界面初始化操作
+                btnGetVerifyCode.setText("30秒后再次获取");
+                btnGetVerifyCode.setTextColor(getResources().getColor(R.color.changeColor));
+            }
+
+            @Override
+            protected Integer doInBackground(Integer... params) {
+                // 子线程，耗时操作
+                int start = 0;
+                int end = 29;
+                int result = 0;
+                for (int i = end; i >= start; i--) {
+                    SystemClock.sleep(1000);
+                    result = i;
+                    publishProgress(result);//把进度推出去，推给onProgressUpdate参数位置
+                }
+                return result;
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer[] values) {
+                int progress = values[0];
+                btnGetVerifyCode.setText(progress+"秒后再次获取");
+            };
+
+            @Override
+            protected void onPostExecute(Integer result) {
+                btnGetVerifyCode.setText("获取验证码");
+                btnGetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
+            }
+
+        }.execute(0,100);
+    }
 
     /**
      * 注册监听器

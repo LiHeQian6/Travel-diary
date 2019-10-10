@@ -2,9 +2,11 @@ package com.project.li.travel_diary.Login;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -48,9 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
     private CustomeOnClickListener onclickListener;
     private Handler handler;
     private Handler sendEmailHandler;
-    private int time = 30;
-    private Handler mainHandler;
-    private int version;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,35 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
         textChange();
         registeListener();
         edtgetVerifyCode.setText("获取验证码");
-        final Timer timer = new Timer();
-        final TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                edtgetVerifyCode.setText(time-- + "秒后重新获取");
-                if(time<=0){
-                    edtgetVerifyCode.setText("获取验证码");
-                    edtgetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
-                    time = 30;
-                    timer.cancel();
-                }
-            }
-        };
-        mainHandler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case 100:
-                        edtgetVerifyCode.setText(time-- + "秒后重新获取");
-                        break;
-                    case 200:
-                        edtgetVerifyCode.setText("获取验证码");
-                        edtgetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
-                        time = 30;
-                        break;
-                }
-            }
-        };
-
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -97,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
                     Intent intent = new Intent();
-                    intent.setClass(RegisterActivity.this, WelcomActivity.class);
+                    intent.setClass(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }else {
@@ -113,10 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
-                    if(version>25) {
-                        timer.schedule(task,0,1000);
-                    }
-                    edtgetVerifyCode.setTextColor(getResources().getColor(R.color.changeColor));
+                    start();
                     Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }else if(info.equals("S")){
@@ -129,6 +96,47 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
 
+    }
+
+    /**
+     * 执行倒计时操作
+     */
+    public void start() {
+        new AsyncTask<Integer, Integer, Integer>() {
+            @Override
+            protected void onPreExecute() {
+                // 准备执行前调用，用于界面初始化操作
+                edtgetVerifyCode.setText("30秒后再次获取");
+                edtgetVerifyCode.setTextColor(getResources().getColor(R.color.changeColor));
+            }
+
+            @Override
+            protected Integer doInBackground(Integer... params) {
+                // 子线程，耗时操作
+                int start = 0;
+                int end = 29;
+                int result = 0;
+                for (int i = end; i >= start; i--) {
+                    SystemClock.sleep(1000);
+                    result = i;
+                    publishProgress(result);//把进度推出去，推给onProgressUpdate参数位置
+                }
+                return result;
+            }
+
+            @Override
+            protected void onProgressUpdate(Integer[] values) {
+                int progress = values[0];
+                edtgetVerifyCode.setText(progress+"秒后再次获取");
+            };
+
+            @Override
+            protected void onPostExecute(Integer result) {
+                edtgetVerifyCode.setText("获取验证码");
+                edtgetVerifyCode.setTextColor(Color.parseColor("#1E90FF"));
+            }
+
+        }.execute(0,100);
     }
 
     /**
@@ -148,7 +156,6 @@ public class RegisterActivity extends AppCompatActivity {
                     InputStream in = conn.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
                     String info = reader.readLine();
-                    Log.e("info",info);
                     Message msg = Message.obtain();
                     msg.obj = info;
                     handler.sendMessage(msg);
@@ -452,7 +459,6 @@ public class RegisterActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.edtGetVerifyCode:
-                    version = Build.VERSION.SDK_INT;
                     textBtnedtgetVerifyCode = edtgetVerifyCode.getText().toString().trim();
                     emailAddress = edtEmailAddress.getText().toString().trim();
                     password = edtPassword.getText().toString().trim();
