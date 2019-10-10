@@ -260,6 +260,9 @@ public class Findings extends Fragment {
                 //.decodeResource(getResources(),R.drawable.branch)));
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         //markerOption.setFlat(true);//设置marker平贴地图效果
+        if (map == null) {
+            map = mapView.getMap();
+        }
         final Marker marker = map.addMarker(markerOption);
     }
 

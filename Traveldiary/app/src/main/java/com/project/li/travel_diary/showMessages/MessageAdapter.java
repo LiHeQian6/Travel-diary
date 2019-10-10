@@ -113,7 +113,7 @@ public class MessageAdapter extends BaseAdapter {
             edit.setVisibility(View.INVISIBLE);
             delete.setVisibility(View.INVISIBLE);
         }
-        List<String> liked=new ArrayList<>(Arrays.asList(data.get(position).getLiked().split(",")));
+        final List<String> liked=new ArrayList<>(Arrays.asList(data.get(position).getLiked().split(",")));
         Log.e("liked",liked.toString());
         if(liked.contains(name)){
             like.setImageResource(R.drawable.liked);
@@ -124,38 +124,45 @@ public class MessageAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     //发送到后台赞数+1
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                URL url = new URL("http://" +context.getResources().getString(R.string.IP) + ":8080/travel_diary/LikeMessageServlet?id="+data.get(position).getId()+"&user="+name);
-                                URLConnection conn = url.openConnection();
-                                InputStream in = conn.getInputStream();
-                                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
-                                String returnResult = reader.readLine();Log.e("like info",returnResult);
-//                                Message message = new Message();
-//                                message.what = 301;
-//                                message.obj = returnResult;
-//                                handlerDelete.sendMessage(message);
-                                if(returnResult.equals("true")){
-//                                    like.setImageResource(R.drawable.liked);
-//                                    likeNum.setText(Integer.parseInt(likeNum.getText().toString())+1+"");
-//                                    like.setOnClickListener(null);
-                                    data.get(position).setLiked(data.get(position).getLiked()+","+name);
-                                    data.get(position).setLikeNum(data.get(position).getLikeNum()+1);
-                                    notifyDataSetChanged();
-                                    /*View view = getView(position, finalConvertView, parent);
-                                    ImageView l = view.findViewById(R.id.like);
-                                    TextView n= view.findViewById(R.id.finger);
-                                    l.setImageResource(R.drawable.liked);
-                                    n.setText(Integer.parseInt(n.getText().toString())+1+"");
-                                    l.setOnClickListener(null);*/
-                                }
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
+//                    new Thread() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                URL url = new URL("http://" +context.getResources().getString(R.string.IP) + ":8080/travel_diary/LikeMessageServlet?id="+data.get(position).getId()+"&user="+name);
+//                                URLConnection conn = url.openConnection();
+//                                InputStream in = conn.getInputStream();
+//                                BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+//                                String returnResult = reader.readLine();Log.e("like info",returnResult);
+////                                Message message = new Message();
+////                                message.what = 301;
+////                                message.obj = returnResult;
+////                                handlerDelete.sendMessage(message);
+//                                if(returnResult.equals("true")){
+////                                    like.setImageResource(R.drawable.liked);
+////                                    likeNum.setText(Integer.parseInt(likeNum.getText().toString())+1+"");
+////                                    like.setOnClickListener(null);
+//                                    data.get(position).setLiked(data.get(position).getLiked()+","+name);
+//                                    data.get(position).setLikeNum(data.get(position).getLikeNum()+1);
+//                                    notifyDataSetChanged();
+//                                    /*View view = getView(position, finalConvertView, parent);
+//                                    ImageView l = view.findViewById(R.id.like);
+//                                    TextView n= view.findViewById(R.id.finger);
+//                                    l.setImageResource(R.drawable.liked);
+//                                    n.setText(Integer.parseInt(n.getText().toString())+1+"");
+//                                    l.setOnClickListener(null);*/
+//                                }
+//                            }catch (Exception e){
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }.start();
+                    View view = getView(position, finalConvertView, parent);
+                    ImageView l = view.findViewById(R.id.like);
+                    TextView n = view.findViewById(R.id.finger);
+                    l.setImageResource(R.drawable.liked);
+                    n.setText(Integer.parseInt(likeNum.getText().toString())+1+"");
+                    ShowMessageActivity.liked+=(data.get(position).getId()+",");
+                    l.setOnClickListener(null);
                 }
             });
         }
