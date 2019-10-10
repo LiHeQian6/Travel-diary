@@ -65,7 +65,6 @@
                                       <entry key="foregroundImage" value="C:\Users\Administrator\Desktop\logo.png" />
                                       <entry key="foregroundLayerName" value="logo" />
                                       <entry key="outputName" value="icon" />
-                                      <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -132,6 +131,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>

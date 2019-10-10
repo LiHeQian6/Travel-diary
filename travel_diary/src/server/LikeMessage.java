@@ -12,6 +12,8 @@ package server;
 
 import java.sql.SQLException;
 
+import org.apache.naming.factory.TransactionFactory;
+
 import com.mysql.jdbc.Connection;
 
 import dao.UpDataMessage;
@@ -25,13 +27,21 @@ import dao.UpDataMessage;
      */
 
 public class LikeMessage {
-	public boolean addLikeNum(int id,String user) {
+	public boolean addLikeNum(String id,String user) {
 		UpDataMessage dataMessage=new UpDataMessage();
+		String[] idMessage;
 		int n=0;
 		int m=0;
 		try {
-			dataMessage.getConnection();
-			n=dataMessage.UpDate("UPDATE table_message set praiseNum=praiseNum+1,liked=CONCAT(liked,"+"\","+user+"\") where id_message="+id+";");
+			dataMessage.getConnection().setAutoCommit(false);;
+			idMessage = id.split(",");
+			
+			for(int i=0;i<idMessage.length;i++) {
+				//System.out.println(idMessage[i]);
+				n=dataMessage.UpDate("UPDATE table_message set praiseNum=praiseNum+1,liked=CONCAT(liked,"+"\","+user+"\") where id_message="+idMessage[i]+";");
+			}
+			dataMessage.getConnection().commit();
+			//n=dataMessage.UpDate("UPDATE table_message set praiseNum=praiseNum+1,liked=CONCAT(liked,"+"\","+user+"\") where id_message="+id+";");
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

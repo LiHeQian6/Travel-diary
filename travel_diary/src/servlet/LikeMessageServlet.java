@@ -35,7 +35,7 @@ public class LikeMessageServlet extends HttpServlet {
         String user=request.getParameter("user");
         System.out.println(id+" "+user);
         LikeMessage like=new LikeMessage();
-        if(like.addLikeNum(Integer.parseInt(id), user)) {
+        if(like.addLikeNum(id,user)) {
         	response.getWriter().print("true");
         }else {
         	response.getWriter().print("false");
