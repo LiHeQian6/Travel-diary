@@ -16,7 +16,7 @@ public class Messages implements Serializable{
     private String date;
     private String user;
     private String address="火星QAQ";
-    private String liked="";
+    private String liked=",";
     private int likeNum;
 
     public Messages() {

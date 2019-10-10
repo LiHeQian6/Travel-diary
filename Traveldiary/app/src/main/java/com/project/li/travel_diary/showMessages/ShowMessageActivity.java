@@ -1,13 +1,14 @@
 package com.project.li.travel_diary.showMessages;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import com.amap.api.maps.model.LatLng;
@@ -22,6 +23,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,8 @@ public class ShowMessageActivity extends AppCompatActivity {
     private List<Messages> list = new ArrayList();
     private ListView listView;
     private LatLng location;
+    public static String liked="";
+    public static AppCompatActivity a;
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -36,9 +40,7 @@ public class ShowMessageActivity extends AppCompatActivity {
                 case 100:
                     list.clear();
                     list.addAll((List) msg.obj);
-                    Messages e = new Messages();
-                    list.add(e);
-                    adapter = new MessageAdapter(getApplicationContext(), list, R.layout.messages_page);
+                    adapter = new MessageAdapter(a, list, R.layout.messages_page);
                     listView.setAdapter(adapter);
                     break;
             }
@@ -50,6 +52,7 @@ public class ShowMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_message);
+        a=this;
         setStatusBar();
         location =(LatLng) getIntent().getParcelableExtra("location");
         getPositionMessages();
@@ -117,7 +120,36 @@ public class ShowMessageActivity extends AppCompatActivity {
             //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//隐藏状态栏但不隐藏状态栏字体
             //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //隐藏状态栏，并且不显示字体
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//实现状态栏文字颜色为暗色
-
         }
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        final SharedPreferences sharedPreferences=getSharedPreferences("data",0);
+        final String name = sharedPreferences.getString("name", "");
+        if(!"".equals(liked)){
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        URL url = new URL("http://" +getResources().getString(R.string.IP) + ":8080/travel_diary/LikeMessageServlet?id="+liked+"&user="+name);
+                        URLConnection conn = url.openConnection();
+                        InputStream in = conn.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+                        String info = reader.readLine();
+                        if(info.equals("true")){
+                            liked="";
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        }
+    }
+
+
+
 }

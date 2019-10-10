@@ -7,9 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +22,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.model.*;
@@ -100,7 +101,7 @@ public class Findings extends Fragment {
         map.getUiSettings().setCompassEnabled(true);
         map.getUiSettings().setScaleControlsEnabled(true);
         map.setMyLocationEnabled(true);
-        map.moveCamera(CameraUpdateFactory.zoomTo(18));
+        map.moveCamera(CameraUpdateFactory.zoomTo(17));
         map.moveCamera(CameraUpdateFactory.changeTilt(60));
         //初始化定位监听
         mLocationClient = new AMapLocationClient(getContext());
@@ -124,9 +125,8 @@ public class Findings extends Fragment {
         });
         //视角初始化
         mLocationClient.startLocation();
-        //初始化数据
-        getFootPrint();
-        addMarker(new LatLng(34.341568, 108.940174),"西安","一起来啊！");
+
+        addMarker(new LatLng(34.341568, 108.940174),"西安", AMapUtils.calculateLineDistance(new LatLng(34.341568, 108.940174),new LatLng(34.341568, 108.940274))+"");
         //添加数据
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,6 +260,9 @@ public class Findings extends Fragment {
                 //.decodeResource(getResources(),R.drawable.branch)));
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         //markerOption.setFlat(true);//设置marker平贴地图效果
+        if (map == null) {
+            map = mapView.getMap();
+        }
         final Marker marker = map.addMarker(markerOption);
     }
 
@@ -267,7 +270,7 @@ public class Findings extends Fragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
-
+        getFootPrint();
     }
 
     @Override

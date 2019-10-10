@@ -6,12 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -32,7 +33,7 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Footprint extends SupportMapFragment {
+public class Footprint extends Fragment {
     private TextureMapView mapView;
     private AMap map;
     private Marker clickMarker;
@@ -136,6 +137,9 @@ public class Footprint extends SupportMapFragment {
         //.decodeResource(getResources(),R.drawable.branch)));
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
         //markerOption.setFlat(true);//设置marker平贴地图效果
+        if (map == null) {
+            map = mapView.getMap();
+        }
         final Marker marker = map.addMarker(markerOption);
     }
 

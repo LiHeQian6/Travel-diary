@@ -2,7 +2,7 @@ package com.project.li.travel_diary.Settings;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,8 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.project.li.travel_diary.R;
-
-import java.util.Set;
 
 public class Setting extends AppCompatActivity {
     private String[] itemName = {"昵称","密码","皮肤","更多设置"};

@@ -70,11 +70,11 @@
                 android:gravity="top"
                 android:hint="请输入内容"
                 android:inputType="textMultiLine"
-                android:minLines="8"
+                android:minLines="10"
                 android:maxLines="15"
                 android:scrollbars="vertical"
                 android:background="@null"
-        android:maxLength="2000">
+                android:maxLength="2000">
         </EditText>
     </LinearLayout>
 
