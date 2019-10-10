@@ -113,14 +113,12 @@ public class RegisterActivity extends AppCompatActivity {
                 super.handleMessage(msg);
                 String info = (String) msg.obj;
                 if (info.equals("T")) {
-//                    if(version>25) {
-//                        CountThread countThread = new CountThread();
-//                        countThread.start();
-//                    }
-                    edtgetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
-                    timer.schedule(task,0,1000);
-//                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
-//                    toastTip.show();
+                    if(version>25) {
+                        timer.schedule(task,0,1000);
+                    }
+                    edtgetVerifyCode.setTextColor(getResources().getColor(R.color.changeColor));
+                    Toast toastTip = Toast.makeText(RegisterActivity.this, "验证码已发送，请查收！", Toast.LENGTH_LONG);
+                    toastTip.show();
                 }else if(info.equals("S")){
                     Toast toastTip = Toast.makeText(RegisterActivity.this, "该邮箱已被注册！", Toast.LENGTH_LONG);
                     toastTip.show();
@@ -445,29 +443,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private class CountThread extends Thread{
-        @Override
-        public void run() {
-            while (true){
-                //每1秒向主线程发送一个Message
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                Message message = new Message();
-                message.what = 100;
-                edtgetVerifyCode.setTextColor(Color.parseColor("#bcbcbc"));
-                mainHandler.sendMessage(message);
-                //当数字减为0时，停止循环
-                if (time <= 0){
-                    message.what = 200;
-                    break;
-                }
-            }
-        }
-    }
     /**
      * 点击事件监听器
      */
@@ -487,6 +462,7 @@ public class RegisterActivity extends AppCompatActivity {
                         toastTip.show();
                     } else {
                         if (textBtnedtgetVerifyCode.equals("获取验证码")
+                                && !edtgetVerifyCode.getTextColors().equals(R.color.changeColor)
                                 && isEmail(emailAddress)) {
                             toSendEmail(emailAddress, "register");
                         } else {
