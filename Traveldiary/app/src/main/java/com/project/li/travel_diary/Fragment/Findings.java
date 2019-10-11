@@ -125,8 +125,6 @@ public class Findings extends Fragment {
         });
         //视角初始化
         mLocationClient.startLocation();
-
-        addMarker(new LatLng(34.341568, 108.940174),"西安", AMapUtils.calculateLineDistance(new LatLng(34.341568, 108.940174),new LatLng(34.341568, 108.940274))+"");
         //添加数据
         add.setOnClickListener(new View.OnClickListener() {
             @Override
