@@ -462,12 +462,16 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast toastTip = Toast.makeText(RegisterActivity.this, "请填写信息！", Toast.LENGTH_LONG);
                         toastTip.show();
                     } else {
-                        if (textBtnedtgetVerifyCode.equals("获取验证码")
-                                && !edtgetVerifyCode.getTextColors().equals(R.color.changeColor)
-                                && isEmail(emailAddress)) {
-                            toSendEmail(emailAddress, "register");
-                        } else {
-                            Toast toastTip = Toast.makeText(RegisterActivity.this, "请稍后再获取！", Toast.LENGTH_LONG);
+                        if(isEmail(emailAddress)) {
+                            if (textBtnedtgetVerifyCode.equals("获取验证码")
+                                    && !edtgetVerifyCode.getTextColors().equals(R.color.changeColor)) {
+                                toSendEmail(emailAddress, "register");
+                            } else {
+                                Toast toastTip = Toast.makeText(RegisterActivity.this, "请稍后再获取！", Toast.LENGTH_LONG);
+                                toastTip.show();
+                            }
+                        }else{
+                            Toast toastTip = Toast.makeText(RegisterActivity.this, "请填写正确的邮箱信息！", Toast.LENGTH_LONG);
                             toastTip.show();
                         }
                     }
