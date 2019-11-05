@@ -47,6 +47,7 @@ public class Register {
 		try {
 			isName.getConnection();
 			Message = isName.queryDate("select distinct * from table_users where account='"+userName+"'").split(";");
+			System.out.println(Message[0]);
 			if(Message[0].equals(userName)) {
 				return true;
 			}else {

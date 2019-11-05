@@ -26,6 +26,16 @@ android {
         versionCode 1
         versionName "1.4.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters 'x86', 'x86_64', 'mips', 'mips64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME:applicationId,
+                JPUSH_APPKEY :"25d9e14c8b09c65a5110398d", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL:"developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -48,4 +58,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
     implementation 'pub.devrel:easypermissions:2.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'cn.jiguang.sdk:jpush:3.3.9'  // 此处以JPush 3.3.9 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.1.6 版本为例。
 }

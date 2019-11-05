@@ -35,14 +35,19 @@ public class ForgetPasswordServlet extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html; charset=UTF-8");
 		server.Forget forget = new server.Forget();
+		server.Register ifSame = new server.Register();
 		PrintWriter writer = response.getWriter();
 		String nameString = request.getParameter("name");
 		String verifyCode = request.getParameter("verifyCode"); 
 		System.out.println(nameString+"  "+verifyCode);
-		if(forget.ifSame(nameString,verifyCode)) {
-			writer.write("T");
-			System.out.println("验证成功！");
-		}else {
+		if(ifSame.ifSame(nameString)) {
+			if(forget.ifSame(nameString, verifyCode)) {
+				writer.write("T");
+				System.out.println("验证成功！");
+			}else {
+				writer.write("F");
+			}
+		}else{
 			writer.write("Nobody");
 			System.out.println("查无此人");
 		}

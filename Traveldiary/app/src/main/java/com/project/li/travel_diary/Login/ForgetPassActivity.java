@@ -76,7 +76,11 @@ public class ForgetPassActivity extends AppCompatActivity {
                     intent.setClass(ForgetPassActivity.this, ResetPassActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                }else if(info.equals("F")){
+                    Toast toastTip = Toast.makeText(ForgetPassActivity.this, "验证失败！", Toast.LENGTH_LONG);
+                    toastTip.show();
+                }
+                else {
                     Toast toastTip = Toast.makeText(ForgetPassActivity.this, "没有此用户！", Toast.LENGTH_LONG);
                     toastTip.show();
                 }
